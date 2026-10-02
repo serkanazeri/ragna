@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.wrangler/
+.dev.vars
+.env
+.env.*
+!.env.example
+wrangler.production.json
+reports/live-*.json
+data/synthetic-candidates.jsonl
+__pycache__/
+.DS_Store
+*.log

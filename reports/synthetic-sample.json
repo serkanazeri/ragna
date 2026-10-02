@@ -1,0 +1,44 @@
+{
+  "reviewStatus": "pending-human-review",
+  "candidates": [
+    {
+      "question": "Ürünlerin iadesi için ne kadar süre bulunmaktadır?",
+      "referenceAnswer": "Standart iade süresi teslimattan itibaren 30 takvim günüdür.",
+      "evidenceQuote": "Standart iade süresi teslimattan itibaren 30 takvim günüdür.",
+      "category": "single-hop",
+      "documentId": "returns",
+      "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+      "provider": "ollama",
+      "model": "gemma4:12b-mlx",
+      "provenance": "llm-synthetic",
+      "reviewStatus": "pending",
+      "generatedAt": "2026-10-02T09:52:11.240Z"
+    },
+    {
+      "question": "Hangi ürünler iade edilemez?",
+      "referenceAnswer": "Kullanılmış sarf malzemeleri iade kapsamı dışındadır.",
+      "evidenceQuote": "Kullanılmış sarf malzemeleri iade kapsamı dışındadır.",
+      "category": "single-hop",
+      "documentId": "returns",
+      "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+      "provider": "ollama",
+      "model": "gemma4:12b-mlx",
+      "provenance": "llm-synthetic",
+      "reviewStatus": "pending",
+      "generatedAt": "2026-10-02T09:52:11.244Z"
+    },
+    {
+      "question": "İade işlemi sırasında hangi ödeme yöntemleri kabul edilmektedir?",
+      "referenceAnswer": "Belge içerisinde ödeme yöntemlerine dair bir bilgi bulunmamaktadır.",
+      "evidenceQuote": "İade talebinde sipariş numarası ve teslim tarihi gerekir.",
+      "category": "unanswerable",
+      "documentId": "returns",
+      "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+      "provider": "ollama",
+      "model": "gemma4:12b-mlx",
+      "provenance": "llm-synthetic",
+      "reviewStatus": "pending",
+      "generatedAt": "2026-10-02T09:52:11.245Z"
+    }
+  ]
+}

@@ -1,0 +1,1610 @@
+{
+  "createdAt": "2026-10-02T09:52:38.510Z",
+  "base": "https://ragna.serkanazeri.workers.dev",
+  "results": [
+    {
+      "questionId": "q-returns-1",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1439,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "74356c7e-4e5e-4ea6-a75c-bb4d0ad327e7",
+        "answer": "Standart iade süresi teslimattan itibaren 30 takvim günüdür [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "returns",
+            "title": "İade politikası",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Standart iade süresi teslimattan itibaren 30 takvim günüdür. İade talebinde sipariş numarası ve teslim tarihi gerekir. Kullanılmış sarf malzemeleri iade kapsamı dışındadır.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 35,
+            "status": "ok",
+            "detail": "8 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 317,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1057,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1439,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 597,
+          "outputTokens": 36,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.12999999999999998,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-returns-2",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 862,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "94be3ff6-e93d-48a2-9d3c-55d972b67db0",
+        "answer": "Standart iade süresi, teslimat tarihinden itibaren 30 takvim günüdür [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "returns",
+            "title": "İade politikası",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Standart iade süresi teslimattan itibaren 30 takvim günüdür. İade talebinde sipariş numarası ve teslim tarihi gerekir. Kullanılmış sarf malzemeleri iade kapsamı dışındadır.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 29,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 297,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 507,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 862,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 519,
+          "outputTokens": 39,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.13999999999999999,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-returns-3",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 10629,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "93189f2f-91bb-4274-8111-635861392f3c",
+        "answer": "Standart iade süresi teslimattan itibaren 30 takvim günüdür [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "returns",
+            "title": "İade politikası",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Standart iade süresi teslimattan itibaren 30 takvim günüdür. İade talebinde sipariş numarası ve teslim tarihi gerekir. Kullanılmış sarf malzemeleri iade kapsamı dışındadır.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 33,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 443,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 10125,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 10629,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 574,
+          "outputTokens": 36,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.15,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-delivery-1",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 3223,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "ba6efc71-c91b-4f6e-bca5-d5fdb5b1a26f",
+        "answer": "Stoktaki standart siparişler 3 iş günü içerisinde sevk edilir [S1]. Saat 14.00'ten sonra verilen siparişlerin hazırlık süreci ise ertesi iş günü başlar [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "delivery",
+            "title": "Teslimat takvimi",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Stoktaki standart siparişler 3 iş gününde sevk edilir. Özel üretim siparişleri 15 iş gününde hazırlanır. Sevk süresi taşıma süresini içermez. Saat 14.00 sonrası verilen siparişlerin hazırlık süresi ertesi iş günü başlar.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 33,
+            "status": "ok",
+            "detail": "8 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 323,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 2837,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 3223,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 597,
+          "outputTokens": 64,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.16,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-delivery-2",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 8371,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "aa12ec8f-24cc-4ecf-afaf-58f33eadc0d3",
+        "answer": "Stoktaki standart siparişler 3 iş gününde sevk edilir; ancak saat 14.00'ten sonra verilen siparişler için hazırlık süreci ertesi iş günü başlar [S2]. Bu süre taşıma süresini kapsamamaktadır [S2].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S2",
+            "documentId": "delivery",
+            "title": "Teslimat takvimi",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Stoktaki standart siparişler 3 iş gününde sevk edilir. Özel üretim siparişleri 15 iş gününde hazırlanır. Sevk süresi taşıma süresini içermez. Saat 14.00 sonrası verilen siparişlerin hazırlık süresi ertesi iş günü başlar.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 36,
+            "status": "ok",
+            "detail": "6 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 305,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 8001,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 8371,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 587,
+          "outputTokens": 76,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.17,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-delivery-3",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1148,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "2465b176-6acf-4d29-8fda-c649ad40eec3",
+        "answer": "Stoktaki standart siparişler 3 iş gününde sevk edilir [S1]. Saat 14.00'ten sonra verilen siparişlerin hazırlık süreci ertesi iş günü başlar [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "delivery",
+            "title": "Teslimat takvimi",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Stoktaki standart siparişler 3 iş gününde sevk edilir. Özel üretim siparişleri 15 iş gününde hazırlanır. Sevk süresi taşıma süresini içermez. Saat 14.00 sonrası verilen siparişlerin hazırlık süresi ertesi iş günü başlar.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 29,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 313,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 775,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1148,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 619,
+          "outputTokens": 63,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.18000000000000002,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-loan-1",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 7888,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "bcfddcf3-c859-46ae-84de-8fa975198755",
+        "answer": "Geçici ekipman, Kesintisiz Destek paketi olan müşterilere onarım süreci 5 iş gününü aşması durumunda, stok uygunluğuna göre sağlanır [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "loan",
+            "title": "Geçici ekipman",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Kesintisiz Destek paketi olan müşterilere onarım 5 iş gününü aşarsa stok uygunluğuna göre geçici ekipman sunulur. Teslimat için aktif servis kayıt numarası gerekir. Geçici ekipmanın modeli asıl cihazla aynı olmak zorunda değildir.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 31,
+            "status": "ok",
+            "detail": "3 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 319,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 7509,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 7888,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 651,
+          "outputTokens": 56,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.19000000000000003,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-loan-2",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 5002,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "793d6327-982e-480a-80fb-20746d8b78e1",
+        "answer": "Kesintisiz Destek paketi sahibi olan müşterilere, onarım süreci 5 iş gününü aşması durumunda stok uygunluğuna göre geçici ekipman sunulmaktadır [S2]. Geçici ekipmanın teslim alınabilmesi için aktif bir servis kayıt numarası gereklidir ve sunulan ekipmanın modeli asıl cihazla aynı olmak zorunda değildir [S2].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S2",
+            "documentId": "loan",
+            "title": "Geçici ekipman",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Kesintisiz Destek paketi olan müşterilere onarım 5 iş gününü aşarsa stok uygunluğuna göre geçici ekipman sunulur. Teslimat için aktif servis kayıt numarası gerekir. Geçici ekipmanın modeli asıl cihazla aynı olmak zorunda değildir.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 37,
+            "status": "ok",
+            "detail": "5 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 292,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 4643,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 5002,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 594,
+          "outputTokens": 92,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.20000000000000004,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-loan-3",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 2669,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "1042522c-9dba-49ff-8e46-0adab195f8ec",
+        "answer": "Kesintisiz Destek paketine sahip müşterilere, onarım süreci 5 iş gününü aşması durumunda stok uygunluğuna bağlı olarak geçici ekipman sunulmaktadır [S1]. Teslimat için aktif bir servis kayıt numarası gereklidir ve sunulan geçici ekipmanın modeli asıl cihazla aynı olmak zorunda değildir [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "loan",
+            "title": "Geçici ekipman",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Kesintisiz Destek paketi olan müşterilere onarım 5 iş gününü aşarsa stok uygunluğuna göre geçici ekipman sunulur. Teslimat için aktif servis kayıt numarası gerekir. Geçici ekipmanın modeli asıl cihazla aynı olmak zorunda değildir.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 32,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 308,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 2300,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 2669,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 545,
+          "outputTokens": 89,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.21000000000000005,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-invoice-1",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1771,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "84e6e7de-578a-404d-b7dc-2ffc729bcfab",
+        "answer": "Fatura bilgisi düzeltme talepleri, kesim tarihinden itibaren 7 takvim günü içinde finans ekibine iletilmelidir [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "invoice",
+            "title": "Fatura düzeltme",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Fatura bilgisi düzeltme talepleri kesim tarihinden itibaren 7 takvim günü içinde finans ekibine iletilir. Talepte fatura numarası ve doğru şirket bilgileri bulunmalıdır. Vergi numarası değişikliği yeni belge düzenlenmesini gerektirir.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 30,
+            "status": "ok",
+            "detail": "4 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 280,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1433,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1771,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 604,
+          "outputTokens": 47,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.22000000000000006,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-invoice-2",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1703,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "199850dc-eb2c-455f-9f58-1778240166dc",
+        "answer": "Fatura bilgisi düzeltme talepleri, kesim tarihinden itibaren 7 takvim günü içinde finans ekibine iletilmelidir [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "invoice",
+            "title": "Fatura düzeltme",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Fatura bilgisi düzeltme talepleri kesim tarihinden itibaren 7 takvim günü içinde finans ekibine iletilir. Talepte fatura numarası ve doğru şirket bilgileri bulunmalıdır. Vergi numarası değişikliği yeni belge düzenlenmesini gerektirir.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 39,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 284,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1350,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1703,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 601,
+          "outputTokens": 47,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.23000000000000007,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-invoice-3",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 2171,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "c6c22dc5-f542-4f7c-929e-8805eb2e9fb5",
+        "answer": "Fatura bilgisi düzeltme talepleri, kesim tarihinden itibaren 7 takvim günü içinde finans ekibine iletilmelidir [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "invoice",
+            "title": "Fatura düzeltme",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Fatura bilgisi düzeltme talepleri kesim tarihinden itibaren 7 takvim günü içinde finans ekibine iletilir. Talepte fatura numarası ve doğru şirket bilgileri bulunmalıdır. Vergi numarası değişikliği yeni belge düzenlenmesini gerektirir.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 33,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 417,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1692,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 2171,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 645,
+          "outputTokens": 47,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.24000000000000007,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-stock-1",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1869,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "c4bd854e-b4ae-47d7-bf36-78ce3fc937e3",
+        "answer": "Teklif onayından sonra stok rezervasyonu 48 saat geçerlidir; ödeme teyidi alınmadığı takdirde rezervasyon otomatik olarak kaldırılır [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "stock",
+            "title": "Stok rezervasyonu",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Teklif onayından sonra stok rezervasyonu 48 saat geçerlidir. Ödeme teyidi alınmazsa rezervasyon otomatik kaldırılır. Özel üretim ürünlerinde stok rezervasyonu yerine üretim planı kullanılır.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 31,
+            "status": "ok",
+            "detail": "5 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 287,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1522,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1869,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 590,
+          "outputTokens": 51,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.25000000000000006,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-stock-2",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1643,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 0,
+      "evidenceRecall": 0,
+      "answer": {
+        "requestId": "fadedbed-709a-4305-81b1-a0c8b3db86f5",
+        "answer": "Sunulan belgelerde teklif onaylandıktan sonra ürünün ne kadar süreyle ayrılacağına dair bir bilgi bulunmamaktadır [S2].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S2",
+            "documentId": "cancel",
+            "title": "Sipariş iptali",
+            "heading": "Uygulama ve takip",
+            "excerpt": "Bu prosedür Aster Mobility'nin Türkiye operasyonlarında kullanılır. Sipariş iptali için kayıt oluşturulurken müşteri ve işlem bilgisi doğrulanır. İşlem kaydı ilgili ekibe atanır; eksik bilgi varsa müşteriden tamamlaması istenir. Sonuç destek portalında müşteriye bildirilir. Tatil günleri iş günü hesaplamasına dahil edilmez. Kapsamı aşan durumlarda yetkili ekibe danışılır; belgede tanımlanmayan hak veya süre taahhüt edilmez.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 33,
+            "status": "ok",
+            "detail": "17 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 308,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1273,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1643,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 747,
+          "outputTokens": 44,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.26000000000000006,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-stock-3",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1098,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "6f67d22b-ac6a-46b8-b4ca-d0cd39d94063",
+        "answer": "Teklif onayından sonra stok rezervasyonu 48 saat geçerlidir; ödeme teyidi alınmadığı takdirde rezervasyon otomatik olarak kaldırılır [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "stock",
+            "title": "Stok rezervasyonu",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Teklif onayından sonra stok rezervasyonu 48 saat geçerlidir. Ödeme teyidi alınmazsa rezervasyon otomatik kaldırılır. Özel üretim ürünlerinde stok rezervasyonu yerine üretim planı kullanılır.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 33,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 323,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 714,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1098,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 581,
+          "outputTokens": 51,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.2700000000000001,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-escalation-1",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1695,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "1fc3f99c-2609-406c-848a-c37748e42098",
+        "answer": "Çözülemeyen müşteri şikayetleri 2 iş günü sonunda müşteri başarı yöneticisine aktarılır [S1]. Ancak P1 teknik olayları bu süreyi beklemeden öncelikli destek sürecine girer [S1]. İş günü hesaplamasına tatil günleri dahil edilmez [S3].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "escalation",
+            "title": "Şikayet eskalasyonu",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Çözülemeyen müşteri şikayetleri 2 iş günü sonunda müşteri başarı yöneticisine aktarılır. Şikayet kayıt numarası ve önceki aksiyonlar eklenir. P1 teknik olayları bu süreyi beklemeden öncelikli destek sürecine girer.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          },
+          {
+            "id": "S3",
+            "documentId": "escalation",
+            "title": "Şikayet eskalasyonu",
+            "heading": "Uygulama ve takip",
+            "excerpt": "Bu prosedür Aster Mobility'nin Türkiye operasyonlarında kullanılır. Şikayet eskalasyonu için kayıt oluşturulurken müşteri ve işlem bilgisi doğrulanır. İşlem kaydı ilgili ekibe atanır; eksik bilgi varsa müşteriden tamamlaması istenir. Sonuç destek portalında müşteriye bildirilir. Tatil günleri iş günü hesaplamasına dahil edilmez. Kapsamı aşan durumlarda yetkili ekibe danışılır; belgede tanımlanmayan hak veya süre taahhüt edilmez.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 31,
+            "status": "ok",
+            "detail": "7 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 290,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1345,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1695,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 607,
+          "outputTokens": 86,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.2800000000000001,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-escalation-2",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 3537,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "7475e681-d903-49cf-97ef-8cb03a2fd3a3",
+        "answer": "Çözülemeyen müşteri şikayetleri 2 iş günü sonunda müşteri başarı yöneticisine aktarılır [S1]. Ancak P1 teknik olayları bu süreyi beklemeden öncelikli destek sürecine girer [S1]. İş günü hesaplamasına tatil günleri dahil edilmez [S2, S5].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "escalation",
+            "title": "Şikayet eskalasyonu",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Çözülemeyen müşteri şikayetleri 2 iş günü sonunda müşteri başarı yöneticisine aktarılır. Şikayet kayıt numarası ve önceki aksiyonlar eklenir. P1 teknik olayları bu süreyi beklemeden öncelikli destek sürecine girer.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          },
+          {
+            "id": "S2",
+            "documentId": "priority",
+            "title": "Öncelikli destek",
+            "heading": "Uygulama ve takip",
+            "excerpt": "Bu prosedür Aster Mobility'nin Türkiye operasyonlarında kullanılır. Öncelikli destek için kayıt oluşturulurken müşteri ve işlem bilgisi doğrulanır. İşlem kaydı ilgili ekibe atanır; eksik bilgi varsa müşteriden tamamlaması istenir. Sonuç destek portalında müşteriye bildirilir. Tatil günleri iş günü hesaplamasına dahil edilmez. Kapsamı aşan durumlarda yetkili ekibe danışılır; belgede tanımlanmayan hak veya süre taahhüt edilmez.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          },
+          {
+            "id": "S5",
+            "documentId": "escalation",
+            "title": "Şikayet eskalasyonu",
+            "heading": "Uygulama ve takip",
+            "excerpt": "Bu prosedür Aster Mobility'nin Türkiye operasyonlarında kullanılır. Şikayet eskalasyonu için kayıt oluşturulurken müşteri ve işlem bilgisi doğrulanır. İşlem kaydı ilgili ekibe atanır; eksik bilgi varsa müşteriden tamamlaması istenir. Sonuç destek portalında müşteriye bildirilir. Tatil günleri iş günü hesaplamasına dahil edilmez. Kapsamı aşan durumlarda yetkili ekibe danışılır; belgede tanımlanmayan hak veya süre taahhüt edilmez.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 31,
+            "status": "ok",
+            "detail": "17 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 353,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 3123,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 3537,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 752,
+          "outputTokens": 92,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.2900000000000001,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-escalation-3",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 2150,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "c19786db-083e-435e-a6b4-4cf1425ec500",
+        "answer": "Çözülemeyen müşteri şikayetleri 2 iş günü sonunda müşteri başarı yöneticisine aktarılır [S1]. Ancak P1 teknik olayları bu süreyi beklemeden öncelikli destek sürecine girer [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "escalation",
+            "title": "Şikayet eskalasyonu",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Çözülemeyen müşteri şikayetleri 2 iş günü sonunda müşteri başarı yöneticisine aktarılır. Şikayet kayıt numarası ve önceki aksiyonlar eklenir. P1 teknik olayları bu süreyi beklemeden öncelikli destek sürecine girer.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 35,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 430,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1656,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 2150,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 650,
+          "outputTokens": 67,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.3000000000000001,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-edge-2",
+      "category": "temporal",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 3300,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "58d785eb-34e1-4870-9046-0617fec7bd1c",
+        "answer": "1 Eylül 2026 itibarıyla geçerli olan iade politikasına göre, standart iade süresi teslimattan itibaren 30 takvim günüdür [S1, S2].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "returns",
+            "title": "İade politikası",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Standart iade süresi teslimattan itibaren 30 takvim günüdür. İade talebinde sipariş numarası ve teslim tarihi gerekir. Kullanılmış sarf malzemeleri iade kapsamı dışındadır.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          },
+          {
+            "id": "S2",
+            "documentId": "returns",
+            "title": "İade politikası",
+            "heading": "Sürüm notu",
+            "excerpt": "Bu belgenin ikinci sürümü 1 Eylül 2026 itibarıyla geçerlidir. Önceki sürüm arşivlenmiştir. Belge numarası AST-001. Şirket, kişiler ve kurallar RAGNA testleri için kurgulanmıştır; gerçek ticari koşulları temsil etmez.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 31,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 296,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 2945,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 3300,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 570,
+          "outputTokens": 59,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.3100000000000001,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-edge-4",
+      "category": "multi-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 8346,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "d94ae632-213e-4cd7-a92e-53aecb3e4540",
+        "answer": "Siparişler sevk edilmeden önce ücretsiz olarak iptal edilebilir [S1]. Eğer sipariş sevk edilmişse, iade politikası uygulanır [S1]. Standart iade süresi teslimattan itibaren 30 takvim günüdür [S2].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "cancel",
+            "title": "Sipariş iptali",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Siparişler sevk öncesinde ücretsiz iptal edilebilir. Özel üretimde imalat başladıktan sonra iptal için ürün bedelinin yüzde 20 tutarında hazırlık bedeli alınır. Sevk edilmiş siparişlerde iade politikası uygulanır.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          },
+          {
+            "id": "S2",
+            "documentId": "returns",
+            "title": "İade politikası",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Standart iade süresi teslimattan itibaren 30 takvim günüdür. İade talebinde sipariş numarası ve teslim tarihi gerekir. Kullanılmış sarf malzemeleri iade kapsamı dışındadır.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 31,
+            "status": "ok",
+            "detail": "5 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 406,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 7881,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 8346,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 610,
+          "outputTokens": 76,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.3200000000000001,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-edge-6",
+      "category": "unanswerable",
+      "mode": "abstained",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1937,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": null,
+      "evidenceRecall": null,
+      "answer": {
+        "requestId": "aa092089-5cd3-4a45-86ff-ef210dc09389",
+        "answer": "Verilen belgelerde Aster M900 modelinin batarya kapasitesine dair bir bilgi bulunmamaktadır.",
+        "mode": "abstained",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 35,
+            "status": "ok",
+            "detail": "18 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 284,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1590,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1937,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 685,
+          "outputTokens": 36,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.3300000000000001,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-edge-8",
+      "category": "unanswerable",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 2224,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": false,
+      "referenceTermCoverage": null,
+      "evidenceRecall": null,
+      "answer": {
+        "requestId": "8b793f94-1d24-44cb-a91b-e0c0375da678",
+        "answer": "Verilen belgelerde siparişinizin güncel konumu veya durumuna dair spesifik bir bilgi bulunmamaktadır. [S1, S2, S3, S4, S5]",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "cancel",
+            "title": "Sipariş iptali",
+            "heading": "Sürüm notu",
+            "excerpt": "Bu belgenin ikinci sürümü 1 Eylül 2026 itibarıyla geçerlidir. Önceki sürüm arşivlenmiştir. Belge numarası AST-005. Şirket, kişiler ve kurallar RAGNA testleri için kurgulanmıştır; gerçek ticari koşulları temsil etmez.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          },
+          {
+            "id": "S2",
+            "documentId": "cancel",
+            "title": "Sipariş iptali",
+            "heading": "Uygulama ve takip",
+            "excerpt": "Bu prosedür Aster Mobility'nin Türkiye operasyonlarında kullanılır. Sipariş iptali için kayıt oluşturulurken müşteri ve işlem bilgisi doğrulanır. İşlem kaydı ilgili ekibe atanır; eksik bilgi varsa müşteriden tamamlaması istenir. Sonuç destek portalında müşteriye bildirilir. Tatil günleri iş günü hesaplamasına dahil edilmez. Kapsamı aşan durumlarda yetkili ekibe danışılır; belgede tanımlanmayan hak veya süre taahhüt edilmez.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          },
+          {
+            "id": "S3",
+            "documentId": "delivery",
+            "title": "Teslimat takvimi",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Stoktaki standart siparişler 3 iş gününde sevk edilir. Özel üretim siparişleri 15 iş gününde hazırlanır. Sevk süresi taşıma süresini içermez. Saat 14.00 sonrası verilen siparişlerin hazırlık süresi ertesi iş günü başlar.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          },
+          {
+            "id": "S4",
+            "documentId": "invoice",
+            "title": "Fatura düzeltme",
+            "heading": "Sürüm notu",
+            "excerpt": "Bu belgenin ikinci sürümü 1 Eylül 2026 itibarıyla geçerlidir. Önceki sürüm arşivlenmiştir. Belge numarası AST-010. Şirket, kişiler ve kurallar RAGNA testleri için kurgulanmıştır; gerçek ticari koşulları temsil etmez.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          },
+          {
+            "id": "S5",
+            "documentId": "stock",
+            "title": "Stok rezervasyonu",
+            "heading": "Uygulama ve takip",
+            "excerpt": "Bu prosedür Aster Mobility'nin Türkiye operasyonlarında kullanılır. Stok rezervasyonu için kayıt oluşturulurken müşteri ve işlem bilgisi doğrulanır. İşlem kaydı ilgili ekibe atanır; eksik bilgi varsa müşteriden tamamlaması istenir. Sonuç destek portalında müşteriye bildirilir. Tatil günleri iş günü hesaplamasına dahil edilmez. Kapsamı aşan durumlarda yetkili ekibe danışılır; belgede tanımlanmayan hak veya süre taahhüt edilmez.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 29,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 299,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1867,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 2224,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 676,
+          "outputTokens": 66,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.34000000000000014,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-edge-10",
+      "category": "access-control",
+      "mode": "abstained",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 7393,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": null,
+      "evidenceRecall": null,
+      "answer": {
+        "requestId": "82f23643-7474-48c8-8807-36468f56f092",
+        "answer": "Sağlanan belgelerde iç komisyon tarifesine ilişkin herhangi bir bilgi bulunmamaktadır.",
+        "mode": "abstained",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 35,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 352,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 6978,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 7393,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 706,
+          "outputTokens": 31,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.35000000000000014,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-edge-12",
+      "category": "adversarial",
+      "mode": "abstained",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1129,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": null,
+      "evidenceRecall": null,
+      "answer": {
+        "requestId": "4013e524-a428-4342-9378-e3548527947b",
+        "answer": "Üzgünüm, sorunuzun cevabını sağlayamıyorum.",
+        "mode": "abstained",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 31,
+            "status": "ok",
+            "detail": "7 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 273,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 797,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1129,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 592,
+          "outputTokens": 28,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.36000000000000015,
+          "dailyLimitUsd": 1
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Term coverage is a diagnostic, not semantic correctness.",
+    "Evidence/guided fallback rows are excluded from live generation quality conclusions.",
+    "Human review and calibrated model-judge scores are not available."
+  ],
+  "configuration": {
+    "promptPolicy": "grounded-v1",
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "thinking": false
+  },
+  "findings": [
+    "All 24 requests reached the live Workers AI provider; 21 were labeled live and 3 abstained.",
+    "English questions received Turkish answers: language-following failure.",
+    "The stock paraphrase missed reference evidence; the model described missing information with a non-abstaining flag.",
+    "The order-status question described missing information but was tagged live: an abstention-schema mismatch.",
+    "These findings motivated grounded-v2; subsequent targeted regressions are not an untouched holdout."
+  ]
+}

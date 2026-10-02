@@ -1,0 +1,8 @@
+# Copy to .dev.vars. Never commit real keys.
+OPENROUTER_API_KEY=
+# Required for Open WebUI, evaluation and admin requests. Generate with: openssl rand -hex 32
+RAGNA_API_KEY=
+# Optional. Used only when MODEL_ROUTE=local-first.
+OLLAMA_BASE_URL=http://localhost:11434
+# Optional public-demo protection. Supply the matching public site key in Wrangler vars.
+TURNSTILE_SECRET_KEY=

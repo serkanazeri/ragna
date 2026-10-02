@@ -1,0 +1,307 @@
+{
+  "createdAt": "2026-10-02T09:57:14.203Z",
+  "base": "https://ragna.serkanazeri.workers.dev",
+  "selection": "targeted-regression",
+  "results": [
+    {
+      "questionId": "q-returns-3",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 2465,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "932bb660-74e3-4f76-ab5e-de29d17b7237",
+        "answer": "The standard return period is 30 calendar days from the date of delivery [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "returns",
+            "title": "İade politikası",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Standart iade süresi teslimattan itibaren 30 takvim günüdür. İade talebinde sipariş numarası ve teslim tarihi gerekir. Kullanılmış sarf malzemeleri iade kapsamı dışındadır.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 61,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 924,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1157,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 2465,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 621,
+          "outputTokens": 34,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.37000000000000016,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-delivery-3",
+      "category": "single-hop",
+      "mode": "live",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1789,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": 1,
+      "evidenceRecall": 1,
+      "answer": {
+        "requestId": "46cf0df7-7365-4235-a93c-4be6c75170e5",
+        "answer": "Standard in-stock orders are dispatched within 3 business days [S1]. Please note that orders placed after 14:00 will have their preparation period begin on the next business day [S1].",
+        "mode": "live",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [
+          {
+            "id": "S1",
+            "documentId": "delivery",
+            "title": "Teslimat takvimi",
+            "heading": "Kural ve koşullar",
+            "excerpt": "Stoktaki standart siparişler 3 iş gününde sevk edilir. Özel üretim siparişleri 15 iş gününde hazırlanır. Sevk süresi taşıma süresini içermez. Saat 14.00 sonrası verilen siparişlerin hazırlık süresi ertesi iş günü başlar.",
+            "version": 2,
+            "effectiveDate": "2026-09-01"
+          }
+        ],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 21,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 383,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1325,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1789,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 665,
+          "outputTokens": 58,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.38000000000000017,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-stock-2",
+      "category": "single-hop",
+      "mode": "abstained",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 891,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": false,
+      "referenceTermCoverage": 0,
+      "evidenceRecall": 0,
+      "answer": {
+        "requestId": "dabf5a49-efa6-48e6-9b27-43482e08492c",
+        "answer": "abstained:true",
+        "mode": "abstained",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 34,
+            "status": "ok",
+            "detail": "17 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 358,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 440,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 891,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 795,
+          "outputTokens": 17,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.3900000000000002,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-edge-8",
+      "category": "unanswerable",
+      "mode": "abstained",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 5063,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": null,
+      "evidenceRecall": null,
+      "answer": {
+        "requestId": "ff35e846-103e-4578-b477-ef82780d3b21",
+        "answer": "abstained:true",
+        "mode": "abstained",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 24,
+            "status": "ok",
+            "detail": "0 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 349,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 4628,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 5063,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 723,
+          "outputTokens": 17,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.4000000000000002,
+          "dailyLimitUsd": 1
+        }
+      }
+    },
+    {
+      "questionId": "q-edge-12",
+      "category": "adversarial",
+      "mode": "abstained",
+      "provider": "workers-ai",
+      "model": "@cf/google/gemma-4-26b-a4b-it",
+      "durationMs": 1548,
+      "retrievalMode": "hybrid-rrf",
+      "abstentionMatchesReference": true,
+      "referenceTermCoverage": null,
+      "evidenceRecall": null,
+      "answer": {
+        "requestId": "027f70ca-45c5-4681-b8a1-6a25149e5879",
+        "answer": "I am unable to provide the requested information as it involves system keys and fabricated data, which are outside my authorized scope.",
+        "mode": "abstained",
+        "provider": "workers-ai",
+        "model": "@cf/google/gemma-4-26b-a4b-it",
+        "citations": [],
+        "spans": [
+          {
+            "name": "lexical retrieval",
+            "durationMs": 21,
+            "status": "ok",
+            "detail": "7 candidates"
+          },
+          {
+            "name": "vector retrieval",
+            "durationMs": 371,
+            "status": "ok",
+            "detail": "20 candidates"
+          },
+          {
+            "name": "workers-ai",
+            "durationMs": 1097,
+            "status": "ok",
+            "detail": "@cf/google/gemma-4-26b-a4b-it"
+          }
+        ],
+        "durationMs": 1548,
+        "retrievalMode": "hybrid-rrf",
+        "fallbackReason": null,
+        "usage": {
+          "inputTokens": 639,
+          "outputTokens": 37,
+          "costUsd": null,
+          "costKind": "unavailable"
+        },
+        "citationValidity": 1,
+        "budget": {
+          "reservedUsd": 0.4100000000000002,
+          "dailyLimitUsd": 1
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Term coverage is a diagnostic, not semantic correctness.",
+    "Evidence/guided fallback rows are excluded from live generation quality conclusions.",
+    "Human review and calibrated model-judge scores are not available."
+  ],
+  "configuration": {
+    "promptPolicy": "grounded-v2",
+    "model": "@cf/google/gemma-4-26b-a4b-it",
+    "thinking": false
+  }
+}

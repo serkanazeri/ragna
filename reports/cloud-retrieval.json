@@ -1,0 +1,3423 @@
+{
+  "publishedAt": "2026-10-02T09:49:14.406Z",
+  "kind": "deployed-retrieval",
+  "runs": [
+    {
+      "id": "cloud-lexical",
+      "label": "D1 FTS5",
+      "createdAt": "2026-10-02T09:47:08.197Z",
+      "base": "https://ragna.serkanazeri.workers.dev",
+      "configuration": {
+        "embedding": null,
+        "chunks": "sections-450",
+        "ranking": "D1 FTS5"
+      },
+      "metrics": {
+        "questions": 60,
+        "answerable": 54,
+        "recallAt5": 0.6141975308641976,
+        "mrr": 0.5746913580246913,
+        "ndcgAt5": 0.5755161238305774,
+        "accessLeaks": 0,
+        "p95Ms": 39,
+        "hybridRequests": 0
+      },
+      "holdoutMetrics": {
+        "questions": 24,
+        "answerable": 20,
+        "recallAt5": 0.55,
+        "mrr": 0.4916666666666667,
+        "ndcgAt5": 0.5025325271359822,
+        "accessLeaks": 0,
+        "p95Ms": 40,
+        "hybridRequests": 0
+      },
+      "results": [
+        {
+          "questionId": "q-returns-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 44,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "returns",
+            "privacy",
+            "delivery",
+            "handover"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 44,
+              "status": "ok",
+              "detail": "8 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-returns-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 40,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 40,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-returns-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 38,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 38,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-warranty-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 36,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "warranty",
+            "maintenance",
+            "injection-test"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 36,
+              "status": "ok",
+              "detail": "5 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-warranty-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 35,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "warranty",
+            "stock",
+            "delivery"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 35,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-warranty-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-priority-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 35,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "priority",
+            "repair",
+            "escalation"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 35,
+              "status": "ok",
+              "detail": "3 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-priority-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 35,
+          "recall": 1,
+          "mrr": 0.2,
+          "ndcg": 0.38685280723454163,
+          "leaks": 0,
+          "retrievedIds": [
+            "handover",
+            "stock",
+            "warranty",
+            "delivery",
+            "priority"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 35,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-priority-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "priority",
+            "escalation"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "2 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-delivery-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 38,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "delivery",
+            "cancel",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 38,
+              "status": "ok",
+              "detail": "8 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-delivery-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 34,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [
+            "loan",
+            "returns",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 34,
+              "status": "ok",
+              "detail": "6 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-delivery-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-cancel-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 34,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "stock",
+            "delivery",
+            "warranty"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 34,
+              "status": "ok",
+              "detail": "4 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-cancel-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "stock",
+            "privacy",
+            "onboarding"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "4 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-cancel-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-repair-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 37,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "repair",
+            "privacy",
+            "priority",
+            "handover"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 37,
+              "status": "ok",
+              "detail": "10 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-repair-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "repair",
+            "training"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "2 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-repair-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 30,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 30,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-loan-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "3 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-loan-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 1,
+          "mrr": 0.3333333333333333,
+          "ndcg": 0.5,
+          "leaks": 0,
+          "retrievedIds": [
+            "repair",
+            "warranty",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "5 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-loan-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-training-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [
+            "onboarding",
+            "handover"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "2 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-training-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 39,
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "leaks": 0,
+          "retrievedIds": [
+            "onboarding",
+            "training"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 39,
+              "status": "ok",
+              "detail": "4 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-training-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 34,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 34,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-maintenance-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 34,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 34,
+              "status": "ok",
+              "detail": "3 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-maintenance-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 30,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 30,
+              "status": "ok",
+              "detail": "1 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-maintenance-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 48,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 48,
+              "status": "ok",
+              "detail": "1 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-invoice-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "invoice",
+            "privacy"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "4 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-invoice-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 38,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "invoice",
+            "delivery",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 38,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-invoice-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-privacy-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "privacy",
+            "priority",
+            "escalation"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-privacy-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [
+            "priority",
+            "returns",
+            "warranty",
+            "delivery",
+            "cancel"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-privacy-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-onboarding-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 37,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "onboarding",
+            "privacy"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 37,
+              "status": "ok",
+              "detail": "4 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-onboarding-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "onboarding",
+            "priority",
+            "handover",
+            "privacy",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-onboarding-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-stock-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 34,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "stock",
+            "delivery",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 34,
+              "status": "ok",
+              "detail": "5 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-stock-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "returns",
+            "warranty",
+            "priority",
+            "delivery"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "17 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-stock-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-handover-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 34,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [
+            "returns",
+            "warranty",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 34,
+              "status": "ok",
+              "detail": "3 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-handover-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "handover"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "1 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-handover-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-remote-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "remote",
+            "injection-test",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "7 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-remote-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "remote",
+            "escalation",
+            "onboarding"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "3 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-remote-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 34,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 34,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-escalation-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 39,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "escalation",
+            "training",
+            "maintenance"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 39,
+              "status": "ok",
+              "detail": "7 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-escalation-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "escalation",
+            "returns",
+            "warranty",
+            "priority",
+            "delivery"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "17 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-escalation-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-1",
+          "category": "temporal",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 31,
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "leaks": 0,
+          "retrievedIds": [
+            "privacy",
+            "returns",
+            "delivery",
+            "handover",
+            "priority"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "8 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-2",
+          "category": "temporal",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "returns",
+            "stock"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-3",
+          "category": "multi-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 0.6666666666666666,
+          "mrr": 1,
+          "ndcg": 0.7653606369886217,
+          "leaks": 0,
+          "retrievedIds": [
+            "loan",
+            "warranty",
+            "remote"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "11 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-4",
+          "category": "multi-hop",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 0.9197207891481876,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "delivery",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "5 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-5",
+          "category": "multi-hop",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": 0.5,
+          "mrr": 1,
+          "ndcg": 0.6131471927654584,
+          "leaks": 0,
+          "retrievedIds": [
+            "onboarding",
+            "priority",
+            "maintenance"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "7 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-6",
+          "category": "unanswerable",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [
+            "warranty",
+            "maintenance",
+            "returns",
+            "priority"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "18 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-7",
+          "category": "unanswerable",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 36,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [
+            "priority",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 36,
+              "status": "ok",
+              "detail": "2 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-8",
+          "category": "unanswerable",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 35,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 35,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-9",
+          "category": "access-control",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "1 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-10",
+          "category": "access-control",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 33,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 33,
+              "status": "ok",
+              "detail": "0 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-11",
+          "category": "adversarial",
+          "split": "dev",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 37,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "injection-test",
+            "remote",
+            "repair",
+            "maintenance",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 37,
+              "status": "ok",
+              "detail": "5 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-12",
+          "category": "adversarial",
+          "split": "test",
+          "mode": "lexical",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 32,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [
+            "warranty",
+            "delivery",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "7 candidates"
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic fixture; not a production quality estimate.",
+        "End-to-end retrieval only, no generation or semantic correctness score.",
+        "A hybrid label confirms both paths ran, not that every hit came from vector search."
+      ]
+    },
+    {
+      "id": "cloud-hybrid",
+      "label": "FTS5 + BGE-M3 + RRF",
+      "createdAt": "2026-10-02T09:45:17.890Z",
+      "base": "https://ragna.serkanazeri.workers.dev",
+      "configuration": {
+        "embedding": "BGE-M3 1024d",
+        "chunks": "sections-450",
+        "ranking": "FTS5 + Vectorize / RRF k=60"
+      },
+      "metrics": {
+        "questions": 60,
+        "answerable": 54,
+        "recallAt5": 0.9537037037037037,
+        "mrr": 0.8904320987654321,
+        "ndcgAt5": 0.9018235651610397,
+        "accessLeaks": 0,
+        "p95Ms": 527,
+        "hybridRequests": 60
+      },
+      "holdoutMetrics": {
+        "questions": 24,
+        "answerable": 20,
+        "recallAt5": 0.95,
+        "mrr": 0.9,
+        "ndcgAt5": 0.9130929753571457,
+        "accessLeaks": 0,
+        "p95Ms": 511,
+        "hybridRequests": 24
+      },
+      "results": [
+        {
+          "questionId": "q-returns-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 801,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "returns",
+            "delivery",
+            "privacy"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 40,
+              "status": "ok",
+              "detail": "8 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 761,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-returns-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 441,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "returns",
+            "repair",
+            "stock",
+            "delivery",
+            "cancel"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 410,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-returns-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 394,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "returns",
+            "repair",
+            "remote"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 28,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 366,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-warranty-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 486,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "warranty",
+            "maintenance",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 37,
+              "status": "ok",
+              "detail": "5 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 449,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-warranty-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 381,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "warranty",
+            "stock",
+            "cancel"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 29,
+              "status": "ok",
+              "detail": "20 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 352,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-warranty-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 904,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "warranty",
+            "loan",
+            "repair",
+            "remote",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 36,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 868,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-priority-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 350,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "priority",
+            "escalation",
+            "repair",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 28,
+              "status": "ok",
+              "detail": "3 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 322,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-priority-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 352,
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "leaks": 0,
+          "retrievedIds": [
+            "handover",
+            "priority",
+            "delivery",
+            "loan",
+            "privacy"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 24,
+              "status": "ok",
+              "detail": "20 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 328,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-priority-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 431,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "priority",
+            "escalation",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 25,
+              "status": "ok",
+              "detail": "2 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 406,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-delivery-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 361,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "delivery",
+            "returns",
+            "cancel"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 41,
+              "status": "ok",
+              "detail": "8 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 320,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-delivery-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 339,
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "leaks": 0,
+          "retrievedIds": [
+            "loan",
+            "delivery",
+            "repair",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "6 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 313,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-delivery-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 387,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "delivery",
+            "stock",
+            "returns",
+            "handover"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 29,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 358,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-cancel-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 869,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "stock",
+            "delivery",
+            "warranty"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 25,
+              "status": "ok",
+              "detail": "4 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 844,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-cancel-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 316,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "onboarding",
+            "stock",
+            "privacy",
+            "handover"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 24,
+              "status": "ok",
+              "detail": "4 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 292,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-cancel-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 365,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "stock",
+            "delivery",
+            "privacy",
+            "invoice"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 339,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-repair-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 392,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "repair",
+            "priority",
+            "returns",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "10 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 366,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-repair-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 337,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "repair",
+            "training",
+            "loan",
+            "handover"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "2 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 311,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-repair-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 311,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "repair",
+            "priority",
+            "loan",
+            "maintenance",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 23,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 288,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-loan-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 364,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "loan",
+            "handover",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 25,
+              "status": "ok",
+              "detail": "3 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 339,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-loan-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 374,
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "leaks": 0,
+          "retrievedIds": [
+            "repair",
+            "loan",
+            "warranty"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 27,
+              "status": "ok",
+              "detail": "5 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 347,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-loan-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 360,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "loan",
+            "handover",
+            "warranty",
+            "onboarding"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 27,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 333,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-training-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 354,
+          "recall": 1,
+          "mrr": 0.3333333333333333,
+          "ndcg": 0.5,
+          "leaks": 0,
+          "retrievedIds": [
+            "onboarding",
+            "handover",
+            "training"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 34,
+              "status": "ok",
+              "detail": "2 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 320,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-training-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 363,
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "leaks": 0,
+          "retrievedIds": [
+            "onboarding",
+            "training",
+            "remote"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "4 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 337,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-training-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 346,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "training",
+            "onboarding",
+            "handover"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 24,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 322,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-maintenance-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 373,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "maintenance",
+            "repair",
+            "warranty"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 27,
+              "status": "ok",
+              "detail": "3 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 346,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-maintenance-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 371,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "maintenance",
+            "repair",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "1 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 340,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-maintenance-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 383,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "maintenance",
+            "repair",
+            "loan",
+            "warranty",
+            "priority"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 28,
+              "status": "ok",
+              "detail": "1 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 355,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-invoice-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 385,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "invoice",
+            "privacy",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 30,
+              "status": "ok",
+              "detail": "4 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 355,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-invoice-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 403,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "invoice",
+            "repair",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "20 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 377,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-invoice-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 396,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "invoice",
+            "repair",
+            "cancel"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 370,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-privacy-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 480,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "privacy",
+            "priority",
+            "warranty"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 25,
+              "status": "ok",
+              "detail": "20 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 455,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-privacy-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 342,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [
+            "priority",
+            "warranty",
+            "cancel",
+            "returns",
+            "maintenance"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 25,
+              "status": "ok",
+              "detail": "20 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 317,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-privacy-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 362,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "privacy",
+            "remote",
+            "priority",
+            "escalation",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 23,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 339,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-onboarding-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 354,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "onboarding",
+            "privacy",
+            "remote"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 25,
+              "status": "ok",
+              "detail": "4 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 329,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-onboarding-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 408,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "onboarding",
+            "priority",
+            "privacy",
+            "handover",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 29,
+              "status": "ok",
+              "detail": "20 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 379,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-onboarding-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 317,
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "leaks": 0,
+          "retrievedIds": [
+            "training",
+            "onboarding",
+            "remote",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 25,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 292,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-stock-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 378,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "stock",
+            "delivery",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 30,
+              "status": "ok",
+              "detail": "5 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 348,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-stock-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 353,
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "repair",
+            "handover",
+            "onboarding"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 23,
+              "status": "ok",
+              "detail": "17 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 330,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-stock-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 357,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "stock",
+            "privacy",
+            "remote"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 25,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 332,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-handover-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 353,
+          "recall": 1,
+          "mrr": 0.25,
+          "ndcg": 0.43067655807339306,
+          "leaks": 0,
+          "retrievedIds": [
+            "loan",
+            "returns",
+            "warranty",
+            "handover",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 28,
+              "status": "ok",
+              "detail": "3 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 325,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-handover-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 374,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "handover",
+            "repair",
+            "loan",
+            "escalation",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 31,
+              "status": "ok",
+              "detail": "1 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 343,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-handover-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 361,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "handover",
+            "repair",
+            "loan",
+            "invoice"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 35,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 326,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-remote-1",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 527,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "remote",
+            "repair",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 22,
+              "status": "ok",
+              "detail": "7 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 505,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-remote-2",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 395,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "remote",
+            "escalation",
+            "onboarding",
+            "privacy",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 24,
+              "status": "ok",
+              "detail": "3 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 371,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-remote-3",
+          "category": "single-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 362,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "remote",
+            "training",
+            "loan",
+            "privacy"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 21,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 341,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-escalation-1",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 511,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "escalation",
+            "handover",
+            "training"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 23,
+              "status": "ok",
+              "detail": "7 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 488,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-escalation-2",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 419,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "escalation",
+            "priority",
+            "repair",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 29,
+              "status": "ok",
+              "detail": "17 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 390,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-escalation-3",
+          "category": "single-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 323,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "escalation",
+            "priority",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 23,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 300,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-1",
+          "category": "temporal",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 415,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "returns",
+            "delivery",
+            "privacy",
+            "priority"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 20,
+              "status": "ok",
+              "detail": "8 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 395,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-2",
+          "category": "temporal",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 306,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "returns",
+            "warranty",
+            "repair",
+            "delivery"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 23,
+              "status": "ok",
+              "detail": "20 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 283,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-3",
+          "category": "multi-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 316,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "loan",
+            "warranty",
+            "repair"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 27,
+              "status": "ok",
+              "detail": "11 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 289,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-4",
+          "category": "multi-hop",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 376,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "returns",
+            "delivery"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 25,
+              "status": "ok",
+              "detail": "5 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 351,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-5",
+          "category": "multi-hop",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 367,
+          "recall": 0.5,
+          "mrr": 1,
+          "ndcg": 0.6131471927654584,
+          "leaks": 0,
+          "retrievedIds": [
+            "onboarding",
+            "handover",
+            "priority"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "7 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 341,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-6",
+          "category": "unanswerable",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 366,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [
+            "warranty",
+            "maintenance",
+            "repair",
+            "returns"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 32,
+              "status": "ok",
+              "detail": "18 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 334,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-7",
+          "category": "unanswerable",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 361,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [
+            "priority",
+            "repair",
+            "onboarding",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 36,
+              "status": "ok",
+              "detail": "2 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 325,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-8",
+          "category": "unanswerable",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 478,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "delivery",
+            "invoice",
+            "stock"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 452,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-9",
+          "category": "access-control",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 343,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [
+            "cancel",
+            "training",
+            "remote",
+            "onboarding",
+            "privacy"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 27,
+              "status": "ok",
+              "detail": "1 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 316,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-10",
+          "category": "access-control",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 348,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [
+            "remote",
+            "escalation",
+            "injection-test",
+            "loan"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 22,
+              "status": "ok",
+              "detail": "0 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 326,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-11",
+          "category": "adversarial",
+          "split": "dev",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 321,
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "leaks": 0,
+          "retrievedIds": [
+            "injection-test",
+            "repair",
+            "remote",
+            "cancel",
+            "onboarding"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "5 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 295,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        },
+        {
+          "questionId": "q-edge-12",
+          "category": "adversarial",
+          "split": "test",
+          "mode": "hybrid-rrf",
+          "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+          "durationMs": 373,
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "leaks": 0,
+          "retrievedIds": [
+            "warranty",
+            "injection-test",
+            "returns",
+            "priority"
+          ],
+          "spans": [
+            {
+              "name": "lexical retrieval",
+              "durationMs": 26,
+              "status": "ok",
+              "detail": "7 candidates"
+            },
+            {
+              "name": "vector retrieval",
+              "durationMs": 347,
+              "status": "ok",
+              "detail": "20 candidates"
+            }
+          ]
+        }
+      ],
+      "limitations": [
+        "Synthetic fixture; not a production quality estimate.",
+        "End-to-end retrieval only, no generation or semantic correctness score.",
+        "A hybrid label confirms both paths ran, not that every hit came from vector search."
+      ]
+    }
+  ]
+}

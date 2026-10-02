@@ -1,0 +1,19 @@
+services:
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:v0.11.1
+    ports:
+      - '127.0.0.1:3000:8080'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    env_file: .dev.vars
+    environment:
+      OPENAI_API_BASE_URL: http://host.docker.internal:8787/v1
+      OPENAI_API_KEY: ${RAGNA_API_KEY:?Run npm run secrets:init first}
+      RAGNA_BASE_URL: http://host.docker.internal:8787
+      OLLAMA_BASE_URL: http://host.docker.internal:11434
+      WEBUI_SECRET_KEY: ${WEBUI_SECRET_KEY:?Run npm run secrets:init first}
+    volumes:
+      - open-webui:/app/backend/data
+    restart: unless-stopped
+volumes:
+  open-webui:

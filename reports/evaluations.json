@@ -1,0 +1,2788 @@
+{
+  "generatedAt": "2026-10-02T09:58:53.791Z",
+  "datasetHash": "0e086c9cf284d9108c1fffada3c48aedeb09d724fe96eea6556b03c5e3a5f069",
+  "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+  "runs": [
+    {
+      "id": "lexical-sections-250",
+      "createdAt": "2026-10-02T09:58:53.711Z",
+      "corpusVersion": "aster-2026.09-v1",
+      "datasetHash": "0e086c9cf284d9108c1fffada3c48aedeb09d724fe96eea6556b03c5e3a5f069",
+      "kind": "offline-retrieval",
+      "strategy": "sections",
+      "chunkSize": 250,
+      "questionCount": 60,
+      "metrics": {
+        "recallAt5": 0.5956790123456791,
+        "mrr": 0.5802469135802469,
+        "ndcgAt5": 0.5766734692017962,
+        "accessLeaks": 0,
+        "p95Ms": 1.1039579999999916
+      },
+      "results": [
+        {
+          "questionId": "q-returns-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "returns",
+            "privacy",
+            "delivery",
+            "handover",
+            "priority"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 1.9564170000000018
+        },
+        {
+          "questionId": "q-returns-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 1.230041
+        },
+        {
+          "questionId": "q-returns-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8360839999999996
+        },
+        {
+          "questionId": "q-warranty-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "warranty",
+            "maintenance",
+            "injection-test"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 1.0267079999999993
+        },
+        {
+          "questionId": "q-warranty-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "warranty",
+            "stock",
+            "delivery"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 5.012582999999992
+        },
+        {
+          "questionId": "q-warranty-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8981249999999932
+        },
+        {
+          "questionId": "q-priority-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "priority",
+            "repair",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 1.1039579999999916
+        },
+        {
+          "questionId": "q-priority-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "handover",
+            "stock",
+            "warranty",
+            "delivery",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8712500000000034
+        },
+        {
+          "questionId": "q-priority-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "priority",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8385829999999999
+        },
+        {
+          "questionId": "q-delivery-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "delivery",
+            "cancel",
+            "returns"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8312920000000048
+        },
+        {
+          "questionId": "q-delivery-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "loan",
+            "returns",
+            "repair"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7894170000000003
+        },
+        {
+          "questionId": "q-delivery-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.756416999999999
+        },
+        {
+          "questionId": "q-cancel-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "stock",
+            "delivery",
+            "warranty"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 1.0331250000000125
+        },
+        {
+          "questionId": "q-cancel-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "stock",
+            "onboarding",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8848750000000081
+        },
+        {
+          "questionId": "q-cancel-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7789580000000029
+        },
+        {
+          "questionId": "q-repair-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "repair",
+            "privacy",
+            "priority",
+            "handover",
+            "returns"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7615839999999992
+        },
+        {
+          "questionId": "q-repair-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "repair",
+            "training"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7315419999999904
+        },
+        {
+          "questionId": "q-repair-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7987499999999983
+        },
+        {
+          "questionId": "q-loan-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8292920000000095
+        },
+        {
+          "questionId": "q-loan-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 0.3333333333333333,
+          "ndcg": 0.5,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "repair",
+            "warranty",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7007080000000059
+        },
+        {
+          "questionId": "q-loan-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6816669999999903
+        },
+        {
+          "questionId": "q-training-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6793749999999932
+        },
+        {
+          "questionId": "q-training-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "training"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7556249999999949
+        },
+        {
+          "questionId": "q-training-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7283749999999998
+        },
+        {
+          "questionId": "q-maintenance-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7866250000000008
+        },
+        {
+          "questionId": "q-maintenance-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6783330000000092
+        },
+        {
+          "questionId": "q-maintenance-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.645583000000002
+        },
+        {
+          "questionId": "q-invoice-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "invoice",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.682666999999995
+        },
+        {
+          "questionId": "q-invoice-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "invoice",
+            "delivery",
+            "returns"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7019169999999946
+        },
+        {
+          "questionId": "q-invoice-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6746249999999918
+        },
+        {
+          "questionId": "q-privacy-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "privacy",
+            "priority",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8161249999999995
+        },
+        {
+          "questionId": "q-privacy-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "priority",
+            "cancel",
+            "delivery",
+            "escalation",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7201249999999959
+        },
+        {
+          "questionId": "q-privacy-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6900839999999988
+        },
+        {
+          "questionId": "q-onboarding-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6757910000000038
+        },
+        {
+          "questionId": "q-onboarding-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "priority",
+            "handover",
+            "privacy",
+            "cancel"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7023750000000035
+        },
+        {
+          "questionId": "q-onboarding-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8909170000000017
+        },
+        {
+          "questionId": "q-stock-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "stock",
+            "delivery",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8677080000000075
+        },
+        {
+          "questionId": "q-stock-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "delivery",
+            "escalation",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7290840000000003
+        },
+        {
+          "questionId": "q-stock-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6714580000000012
+        },
+        {
+          "questionId": "q-handover-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "returns",
+            "warranty",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.702541999999994
+        },
+        {
+          "questionId": "q-handover-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6667079999999999
+        },
+        {
+          "questionId": "q-handover-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7002499999999969
+        },
+        {
+          "questionId": "q-remote-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "remote",
+            "injection-test",
+            "repair"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8037089999999978
+        },
+        {
+          "questionId": "q-remote-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "remote",
+            "escalation",
+            "onboarding"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6897500000000036
+        },
+        {
+          "questionId": "q-remote-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6966660000000076
+        },
+        {
+          "questionId": "q-escalation-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "escalation",
+            "training",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7312499999999886
+        },
+        {
+          "questionId": "q-escalation-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "escalation",
+            "cancel",
+            "delivery",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8131249999999994
+        },
+        {
+          "questionId": "q-escalation-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7437080000000122
+        },
+        {
+          "questionId": "q-edge-1",
+          "category": "temporal",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "returns",
+            "delivery",
+            "privacy",
+            "priority",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8644999999999925
+        },
+        {
+          "questionId": "q-edge-2",
+          "category": "temporal",
+          "split": "test",
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "returns",
+            "stock"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.804916999999989
+        },
+        {
+          "questionId": "q-edge-3",
+          "category": "multi-hop",
+          "split": "dev",
+          "recall": 0.6666666666666666,
+          "mrr": 1,
+          "ndcg": 0.7653606369886217,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "loan",
+            "warranty",
+            "remote"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8213329999999956
+        },
+        {
+          "questionId": "q-edge-4",
+          "category": "multi-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "returns",
+            "delivery"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8102080000000029
+        },
+        {
+          "questionId": "q-edge-5",
+          "category": "multi-hop",
+          "split": "dev",
+          "recall": 0.5,
+          "mrr": 1,
+          "ndcg": 0.6131471927654584,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "priority",
+            "handover",
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7979589999999916
+        },
+        {
+          "questionId": "q-edge-6",
+          "category": "unanswerable",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "warranty",
+            "maintenance",
+            "cancel",
+            "delivery",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7583750000000009
+        },
+        {
+          "questionId": "q-edge-7",
+          "category": "unanswerable",
+          "split": "dev",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "repair",
+            "priority"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.939582999999999
+        },
+        {
+          "questionId": "q-edge-8",
+          "category": "unanswerable",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.758749999999992
+        },
+        {
+          "questionId": "q-edge-9",
+          "category": "access-control",
+          "split": "dev",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "cancel"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.845832999999999
+        },
+        {
+          "questionId": "q-edge-10",
+          "category": "access-control",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8703750000000241
+        },
+        {
+          "questionId": "q-edge-11",
+          "category": "adversarial",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "injection-test",
+            "remote",
+            "repair",
+            "maintenance",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8313750000000084
+        },
+        {
+          "questionId": "q-edge-12",
+          "category": "adversarial",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "warranty",
+            "delivery",
+            "returns",
+            "priority"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7788330000000201
+        }
+      ],
+      "limitations": [
+        "Synthetic questions are lexically close to authored policies. This is a regression fixture, not a production-quality claim.",
+        "Runs use in-memory BM25, not D1 FTS5 or hosted vector search; cloud retrieval must be measured separately.",
+        "No human review, semantic faithfulness, generated-answer correctness, or model TTFT is claimed.",
+        "Policy families are split between dev and test; edge scenarios intentionally revisit known policies."
+      ]
+    },
+    {
+      "id": "lexical-sections-450",
+      "createdAt": "2026-10-02T09:58:53.755Z",
+      "corpusVersion": "aster-2026.09-v1",
+      "datasetHash": "0e086c9cf284d9108c1fffada3c48aedeb09d724fe96eea6556b03c5e3a5f069",
+      "kind": "offline-retrieval",
+      "strategy": "sections",
+      "chunkSize": 450,
+      "questionCount": 60,
+      "metrics": {
+        "recallAt5": 0.5956790123456791,
+        "mrr": 0.5802469135802469,
+        "ndcgAt5": 0.5766734692017962,
+        "accessLeaks": 0,
+        "p95Ms": 0.8919170000000065
+      },
+      "results": [
+        {
+          "questionId": "q-returns-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "returns",
+            "privacy",
+            "delivery",
+            "handover",
+            "priority"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8082080000000076
+        },
+        {
+          "questionId": "q-returns-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8285410000000013
+        },
+        {
+          "questionId": "q-returns-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7862079999999878
+        },
+        {
+          "questionId": "q-warranty-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "warranty",
+            "maintenance",
+            "injection-test"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7692499999999995
+        },
+        {
+          "questionId": "q-warranty-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "warranty",
+            "stock",
+            "delivery"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7714170000000138
+        },
+        {
+          "questionId": "q-warranty-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.9742499999999836
+        },
+        {
+          "questionId": "q-priority-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "priority",
+            "repair",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.9149169999999742
+        },
+        {
+          "questionId": "q-priority-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "handover",
+            "stock",
+            "warranty",
+            "delivery",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7389170000000149
+        },
+        {
+          "questionId": "q-priority-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "priority",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6914999999999907
+        },
+        {
+          "questionId": "q-delivery-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "delivery",
+            "cancel",
+            "returns"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6885840000000201
+        },
+        {
+          "questionId": "q-delivery-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "loan",
+            "returns",
+            "repair"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7522500000000036
+        },
+        {
+          "questionId": "q-delivery-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.921291999999994
+        },
+        {
+          "questionId": "q-cancel-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "stock",
+            "delivery",
+            "warranty"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8919170000000065
+        },
+        {
+          "questionId": "q-cancel-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "stock",
+            "onboarding",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7884999999999991
+        },
+        {
+          "questionId": "q-cancel-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7662499999999852
+        },
+        {
+          "questionId": "q-repair-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "repair",
+            "privacy",
+            "priority",
+            "handover",
+            "returns"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7139999999999986
+        },
+        {
+          "questionId": "q-repair-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "repair",
+            "training"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7254159999999956
+        },
+        {
+          "questionId": "q-repair-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8208750000000009
+        },
+        {
+          "questionId": "q-loan-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6842499999999916
+        },
+        {
+          "questionId": "q-loan-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 0.3333333333333333,
+          "ndcg": 0.5,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "repair",
+            "warranty",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7134169999999926
+        },
+        {
+          "questionId": "q-loan-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7203340000000082
+        },
+        {
+          "questionId": "q-training-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6790409999999838
+        },
+        {
+          "questionId": "q-training-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "training"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7151670000000081
+        },
+        {
+          "questionId": "q-training-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7087909999999908
+        },
+        {
+          "questionId": "q-maintenance-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7732910000000004
+        },
+        {
+          "questionId": "q-maintenance-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7336249999999893
+        },
+        {
+          "questionId": "q-maintenance-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6773749999999836
+        },
+        {
+          "questionId": "q-invoice-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "invoice",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7232920000000149
+        },
+        {
+          "questionId": "q-invoice-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "invoice",
+            "delivery",
+            "returns"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7439580000000205
+        },
+        {
+          "questionId": "q-invoice-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6605409999999949
+        },
+        {
+          "questionId": "q-privacy-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "privacy",
+            "priority",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7776670000000081
+        },
+        {
+          "questionId": "q-privacy-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "priority",
+            "cancel",
+            "delivery",
+            "escalation",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7739170000000115
+        },
+        {
+          "questionId": "q-privacy-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.681666000000007
+        },
+        {
+          "questionId": "q-onboarding-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7020829999999876
+        },
+        {
+          "questionId": "q-onboarding-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "priority",
+            "handover",
+            "privacy",
+            "cancel"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.681999999999988
+        },
+        {
+          "questionId": "q-onboarding-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6860410000000172
+        },
+        {
+          "questionId": "q-stock-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "stock",
+            "delivery",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8332920000000001
+        },
+        {
+          "questionId": "q-stock-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "delivery",
+            "escalation",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6889159999999777
+        },
+        {
+          "questionId": "q-stock-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6540830000000142
+        },
+        {
+          "questionId": "q-handover-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "returns",
+            "warranty",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.8095419999999933
+        },
+        {
+          "questionId": "q-handover-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6534169999999904
+        },
+        {
+          "questionId": "q-handover-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.625124999999997
+        },
+        {
+          "questionId": "q-remote-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "remote",
+            "injection-test",
+            "repair"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7501660000000072
+        },
+        {
+          "questionId": "q-remote-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "remote",
+            "escalation",
+            "onboarding"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6668750000000045
+        },
+        {
+          "questionId": "q-remote-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.620584000000008
+        },
+        {
+          "questionId": "q-escalation-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "escalation",
+            "training",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6117910000000109
+        },
+        {
+          "questionId": "q-escalation-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "escalation",
+            "cancel",
+            "delivery",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6189580000000205
+        },
+        {
+          "questionId": "q-escalation-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6183749999999861
+        },
+        {
+          "questionId": "q-edge-1",
+          "category": "temporal",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "returns",
+            "delivery",
+            "privacy",
+            "priority",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7438339999999926
+        },
+        {
+          "questionId": "q-edge-2",
+          "category": "temporal",
+          "split": "test",
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "returns",
+            "stock"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6494579999999814
+        },
+        {
+          "questionId": "q-edge-3",
+          "category": "multi-hop",
+          "split": "dev",
+          "recall": 0.6666666666666666,
+          "mrr": 1,
+          "ndcg": 0.7653606369886217,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "loan",
+            "warranty",
+            "remote"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6922500000000014
+        },
+        {
+          "questionId": "q-edge-4",
+          "category": "multi-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "returns",
+            "delivery"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6661670000000015
+        },
+        {
+          "questionId": "q-edge-5",
+          "category": "multi-hop",
+          "split": "dev",
+          "recall": 0.5,
+          "mrr": 1,
+          "ndcg": 0.6131471927654584,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "priority",
+            "handover",
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6255000000000166
+        },
+        {
+          "questionId": "q-edge-6",
+          "category": "unanswerable",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "warranty",
+            "maintenance",
+            "cancel",
+            "delivery",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.617874999999998
+        },
+        {
+          "questionId": "q-edge-7",
+          "category": "unanswerable",
+          "split": "dev",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "repair",
+            "priority"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.727958000000001
+        },
+        {
+          "questionId": "q-edge-8",
+          "category": "unanswerable",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6335420000000056
+        },
+        {
+          "questionId": "q-edge-9",
+          "category": "access-control",
+          "split": "dev",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "cancel"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.620332999999988
+        },
+        {
+          "questionId": "q-edge-10",
+          "category": "access-control",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6113330000000019
+        },
+        {
+          "questionId": "q-edge-11",
+          "category": "adversarial",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "injection-test",
+            "remote",
+            "repair",
+            "maintenance",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6160419999999931
+        },
+        {
+          "questionId": "q-edge-12",
+          "category": "adversarial",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "warranty",
+            "delivery",
+            "returns",
+            "priority"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6636249999999961
+        }
+      ],
+      "limitations": [
+        "Synthetic questions are lexically close to authored policies. This is a regression fixture, not a production-quality claim.",
+        "Runs use in-memory BM25, not D1 FTS5 or hosted vector search; cloud retrieval must be measured separately.",
+        "No human review, semantic faithfulness, generated-answer correctness, or model TTFT is claimed.",
+        "Policy families are split between dev and test; edge scenarios intentionally revisit known policies."
+      ]
+    },
+    {
+      "id": "lexical-fixed-450",
+      "createdAt": "2026-10-02T09:58:53.791Z",
+      "corpusVersion": "aster-2026.09-v1",
+      "datasetHash": "0e086c9cf284d9108c1fffada3c48aedeb09d724fe96eea6556b03c5e3a5f069",
+      "kind": "offline-retrieval",
+      "strategy": "fixed",
+      "chunkSize": 450,
+      "questionCount": 60,
+      "metrics": {
+        "recallAt5": 0.6759259259259259,
+        "mrr": 0.6132716049382715,
+        "ndcgAt5": 0.6233334083093608,
+        "accessLeaks": 0,
+        "p95Ms": 0.691915999999992
+      },
+      "results": [
+        {
+          "questionId": "q-returns-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "returns",
+            "privacy",
+            "delivery",
+            "cancel",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5987089999999853
+        },
+        {
+          "questionId": "q-returns-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6217919999999992
+        },
+        {
+          "questionId": "q-returns-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5457090000000164
+        },
+        {
+          "questionId": "q-warranty-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "warranty",
+            "injection-test",
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5776249999999834
+        },
+        {
+          "questionId": "q-warranty-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "warranty",
+            "injection-test",
+            "stock",
+            "delivery",
+            "returns"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5666669999999954
+        },
+        {
+          "questionId": "q-warranty-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5522080000000074
+        },
+        {
+          "questionId": "q-priority-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "priority",
+            "repair",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7010000000000218
+        },
+        {
+          "questionId": "q-priority-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 0.2,
+          "ndcg": 0.38685280723454163,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "handover",
+            "stock",
+            "warranty",
+            "delivery",
+            "priority"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5631669999999929
+        },
+        {
+          "questionId": "q-priority-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "priority",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5697499999999991
+        },
+        {
+          "questionId": "q-delivery-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "delivery",
+            "cancel",
+            "returns",
+            "training",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5680419999999913
+        },
+        {
+          "questionId": "q-delivery-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 0.25,
+          "ndcg": 0.43067655807339306,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "loan",
+            "returns",
+            "repair",
+            "delivery"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5564999999999998
+        },
+        {
+          "questionId": "q-delivery-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5582499999999868
+        },
+        {
+          "questionId": "q-cancel-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "stock",
+            "delivery",
+            "warranty"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.669792000000001
+        },
+        {
+          "questionId": "q-cancel-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "stock",
+            "onboarding",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5535419999999931
+        },
+        {
+          "questionId": "q-cancel-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5619590000000017
+        },
+        {
+          "questionId": "q-repair-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "repair",
+            "privacy",
+            "priority",
+            "handover",
+            "returns"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5595830000000035
+        },
+        {
+          "questionId": "q-repair-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "repair",
+            "training"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5524580000000014
+        },
+        {
+          "questionId": "q-repair-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5487499999999841
+        },
+        {
+          "questionId": "q-loan-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5748749999999916
+        },
+        {
+          "questionId": "q-loan-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 0.3333333333333333,
+          "ndcg": 0.5,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "repair",
+            "warranty",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6082920000000058
+        },
+        {
+          "questionId": "q-loan-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5539579999999944
+        },
+        {
+          "questionId": "q-training-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5428339999999992
+        },
+        {
+          "questionId": "q-training-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "training"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.559125000000023
+        },
+        {
+          "questionId": "q-training-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5579169999999749
+        },
+        {
+          "questionId": "q-maintenance-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5612079999999935
+        },
+        {
+          "questionId": "q-maintenance-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5425409999999999
+        },
+        {
+          "questionId": "q-maintenance-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5817080000000203
+        },
+        {
+          "questionId": "q-invoice-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "invoice",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5603749999999934
+        },
+        {
+          "questionId": "q-invoice-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "invoice",
+            "delivery",
+            "returns",
+            "priority",
+            "onboarding"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.578125
+        },
+        {
+          "questionId": "q-invoice-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5438750000000141
+        },
+        {
+          "questionId": "q-privacy-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "privacy",
+            "priority",
+            "escalation",
+            "handover",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5575000000000045
+        },
+        {
+          "questionId": "q-privacy-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 0.5,
+          "ndcg": 0.6309297535714575,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "priority",
+            "privacy",
+            "escalation",
+            "handover",
+            "maintenance"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5665419999999983
+        },
+        {
+          "questionId": "q-privacy-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6390419999999892
+        },
+        {
+          "questionId": "q-onboarding-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.691915999999992
+        },
+        {
+          "questionId": "q-onboarding-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "priority",
+            "handover",
+            "privacy",
+            "returns"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5795419999999751
+        },
+        {
+          "questionId": "q-onboarding-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5519170000000031
+        },
+        {
+          "questionId": "q-stock-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "stock",
+            "loan",
+            "delivery"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5389169999999979
+        },
+        {
+          "questionId": "q-stock-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 0.3333333333333333,
+          "ndcg": 0.5,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "returns",
+            "stock",
+            "repair",
+            "escalation"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5552910000000111
+        },
+        {
+          "questionId": "q-stock-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5328329999999823
+        },
+        {
+          "questionId": "q-handover-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "returns",
+            "warranty",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.7799169999999833
+        },
+        {
+          "questionId": "q-handover-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "handover"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.584417000000002
+        },
+        {
+          "questionId": "q-handover-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5597920000000158
+        },
+        {
+          "questionId": "q-remote-1",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "remote",
+            "injection-test",
+            "repair",
+            "maintenance",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5498750000000143
+        },
+        {
+          "questionId": "q-remote-2",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "remote",
+            "escalation",
+            "onboarding"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5608749999999816
+        },
+        {
+          "questionId": "q-remote-3",
+          "category": "single-hop",
+          "split": "dev",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.545125000000013
+        },
+        {
+          "questionId": "q-escalation-1",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "escalation",
+            "training",
+            "handover",
+            "maintenance",
+            "delivery"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5381669999999872
+        },
+        {
+          "questionId": "q-escalation-2",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "escalation",
+            "returns",
+            "stock",
+            "repair",
+            "priority"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6997920000000022
+        },
+        {
+          "questionId": "q-escalation-3",
+          "category": "single-hop",
+          "split": "test",
+          "recall": 0,
+          "mrr": 0,
+          "ndcg": 0,
+          "shouldAbstain": false,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5841670000000079
+        },
+        {
+          "questionId": "q-edge-1",
+          "category": "temporal",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "returns",
+            "delivery",
+            "privacy",
+            "priority",
+            "cancel"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5791250000000048
+        },
+        {
+          "questionId": "q-edge-2",
+          "category": "temporal",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "returns",
+            "cancel",
+            "stock",
+            "onboarding",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5685840000000155
+        },
+        {
+          "questionId": "q-edge-3",
+          "category": "multi-hop",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 0.9674679834891693,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "loan",
+            "warranty",
+            "injection-test",
+            "repair",
+            "remote"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5618750000000148
+        },
+        {
+          "questionId": "q-edge-4",
+          "category": "multi-hop",
+          "split": "test",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "cancel",
+            "returns",
+            "delivery"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5520000000000209
+        },
+        {
+          "questionId": "q-edge-5",
+          "category": "multi-hop",
+          "split": "dev",
+          "recall": 0.5,
+          "mrr": 1,
+          "ndcg": 0.6131471927654584,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "onboarding",
+            "priority",
+            "handover",
+            "maintenance",
+            "privacy"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.6518329999999821
+        },
+        {
+          "questionId": "q-edge-6",
+          "category": "unanswerable",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "warranty",
+            "maintenance",
+            "returns",
+            "stock",
+            "repair"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.532999999999987
+        },
+        {
+          "questionId": "q-edge-7",
+          "category": "unanswerable",
+          "split": "dev",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "repair",
+            "priority"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5612500000000011
+        },
+        {
+          "questionId": "q-edge-8",
+          "category": "unanswerable",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5476249999999823
+        },
+        {
+          "questionId": "q-edge-9",
+          "category": "access-control",
+          "split": "dev",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "cancel"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5632090000000005
+        },
+        {
+          "questionId": "q-edge-10",
+          "category": "access-control",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.542459000000008
+        },
+        {
+          "questionId": "q-edge-11",
+          "category": "adversarial",
+          "split": "dev",
+          "recall": 1,
+          "mrr": 1,
+          "ndcg": 1,
+          "shouldAbstain": false,
+          "retrievedIds": [
+            "injection-test",
+            "remote",
+            "repair",
+            "maintenance",
+            "loan"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.5829160000000115
+        },
+        {
+          "questionId": "q-edge-12",
+          "category": "adversarial",
+          "split": "test",
+          "recall": null,
+          "mrr": null,
+          "ndcg": null,
+          "shouldAbstain": true,
+          "retrievedIds": [
+            "warranty",
+            "injection-test",
+            "delivery",
+            "returns",
+            "priority"
+          ],
+          "deniedLeakCount": 0,
+          "latencyMs": 0.648333000000008
+        }
+      ],
+      "limitations": [
+        "Synthetic questions are lexically close to authored policies. This is a regression fixture, not a production-quality claim.",
+        "Runs use in-memory BM25, not D1 FTS5 or hosted vector search; cloud retrieval must be measured separately.",
+        "No human review, semantic faithfulness, generated-answer correctness, or model TTFT is claimed.",
+        "Policy families are split between dev and test; edge scenarios intentionally revisit known policies."
+      ]
+    }
+  ]
+}
