@@ -1,6 +1,6 @@
 {
   "name": "ragna",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "description": "Kaynaklara dayalı yanıtlar, tekrarlanabilir değerlendirmeler ve dayanıklı bulut çıkarımı sunan RAG atölyesi.",
@@ -14,7 +14,7 @@
     "build": "tsc --noEmit && vite build && node scripts/build-pwa.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "npm run build && npm test && npm run evaluate",
+    "check": "npm run evaluate && npm run quality:gate && npm run build && npm test",
     "data:generate": "node --import tsx scripts/generate-data.ts",
     "db:local": "wrangler d1 migrations apply ragna --local",
     "evaluate": "node --import tsx scripts/evaluate.ts",
@@ -31,7 +31,14 @@
     "webui": "docker compose --env-file .dev.vars up -d",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "cache:warm": "node --import tsx scripts/warm-cache.ts"
+    "cache:warm": "node --import tsx scripts/warm-cache.ts",
+    "quality:gate": "node --import tsx scripts/quality-gate.ts",
+    "monitor": "node --import tsx scripts/monitor.ts",
+    "content:preview": "node --import tsx scripts/content.ts preview",
+    "content:apply": "node --import tsx scripts/content.ts apply",
+    "content:publish": "node --import tsx scripts/publish-content.ts",
+    "review:collect": "node --import tsx scripts/collect-review.ts",
+    "health:check": "node --import tsx scripts/check-health.ts"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.3.0",

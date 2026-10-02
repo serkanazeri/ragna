@@ -11,3 +11,7 @@ data/synthetic-candidates.jsonl
 __pycache__/
 .DS_Store
 *.log
+
+.ragna/
+reports/availability.json
+reports/quality-gate.md

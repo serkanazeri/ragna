@@ -2436,3 +2436,258 @@ td {
     scroll-snap-align: start;
   }
 }
+
+.operations-panel {
+  margin: 28px 0;
+  min-width: 0;
+}
+.operations-heading {
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.traffic-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  max-width: 100%;
+}
+.traffic-filter select {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #c8d5ec;
+  border-radius: 8px;
+  background: white;
+  color: #162d52;
+  font: inherit;
+  max-width: 100%;
+}
+.traffic-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0 24px 12px;
+}
+.traffic-summary span {
+  padding: 7px 10px;
+  background: #eff4ff;
+  border-radius: 8px;
+  font-size: 13px;
+}
+.traffic-summary strong {
+  margin-left: 6px;
+}
+.metrics-explanation {
+  margin: 0;
+  padding: 12px 24px 20px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #50627e;
+}
+.operations-panel .notice {
+  margin: 12px 24px;
+}
+.operations-panel .operational-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+.operations-panel small {
+  display: block;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #50627e;
+  line-height: 1.6;
+}
+.metrics-tables {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  padding: 24px;
+}
+.metrics-tables > div {
+  min-width: 0;
+}
+.metrics-tables h3,
+.provider-metrics h3 {
+  font-size: 16px;
+  margin: 0 0 12px;
+}
+.metrics-tables p,
+.provider-metrics p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #50627e;
+}
+.metrics-table-scroll {
+  overflow-x: auto;
+  max-width: 100%;
+}
+.metrics-table-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.metrics-table-scroll th,
+.metrics-table-scroll td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid #e3eaf5;
+  white-space: nowrap;
+}
+.metrics-table-scroll th {
+  font-size: 12px;
+  color: #50627e;
+}
+.provider-metrics {
+  padding: 0 24px 20px;
+}
+@media (max-width: 900px) {
+  .operations-panel .operational-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .metrics-tables {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .operations-panel .operational-grid {
+    grid-template-columns: 1fr;
+  }
+  .metrics-tables,
+  .provider-metrics {
+    padding: 16px;
+  }
+  .traffic-summary {
+    padding: 0 16px;
+  }
+  .metrics-explanation {
+    padding: 12px 16px;
+  }
+}
+
+.health-panel {
+  margin: 24px 0;
+  padding: 24px;
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.health-panel h2 {
+  font-size: 18px;
+}
+.health-panel p,
+.health-panel small {
+  line-height: 1.7;
+}
+.health-panel a {
+  color: #245eea;
+}
+.lab-panel {
+  padding: 24px;
+  margin: 24px 0;
+  min-width: 0;
+}
+.lab-panel h2 {
+  font-size: 22px;
+}
+.lab-panel h3 {
+  font-size: 17px;
+  margin-top: 24px;
+}
+.lab-panel p {
+  line-height: 1.8;
+}
+.lab-panel small {
+  font-size: 13px;
+  color: #50627e;
+  line-height: 1.7;
+}
+.lab-panel details {
+  padding: 14px 0;
+  border-bottom: 1px solid #e3eaf5;
+}
+.lab-panel summary {
+  cursor: pointer;
+  min-height: 30px;
+}
+.lab-panel pre {
+  overflow: auto;
+  max-height: 350px;
+  font-size: 13px;
+  line-height: 1.6;
+  padding: 16px;
+  background: #f1f5fc;
+  border-radius: 8px;
+}
+.lab-panel blockquote {
+  margin: 16px 0;
+  padding-left: 16px;
+  border-left: 3px solid #245eea;
+}
+.lab-label,
+.review-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 16px 0;
+  min-width: 0;
+}
+.lab-label select,
+.review-form select,
+.review-form input,
+.lab-label textarea,
+.review-form textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 44px;
+  border: 1px solid #bfcee7;
+  border-radius: 8px;
+  padding: 12px;
+  font: inherit;
+  background: white;
+  color: #183153;
+  box-sizing: border-box;
+}
+.lab-label select {
+  text-overflow: ellipsis;
+}
+.lab-label textarea,
+.review-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+.lab-label .content-json {
+  min-height: 380px;
+  font-family: monospace;
+  font-size: 13px;
+}
+.lab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 24px;
+}
+.review-summary {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.review-summary span {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #eaf0ff;
+  font-size: 14px;
+}
+@media (max-width: 760px) {
+  .lab-grid {
+    grid-template-columns: 1fr;
+  }
+  .lab-panel,
+  .health-panel {
+    padding: 16px;
+  }
+}

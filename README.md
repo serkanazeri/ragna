@@ -4,7 +4,7 @@
 
 [Serkan Azeri](https://www.serkanazeri.com/) tarafından geliştirilen, **Forward Deployed AI Engineering** yaklaşımını görünür kılan bir RAG referans projesi. Bir sorunun hangi kaynaklarla yanıtlandığını, retrieval tercihlerinin sonuçlarını ve sistemin gerçek çalışma davranışını aynı uygulamada inceleyin.
 
-**[Canlı uygulama](https://ragna.serkanazeri.workers.dev)** · [Mimari](docs/architecture.md) · [Değerlendirme protokolü](docs/evaluation.md) · [Dağıtım](docs/deployment.md) · [Open WebUI](integrations/open-webui/README.md)
+**[Canlı uygulama](https://ragna.serkanazeri.workers.dev)** · [Mimari](docs/architecture.md) · [Değerlendirme protokolü](docs/evaluation.md) · [Dashboard metrikleri](docs/metrics.md) · [Dağıtım](docs/deployment.md) · [Open WebUI](integrations/open-webui/README.md)
 
 ![Türkçe RAGNA arayüzü ve ölçüm paneli](docs/dashboard.jpg)
 
@@ -114,7 +114,7 @@ React build'i ve API, **Workers Static Assets** ile aynı dağıtımda sunulur. 
 3. SHA-256 anahtarı soru, corpus hash, prompt/cache politikası, model route ve sağlayıcı yapılandırmasını içerir. Ham soru cache tablosunda tutulmaz.
 4. D1 kaydı 24 saat geçerlidir. Cache hit sırasında kaynak metni, başlık, sürüm, tarih ve erişim kapsamı yeniden doğrulanır.
 5. Geçerli yanıt **Cache yanıtı** etiketi, üretim zamanı ve asıl sağlayıcısıyla gösterilir. Bu istekte token üretimi ve model rezervasyonu sıfırdır.
-6. Cache en fazla 1.000 kayıt tutar; yazma sırasında süresi dolan/eski kayıtlar temizlenir. Süresi dolmuş kayıtlar hiçbir zaman sunulmaz. Trafik/yazma yoksa fiziksel silme bir sonraki yazmaya kadar gecikebilir.
+6. Cache en fazla 1.000 kayıt tutar; yazma sırasında süresi dolan/eski kayıtlar temizlenir. Süresi dolmuş kayıtlar hiçbir zaman sunulmaz. Fiziksel temizlik 6 saatte bir sağlık kontrolünde de yapılır; scheduler/veritabanı hatasında sonraki başarılı temizliğe kadar gecikebilir.
 7. İç erişim kapsamı, kayıtlı referans örnekleri, abstention ve kaynak alıntısı fallback'leri cache'e alınmaz. Cache hatası normal retrieval yolunu engellemez.
 
 Cache, **model tarafından üretilmiş yanıtı ve kaynaklarını** saklar; hassas bilgi girmeyin. SHA-256 anonimleştirme garantisi değildir. Genel telemetry ham soruyu veya yanıtı saklamaz. Sunucu cache'i çevrimdışı cihazda yanıt üretmez.
@@ -161,7 +161,7 @@ Skorlar ilk beş chunk'ın temsil ettiği benzersiz belgeler üzerinden hesaplan
 | Operasyon           | p50/p95, fallback, cache hit, sağlayıcı, bildirilen token/maliyet, geri bildirim | Tek oturumdan uptime SLO veya eksik maliyetin sıfır olduğu |
 | Canlı değerlendirme | Referans terim kapsaması, atıf recall, abstention uyumu                          | İnsan değerlendirmesine dayalı doğruluk                    |
 
-UI; **canlı model**, **cache yanıtı**, **kayıtlı örnek**, **kaynak alıntıları** ve **yanıt verilmedi** durumlarını ayırır. Cache hit oranı son 24 saatteki en fazla 1.000 kayıtta, `guided` türü hariç istekler üzerinden hesaplanır; bu bir offline benchmark sonucu değildir. OpenAI uyumlu SSE, tam yanıt doğrulandıktan sonra gönderilir. Gerçek token streaming ve TTFT uygulanmadı.
+UI; **canlı model**, **cache yanıtı**, **kayıtlı örnek**, **kaynak alıntıları** ve **yanıt verilmedi** durumlarını ayırır. Dashboard ziyaretçi, operatör, değerlendirme, smoke test ve cache hazırlığı trafiğini ayırır; eski kayıtlar sınıflandırılmamış olarak kalır. Yanıt türüne göre p50/p95, retrieval/generation süreleri ve sağlayıcı denemeleri ayrı gösterilir. Cache hit oranı seçili trafiğin son 24 saatteki en yeni 1.000 kaydında kayıtlı örnek/guided dışı isteklerden hesaplanır. Paydalar ve kesilen örneklem görünürdür; bunlar offline benchmark sonuçları değildir. [Metrik sözleşmesi](docs/metrics.md). OpenAI uyumlu SSE, tam yanıt doğrulandıktan sonra gönderilir. Gerçek token streaming ve TTFT uygulanmadı.
 
 ```bash
 RAGNA_URL=https://your-worker.workers.dev npm run evaluate:retrieval
@@ -221,9 +221,18 @@ tests/                   Retrieval, cache, routing ve bütçe testleri
 docs/                    Mimari, değerlendirme ve operasyon rehberleri
 ```
 
+## Kalite ve operasyon iş akışları
+
+- **Yanıt inceleme:** 40 soruluk Türkçe/İngilizce set, gerçek API yanıtları, referans taslakları ve kaynaklar aynı ekranda. İnsan puanları tarayıcıda taslak olarak tutulur. Set henüz insan onaylı değildir.
+- **CI kalite kapısı:** Aynı dataset üzerinde global ve test split Recall@5/nDCG@5 için en fazla 2 yüzde puanı düşüş; erişim sızıntısı için sıfır tolerans. Soru bazında fark raporu ve sabit baseline.
+- **Canlı sağlık:** Cloudflare'da 6 saatte bir gerçek model çağrısı; GitHub Actions'ta 2 saatte bir arayüz/API/PWA kontrolü. Dashboard son kontrolü, yaşını ve sonuç sayılarını gösterir.
+- **Belge iş akışı:** Sürüm ve erişim denetimi, chunk önizlemesi, etkilenen sorular, migration, kalite kapısı ve index doğrulamasını birleştiren yetkili CLI akışı.
+
+Komutlar, paydalar, hata sonrası toparlama ve ölçüm sınırları: [Kalite ve operasyon rehberi](docs/quality-and-operations.md).
+
 ## Sınırlar ve sonraki deneyler
 
-Bu sürüm sınırları belirli bir portföy demosudur. Gerçek müşteri ortamı; kimlik/tenant politikası, incelenmiş müşteri verisi, asenkron ingestion, veri silme/retention, uptime izlemesi, anlamsal kalite değerlendirmesi ve temsilî yük testleri gerektirir. Cache hit, iyi cevap garantisi değildir; yanlış bir yanıt da atıf biçimi geçerliyse cache'e girebilir.
+Bu sürüm sınırları belirli bir portföy demosudur. Gerçek müşteri ortamı; kimlik/tenant politikası, incelenmiş müşteri verisi, asenkron ingestion, veri silme/retention, SLO ve alarm eskalasyonu, anlamsal kalite değerlendirmesi ve temsilî yük testleri gerektirir. Cache hit, iyi cevap garantisi değildir; yanlış bir yanıt da atıf biçimi geçerliyse cache'e girebilir.
 
 Sonraki kararlar ölçümlere dayanmalıdır: Türkçe/İngilizce embedding karşılaştırması, uzun politikalarla chunk ablation, kaynak çeşitliliği/reranking ve insan yanıt incelemesi. Henüz uygulanmamış optimizasyonlar uygulanmış gibi sunulmaz.
 

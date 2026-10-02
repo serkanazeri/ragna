@@ -52,6 +52,10 @@ Bulut çıkarımında Workers AI için 12 saniye, OpenRouter için 20 saniye zam
 
 ## v0.2: yanıt cache'i ve PWA
 
-Model rezervasyonundan önce D1 exact-match cache'i kontrol edilir. Anahtar; NFC/boşluk normalizasyonu yapılmış soru, corpus hash, public kapsam, `CACHE_POLICY`, route/model ve sağlayıcı yapılandırmasını kapsar. Her hit sırasında atıf metni ve kaynak sürümleri güncel public chunk'larla tekrar eşleştirilir. İç kapsam, kayıtlı örnekler, abstention ve evidence fallback saklanmaz. Geçerlilik 24 saat, kapasite 1.000 kayıttır. Süresi dolmuş kayıtlar sunulmaz; fiziksel temizlik bir sonraki cache yazmasında yapılır. Cache isteği ayrı 60/dakika/IP sınırı kullanır; model rezervasyonuna yazılmaz. Yetkili değerlendirmeler cache okumasını atlayabilir; ziyaretçinin `refreshCache` parametresi dikkate alınmaz.
+Model rezervasyonundan önce D1 exact-match cache'i kontrol edilir. Anahtar; NFC/boşluk normalizasyonu yapılmış soru, corpus hash, public kapsam, `CACHE_POLICY`, route/model ve sağlayıcı yapılandırmasını kapsar. Her hit sırasında atıf metni ve kaynak sürümleri güncel public chunk'larla tekrar eşleştirilir. İç kapsam, kayıtlı örnekler, abstention ve evidence fallback saklanmaz. Geçerlilik 24 saat, kapasite 1.000 kayıttır. Süresi dolmuş kayıtlar sunulmaz; fiziksel temizlik cache yazımında ve 6 saatte bir sağlık kontrolünde yapılır. Cache isteği ayrı 60/dakika/IP sınırı kullanır; model rezervasyonuna yazılmaz. Yetkili değerlendirmeler cache okumasını atlayabilir; ziyaretçinin `refreshCache` parametresi dikkate alınmaz.
 
 PWA sadece aynı origin'deki build dosyalarını, ikonları ve fontları precache eder. API/sohbet yanıtları tarayıcı cache'ine girmez. Sunucu cache'i ile service worker cache'i ayrı amaçlara sahiptir. Çevrimdışı arayüz, sunucu verisine veya yeni model üretimine erişim anlamına gelmez.
+
+## Kalite, inceleme ve sağlık
+
+Offline kalite kapısı, 40 soruluk yanıt inceleme seti, periyodik gerçek model kontrolleri ve yetkili belge yayımlama akışı [kalite ve operasyon rehberinde](quality-and-operations.md) açıklanır. Model kontrolü smoke trafiğine yazılır. İnceleme puanları tarayıcıda taslaktır; genel metriklere veya yayımlanmış kalite skoruna eklenmez.

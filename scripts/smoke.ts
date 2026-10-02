@@ -1,4 +1,8 @@
 import assert from 'node:assert/strict';
+import { loadSecrets } from './env';
+await loadSecrets();
+if (!process.env.RAGNA_API_KEY)
+  throw new Error('Smoke trafiğini sınıflandırmak için RAGNA_API_KEY gerekli.');
 const base = process.env.RAGNA_URL || 'http://127.0.0.1:8787';
 async function get(path: string) {
   const r = await fetch(base + path);
@@ -16,8 +20,12 @@ assert.equal((await fetch(base + '/api/admin/index', { method: 'POST', body: '{}
 assert.equal((await fetch(base + '/v1/models')).status, 401);
 const r = await fetch(base + '/api/chat', {
   method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ question: 'İade süresi kaç gün?', guided: true, audience: 'operations' }),
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${process.env.RAGNA_API_KEY}`,
+    'X-Ragna-Traffic': 'smoke',
+  },
+  body: JSON.stringify({ question: 'İade süresi kaç gün?', guided: true, audience: 'public' }),
 });
 assert.equal(r.status, 200);
 const answer = (await r.json()) as any;
@@ -33,6 +41,10 @@ assert.equal(fb.status, 200);
 const m = await get('/api/metrics');
 assert(m.total >= 1);
 assert(m.feedbackCount >= 1);
+const smoke = await get('/api/metrics?traffic=smoke');
+assert(smoke.requests.some((r: any) => r.id === answer.requestId));
+const visitors = await get('/api/metrics?traffic=visitor');
+assert(!visitors.requests.some((r: any) => r.id === answer.requestId));
 console.log(
   `Smoke checks passed: ${base}. Sources, access control, guided answers, feedback, metrics.`,
 );

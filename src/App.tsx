@@ -1,3 +1,9 @@
+import HealthPanel from './HealthPanel';
+import ReviewWorkbench from './ReviewWorkbench';
+import ContentWorkbench from './ContentWorkbench';
+import qualityReport from '../reports/quality-gate.json';
+import OperationalMetrics from './OperationalMetrics';
+import { trafficLabels, type Metrics, type TrafficScope } from '../core/metrics';
 import { useEffect, useRef, useState } from 'react';
 import {
   Activity,
@@ -32,7 +38,7 @@ import {
 import cloudEvaluation from '../reports/cloud-retrieval.json';
 import type { ChatResponse, EvalRun, SourceDocument, Span } from '../core/types';
 
-type Page = 'overview' | 'ask' | 'experiments' | 'knowledge' | 'decisions';
+type Page = 'overview' | 'ask' | 'experiments' | 'knowledge' | 'decisions' | 'reviews' | 'content';
 type Status = {
   environment: string;
   corpusVersion: string;
@@ -54,30 +60,7 @@ type Trace = {
   retrievalMode: string;
   fallbackReason: string | null;
   spans: Span[];
-};
-type Metrics = {
-  budget: {
-    reservedUsd: number;
-    dailyLimitUsd: number;
-    requests: number;
-    dailyRequestLimit: number;
-  };
-  total: number;
-  live: number;
-  cached: number;
-  cacheHitRate: number | null;
-  guided: number;
-  evidence: number;
-  abstained: number;
-  p50Ms: number | null;
-  p95Ms: number | null;
-  fallbackRate: number | null;
-  reportedCostUsd: number | null;
-  costCoverage: number | null;
-  positiveFeedback: number | null;
-  feedbackCount: number;
-  requests: Trace[];
-  truncated: boolean;
+  trafficSource: string;
 };
 type DocumentSummary = Omit<SourceDocument, 'sections'> & { sections: number; chunkCount: number };
 type Example = { id: string; question: string; category: string };
@@ -194,6 +177,7 @@ export default function App() {
   const [menu, setMenu] = useState(false);
   const [status, setStatus] = useState<Status | null>(null);
   const [metrics, setMetrics] = useState<Metrics | null>(null);
+  const [traffic, setTraffic] = useState<TrafficScope>('visitor');
   const [runs, setRuns] = useState<EvalRun[]>([]);
   const [documents, setDocuments] = useState<DocumentSummary[]>([]);
   const [examples, setExamples] = useState<Example[]>([]);
@@ -204,18 +188,34 @@ export default function App() {
   const refresh = () =>
     Promise.all([
       api<Status>('/api/status').then(setStatus),
-      api<Metrics>('/api/metrics').then(setMetrics),
+      api<Metrics>(`/api/metrics?traffic=${traffic}`).then(setMetrics),
     ]).catch((e) => setLoadError(e.message));
   useEffect(() => {
     Promise.all([
-      refresh(),
+      api<Status>('/api/status').then(setStatus),
       api<{ runs: EvalRun[] }>('/api/evaluations').then((r) => setRuns(r.runs)),
       api<{ documents: DocumentSummary[] }>('/api/corpus').then((r) => setDocuments(r.documents)),
       api<Example[]>('/api/examples').then(setExamples),
     ]).catch((e) => setLoadError(e.message));
-    const timer = setInterval(refresh, 30000);
-    return () => clearInterval(timer);
   }, []);
+  useEffect(() => {
+    let active = true;
+    setMetrics(null);
+    const update = () =>
+      api<Metrics>(`/api/metrics?traffic=${traffic}`)
+        .then((m) => {
+          if (active) setMetrics(m);
+        })
+        .catch((e) => {
+          if (active) setLoadError(e.message);
+        });
+    void update();
+    const timer = setInterval(update, 30000);
+    return () => {
+      active = false;
+      clearInterval(timer);
+    };
+  }, [traffic]);
   useEffect(() => {
     const fn = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -241,6 +241,8 @@ export default function App() {
     ['ask', "Ragna'ya sor", <MessageSquare size={18} />],
     ['experiments', 'Değerlendirmeler', <FlaskConical size={18} />],
     ['knowledge', 'Bilgi tabanı', <Database size={18} />],
+    ['reviews', 'Yanıt inceleme', <Check size={18} />],
+    ['content', 'Belge iş akışı', <FileText size={18} />],
     ['decisions', 'Mühendislik notları', <GitBranch size={18} />],
   ];
   const cloud = cloudEvaluation.runs.find((r) => r.id === 'cloud-hybrid')!;
@@ -426,7 +428,7 @@ export default function App() {
                   icon={<FlaskConical size={16} />}
                 />
               </div>
-              <div className="overview-grid">
+              <div className="retrieval-summary">
                 <section className="panel">
                   <div className="panel-heading">
                     <div>
@@ -465,76 +467,9 @@ export default function App() {
                     ölçülür.{' '}
                   </div>
                 </section>
-                <section className="panel">
-                  <div className="panel-heading">
-                    <div>
-                      <h2> Canlı operasyon </h2>
-                      <p> Son 24 saat · gerçek istekler </p>
-                    </div>
-                    <Activity size={18} />
-                  </div>
-                  <div className="operational-grid">
-                    <div>
-                      <span> İstekler </span>
-                      <strong>{metrics?.total ?? '—'}</strong>
-                    </div>
-                    <div>
-                      <span> Yanıt süresi p95 </span>
-                      <strong>{time(metrics?.p95Ms)}</strong>
-                    </div>
-                    <div>
-                      <span> Canlı yanıtlar </span>
-                      <strong>{metrics?.live ?? '—'}</strong>
-                    </div>
-                    <div>
-                      <span> Bildirilen model maliyeti </span>
-                      <strong>
-                        {metrics?.reportedCostUsd != null
-                          ? `$${metrics.reportedCostUsd.toFixed(4)}`
-                          : '—'}
-                      </strong>
-                    </div>
-                  </div>
-                  <div className="operational-grid secondary-operations">
-                    <div>
-                      <span> Fallback oranı </span>
-                      <strong>{percent(metrics?.fallbackRate)}</strong>
-                    </div>
-                    <div>
-                      <span> Olumlu geri bildirim </span>
-                      <strong>{percent(metrics?.positiveFeedback)}</strong>
-                    </div>
-                    <div>
-                      <span> Maliyeti bildirilen kullanım </span>
-                      <strong>{percent(metrics?.costCoverage)}</strong>
-                    </div>
-                    <div>
-                      <span> Günlük rezervasyon / sınır </span>
-                      <strong>
-                        {metrics?.budget
-                          ? `$${metrics.budget.reservedUsd.toFixed(2)} / $${metrics.budget.dailyLimitUsd.toFixed(2)}`
-                          : '—'}
-                      </strong>
-                    </div>
-                  </div>
-                  <div className="operational-grid secondary-operations">
-                    <div>
-                      <span>Cache yanıtları</span>
-                      <strong>{metrics?.cached ?? '—'}</strong>
-                    </div>
-                    <div>
-                      <span>Cache hit oranı</span>
-                      <strong>{percent(metrics?.cacheHitRate)}</strong>
-                    </div>
-                  </div>
-                  <div className="panel-foot">
-                    <Clock3 size={14} />
-                    {metrics?.total
-                      ? 'Retrieval ve doğrulanmış yanıt üretimi dahildir.'
-                      : 'Telemetry toplamak için bir soru gönderin.'}
-                  </div>
-                </section>
               </div>
+              <HealthPanel />
+              <OperationalMetrics metrics={metrics} scope={traffic} onScope={setTraffic} />
               <div className="section-title">
                 <h2> Bir senaryoyla başlayın </h2>
                 <span className="muted"> Kurgusal Aster Mobility politikalarını keşfedin </span>
@@ -642,8 +577,10 @@ export default function App() {
               )}
             </section>
           )}
+          {page === 'reviews' && <ReviewWorkbench />}
+          {page === 'content' && <ContentWorkbench />}
           <footer className="footer">
-            <span> RAGNA / 0.2.0 </span>
+            <span> RAGNA / 0.3.0 </span>
             <span>
               Serkan Azeri tarafından geliştirildi <span className="footer-dot">·</span> Sentetik
               veri. Şeffaf değerlendirme.{' '}
@@ -1125,6 +1062,21 @@ function Evaluations({ runs }: { runs: EvalRun[] }) {
           <ArrowDownToLine size={16} /> Sonuçları indir{' '}
         </button>
       </div>
+      <section className="panel lab-panel">
+        <h2>CI kalite kontrolü: {qualityReport.passed ? 'Başarılı' : 'Başarısız'}</h2>
+        <p>
+          Recall/nDCG toleransı: {qualityReport.tolerance * 100} yüzde puan · erişim sızıntısı
+          toleransı: 0
+        </p>
+        <p>
+          {qualityReport.changes.length} soru/yapılandırma sonucu değişti. Son kontrol:{' '}
+          {new Date(qualityReport.checkedAt).toLocaleString('tr-TR')}
+        </p>
+        <details>
+          <summary>Soru bazında farklar ve kontrol raporu</summary>
+          <pre>{JSON.stringify(qualityReport, null, 2)}</pre>
+        </details>
+      </section>
       <CloudResults />
       <div className="notice">
         <FlaskConical size={19} />

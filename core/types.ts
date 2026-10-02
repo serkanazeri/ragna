@@ -58,6 +58,7 @@ export interface Span {
   durationMs: number;
   status: 'ok' | 'error' | 'skipped';
   detail?: string;
+  errorKind?: 'timeout' | 'error';
 }
 export interface ChatResponse {
   requestId: string;

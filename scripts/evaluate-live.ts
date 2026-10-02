@@ -16,6 +16,7 @@ for (const q of questions
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'X-Ragna-Traffic': 'evaluation',
       Authorization: `Bearer ${process.env.RAGNA_API_KEY}`,
     },
     body: JSON.stringify({ question: q.question, refreshCache: true }),

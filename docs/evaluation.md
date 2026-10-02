@@ -1,47 +1,79 @@
-# Değerlendirme protokolü
+# Dağıtım ve işletim rehberi
 
-## Tekrarlanabilir baseline
+## Cloudflare
 
-`npm run evaluate`, sabit bir sentetik corpus ve soru kümesi kullanır. Girdiler hash değerleriyle tanımlanır. Üç yapılandırmada da sorular, tokenizer, BM25 uygulaması ve ilk beş chunk sınırı aynıdır. Metrik, bu sınır uygulandıktan sonra tekrar eden belge kimliklerini eler. Dolayısıyla aynı politikadan gelen birden fazla chunk, birden çok politikayı ilgilendiren sorunun kaynak kapsamasını azaltabilir.
+Wrangler OAuth veya kapsamı sınırlı bir deployment token gerekir. İlk kurulum `ragna` ve `ragna-sources` adlı kaynaklar oluşturur; mevcut kaynakları incelemeden aynı adlarla yeni kurulum başlatmayın.
 
-- Recall@5 = getirilen referans belge sayısı / toplam referans belge sayısı.
-- MRR = ilk referans belgenin sırasının tersi; belge bulunamadıysa sıfır.
-- nDCG@5 = sıralamaya göre ağırlığı azaltılmış ikili belge ilgililiği / ideal sıralamanın ağırlıklı ilgililiği.
-- Yanıtlanamayan sorularda pozitif referans belge yoktur; bu sorular üç metriğin paydasına dahil edilmez.
-- Erişim sızıntısı sayımı, public sorgularda gösterilen eski belgeleri ve yalnızca `operations` kapsamına açık belgeleri kapsar.
+```bash
+npm ci
+npx wrangler login
+CLOUDFLARE_ACCOUNT_ID=your-account-id npm run cloud:provision
+npx wrangler d1 migrations apply ragna --remote --config wrangler.production.json
+npm run deploy
+```
 
-Holdout ayrımı, olağan sorularda farklı politika ailelerini kapsar. Adversarial ve zamansal edge case'ler mevcut aileleri bilinçli olarak tekrar kullanır. Bu nedenle kusursuz bağımsız bir benchmark değildir. Sentetik sorular, yazılmış kaynakların diline benzeyebilir ve gerçek kullanıcı sorgularındaki retrieval kalitesini olduğundan yüksek gösterebilir.
+Wrangler'ın döndürdüğü URL'yi kullanın. Git dışında tutulan `wrangler.production.json` içindeki `vars.SITE_URL` bu URL olmalıdır. Başka hesaplarda yazarın workers.dev adresi kullanılmaz.
 
-## Canlı retrieval
+```bash
+npm run secrets:init
+npm run secrets:deploy
+RAGNA_URL=https://your-worker.workers.dev npm run cloud:index
+RAGNA_URL=https://your-worker.workers.dev npm run test:smoke
+RAGNA_URL=https://your-worker.workers.dev npm run cache:warm
+```
 
-`npm run evaluate:retrieval`, 60 sorunun tamamını yanıt üretmeden, kimlik doğrulamalı retrieval endpoint'ine gönderir. Tam küme ve holdout metriklerini, yanıt türünü, kaynak kimliklerini, corpus hash değerini, span'leri ve gecikmeyi kaydeder. Gerçek D1 FTS5 yolunu ölçmek için `LEXICAL_ONLY=1` ayarlayın. Bu sonucu hybrid sonuçlarla karşılaştırın; offline BM25 ile hybrid arasındaki farkı yalnızca embedding'lere bağlamayın.
+**OpenRouter isteğe bağlıdır.** Workers AI ile çalışan demo için `OPENROUTER_API_KEY` gerekmez. İkinci sağlayıcı kullanılacaksa anahtar `.dev.vars` dosyasına eklenir; `secrets:deploy` yalnızca tanımlı sunucu secret'larını stdin üzerinden gönderir, değerlerini yazdırmaz. `WEBUI_SECRET_KEY` yerelde kalır. Secret'ları frontend'e, `vars` alanına veya GitHub'a koymayın.
 
-## Canlı yanıt üretimi
+## Mevcut kurulumu güncelleme
 
-`npm run evaluate:live`, varsayılan olarak 12 holdout sorusu kullanır ve her tam yanıtı inceleme için saklar. `EVAL_LIMIT` en fazla 60 olabilir. Her kalite sonucunda sağlayıcı ve yanıt türü bulunmalıdır. Fallback veya kayıtlı örnek satırı, başarılı canlı üretim olarak sayılamaz.
+```bash
+npm ci
+npx wrangler d1 migrations apply ragna --remote --config wrangler.production.json
+npm run deploy
+```
 
-Referans terim kapsaması bir hata ayıklama yardımcısıdır. Doğru sayıyı içeren yanlış bir ifadeyi ödüllendirebilir. Atıf verilen belge recall'ı, belirli iddiayı desteklemeyen bir kaynağı ödüllendirebilir. İkisi de doğruluk skoru değildir. İddiaları, retrieval ile getirilen kaynak pasajlarıyla birebir karşılaştırın.
+Cache için `0003_answer_cache.sql`, trafik ayrımı için `0004_traffic_source.sql`, periyodik kontroller için `0005_health.sql` migration'ları uygulanmalıdır. Migration'ları yeni Worker dağıtımından önce çalıştırın. Eski telemetry kayıtları `legacy` olarak korunur. Worker eski sürüme döndürülse de ek tablo zararsız kalır. Kaynak/prompt/model politikası değişirse cache anahtarının da değiştiğini doğrulayın; prompt düzenlemelerinde `CACHE_POLICY` sürümünü artırın.
 
-## İnsan değerlendirmesi ölçütleri
+`cache:warm` seçili örnek soruları gerçek API üzerinden geçirir. Mevcut cache'i tekrar kullanır; eksik yanıtlar model kotasını tüketir. Model yanıt vermezse sahte cache kaydı oluşturulmaz.
 
-Her canlı yanıt için şunları kaydedin: doğru / kısmen doğru / yanlış; kaynakla destekleniyor / kısmen destekleniyor / desteklenmiyor; yanıt vermekten kaçınma kararı uygun / uygunsuz; atıflar yeterli / eksik / yanlış. Kısa, kanıta dayalı bir açıklama ekleyin. Çok dilli parafrazları, birden fazla politikanın sentezini, eski/güncel kaynak çelişkilerini, bilinmeyen bilgileri, rol iddialarını ve kaynak içindeki prompt injection girişimlerini ayrı değerlendirin.
+## Kontroller
 
-Model tabanlı değerlendirici eklenirse insan değerlendirmesiyle kalibrasyon, sabitlenmiş model sürümü ve ölçütler, görüş ayrılığı analizi ve kaynak/yanıt ayrımı gerekir. Bağımsız inceleme olmadan aynı modelin soruları, yanıtları ve kendi yanıtını onaylayan kalite skorunu üretmesine dayanmayın.
+`GET /api/status`; sağlayıcı yapılandırması, corpus sürümü/hash ve index hazırlığını bildirir. Yapılandırılmış olmak sağlık kontrolü değildir. Bir soru sorun, yanıt türünü ve trace kaydını inceleyin.
 
-## Sürüm yayımlama koşulları
+- İlk yanıt `live`, tekrarında `cached` olmalıdır; cache hit günlük model rezervasyonunu artırmaz.
+- `guided`, önceden hazırlanmış referans örnektir; model cache'i değildir.
+- `npm run evaluate:live` yetkili `refreshCache: true` kullanır ve gerçek inference ölçer.
+- PWA'yı HTTPS üzerinde veya localhost'ta test edin. Manifest ve `/sw.js` 200 dönmelidir. İlk yükleme çevrimiçi yapılır.
+- Yeni bir build'de service worker otomatik güncellenir. Sayfayı yeniden açmak en yeni arayüzü yükler; arka planda çalışan eski sekme mevcut görünümünü koruyabilir.
 
-- TypeScript, birim testleri ve sağlayıcı regresyon testleri geçer.
-- Sabit regresyon sorularında yetkisiz veya arşivlenmiş kaynak sızıntısı gözlenmez.
-- Yerel ve dağıtılmış HTTP smoke kontrolleri geçer.
-- Canlı yanıtlar gerçek sağlayıcı/model ve trace bilgisini gösterir; başarısızlıklar etiketlenir.
-- Hybrid etkinleştirilmeden önce vektör index hash değeri dağıtılmış corpus ile eşleşir.
-- Commit'te secret dosyası, gerçek kimlik bilgisi veya müşteri verisi bulunmaz.
-- Model/embedding üstünlüğü ve erişilebilirlik SLO'ları, bunları destekleyen kanıt olmadan iddia edilmez.
+Uygulama bütçesi hesap geneli fatura sınırı değildir. Indexleme ve retrieval değerlendirmeleri embedding çağrılarını ayrıca tüketir. Cloudflare ücretsiz kotası başka projelerle paylaşılabilir.
 
-İyileştirme hedefleri ölçülene kadar hipotezdir: erişim regresyonu olmadan daha iyi iki dilli holdout recall, temsilî eşzamanlı yükte makul p95 ve insan değerlendirmesinde kaynaklarla desteklenen yüksek yanıt oranı. İlk dağıtımın belirlenmiş bir production SLO'su yoktur.
+İsteğe bağlı Turnstile için `TURNSTILE_SECRET_KEY`, `TURNSTILE_SITE_KEY` ve doğru `SITE_URL` gerekir. Sunucu hostname doğrulaması yapar. Mevcut sürüm IP ve günlük model rezervasyonu sınırlarını kullanır.
 
-Modelin yanıt vermekten kaçınma kararları, `abstained:true` gibi bozuk protokol metinleri yerine kullanıcıya yönelik sabit bir mesajla sunulur. Küçük bir TR/EN soru öneki kuralı mesaj dilini seçer. Sağlayıcı/model kaydı kararın kökenini korur. Bu sunum normalizasyonu, yanıt verilmiş bir soruyu abstention'a dönüştürmez ve doğruluğu kanıtlamaz.
+## Hata inceleme
 
-## Cache ve canlı ölçümler
+1. Yanıt türü, fallback nedeni ve trace adımlarını inceleyin.
+2. `wrangler tail ragna` ile hatalara bakın; secret veya ziyaretçi verisi içeren logları yayımlamayın.
+3. D1 migration'larını ve corpus hash eşleşmesini kontrol edin.
+4. Vectorize indexleme sonucunu, `audience` ve `status` filtrelerini doğrulayın.
+5. Model kotasını inceleyin. OpenRouter yalnızca yapılandırılmışsa anahtar/kredi kontrolü yapın.
 
-`evaluate:live`, yetkili `refreshCache: true` ile yeni inference ister. Cache yanıtları model doğruluğu veya model gecikmesi olarak raporlanmamalıdır. Operasyon paneli cache yanıtlarını ayrı sayar. Cache hit için bu isteğin üretim maliyeti sıfırdır; önceki üretimin maliyeti asıl istek kaydında kalır. Corpus/yapılandırma değişiminde geçersizleşme, TTL, erişim kapsamı ve bütçe tüketmeme davranışı regresyon testleriyle korunur.
+## Geri alma
+
+Son çalışan Git commit'ini ve Wrangler sürüm kimliğini saklayın. `npx wrangler rollback` Worker/assets sürümünü geri alır; D1 verisini geri almaz. Veritabanı sorunlarını yeni bir düzeltme migration'ıyla çözün. Corpus geri alınırsa hybrid retrieval öncesi karşılık gelen sürümü yeniden indexleyin.
+
+## GitHub CI
+
+Workflow; provider secret'ı olmadan bağımlılık kurulumunu, biçim kontrolünü, build, test ve offline değerlendirmeyi çalıştırır. Deployment manuel tutulur; dış katkıların koduna dağıtım kimlik bilgileri verilmez. Lockfile değişiklikleri incelenmelidir.
+
+## Periyodik kontroller ve içerik yayımlama
+
+Worker Cron gerçek modeli 6 saatte bir kontrol eder; ilk dağıtımdan sonra `RAGNA_URL=https://your-worker.workers.dev npm run health:check` ile ilk kontrolü başlatın. `npm run monitor` dışarıdan erişimi denetler. GitHub Actions `Demo erişilebilirliği` workflow'u 2 saatte bir, main push'larında ve manuel tetiklemelerde çalışır. Yeni ortama uyarlarken monitor varsayılan URL'sini veya `RAGNA_URL` değişkenini güncelleyin.
+
+İçerik güncellemeleri için [kalite ve operasyon rehberindeki](quality-and-operations.md) `content:preview`, `content:apply`, `content:publish` sırasını izleyin. Yayımlama kimlik bilgileri genel arayüze veya GitHub workflow'larına verilmez.
+
+## Otomatik regresyon kapısı ve yanıt inceleme
+
+`npm run quality:gate`, sabit `baselines/retrieval-v1.json` ile güncel offline sonuçları karşılaştırır. Global ve test split Recall@5/nDCG@5 düşüş toleransı 2 yüzde puanıdır; erişim sızıntısı, eksik sonuç veya dataset değişikliği kapıyı başarısız yapar. Değişen sorular `reports/quality-gate.json` içinde görünür ve CI artifact olarak saklanır.
+
+40 soruluk `data/review-set.json` mevcut sentetik kümeden seçildi; yeni kör test değildir. Yanıt inceleme ekranındaki referanslar ve gerçek sistem çıktıları insan puanlaması bekler. Fallback sonuçları model başarısı olarak sunulmaz. [Çalıştırma ve yorumlama rehberi](quality-and-operations.md).

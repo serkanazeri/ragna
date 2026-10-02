@@ -9,6 +9,7 @@ for (const { question } of examples) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'X-Ragna-Traffic': 'warmup',
       Authorization: `Bearer ${process.env.RAGNA_API_KEY}`,
     },
     body: JSON.stringify({ question }),

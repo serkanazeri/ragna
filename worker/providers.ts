@@ -143,6 +143,10 @@ export async function generate(
         durationMs: performance.now() - start,
         status: 'error',
         detail: reason,
+        errorKind:
+          e instanceof Error && (e.name === 'TimeoutError' || /timeout|timed out/i.test(e.message))
+            ? 'timeout'
+            : 'error',
       });
     }
   }

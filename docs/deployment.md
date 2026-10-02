@@ -32,7 +32,7 @@ npx wrangler d1 migrations apply ragna --remote --config wrangler.production.jso
 npm run deploy
 ```
 
-Cache için `0003_answer_cache.sql` migration'ı uygulanmalıdır. Worker eski sürüme döndürülse de ek tablo zararsız kalır. Kaynak/prompt/model politikası değişirse cache anahtarının da değiştiğini doğrulayın; prompt düzenlemelerinde `CACHE_POLICY` sürümünü artırın.
+Cache için `0003_answer_cache.sql`, trafik ayrımı için `0004_traffic_source.sql`, periyodik kontroller için `0005_health.sql` migration'ları uygulanmalıdır. Migration'ları yeni Worker dağıtımından önce çalıştırın. Eski telemetry kayıtları `legacy` olarak korunur. Worker eski sürüme döndürülse de ek tablo zararsız kalır. Kaynak/prompt/model politikası değişirse cache anahtarının da değiştiğini doğrulayın; prompt düzenlemelerinde `CACHE_POLICY` sürümünü artırın.
 
 `cache:warm` seçili örnek soruları gerçek API üzerinden geçirir. Mevcut cache'i tekrar kullanır; eksik yanıtlar model kotasını tüketir. Model yanıt vermezse sahte cache kaydı oluşturulmaz.
 
@@ -65,3 +65,9 @@ Son çalışan Git commit'ini ve Wrangler sürüm kimliğini saklayın. `npx wra
 ## GitHub CI
 
 Workflow; provider secret'ı olmadan bağımlılık kurulumunu, biçim kontrolünü, build, test ve offline değerlendirmeyi çalıştırır. Deployment manuel tutulur; dış katkıların koduna dağıtım kimlik bilgileri verilmez. Lockfile değişiklikleri incelenmelidir.
+
+## Periyodik kontroller ve içerik yayımlama
+
+Worker Cron gerçek modeli 6 saatte bir kontrol eder; ilk dağıtımdan sonra `RAGNA_URL=https://your-worker.workers.dev npm run health:check` ile ilk kontrolü başlatın. `npm run monitor` dışarıdan erişimi denetler. GitHub Actions `Demo erişilebilirliği` workflow'u 2 saatte bir, main push'larında ve manuel tetiklemelerde çalışır. Yeni ortama uyarlarken monitor varsayılan URL'sini veya `RAGNA_URL` değişkenini güncelleyin.
+
+İçerik güncellemeleri için [kalite ve operasyon rehberindeki](quality-and-operations.md) `content:preview`, `content:apply`, `content:publish` sırasını izleyin. Yayımlama kimlik bilgileri genel arayüze veya GitHub workflow'larına verilmez.

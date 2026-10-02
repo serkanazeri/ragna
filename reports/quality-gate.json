@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "tolerance": 0.02,
+  "failures": [],
+  "summaries": [
+    {
+      "run": "lexical-sections-250",
+      "recallDelta": 0,
+      "ndcgDelta": 0,
+      "holdoutRecallDelta": 0,
+      "holdoutNdcgDelta": 0
+    },
+    {
+      "run": "lexical-sections-450",
+      "recallDelta": 0,
+      "ndcgDelta": 0,
+      "holdoutRecallDelta": 0,
+      "holdoutNdcgDelta": 0
+    },
+    {
+      "run": "lexical-fixed-450",
+      "recallDelta": 0,
+      "ndcgDelta": 0,
+      "holdoutRecallDelta": 0,
+      "holdoutNdcgDelta": 0
+    }
+  ],
+  "changes": [],
+  "datasetHash": "0e086c9cf284d9108c1fffada3c48aedeb09d724fe96eea6556b03c5e3a5f069",
+  "baselineCorpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+  "corpusHash": "d7a6ea7d9fc67f74b1ebe218c6fecda0728e3f8c3e401f29359bc165ff229193",
+  "checkedAt": "2026-10-02T12:04:30.412Z"
+}

@@ -1,3 +1,11 @@
+import { healthStatus } from './health';
+import {
+  classifyTraffic,
+  summarizeMetrics,
+  trafficSources,
+  type TrafficSource,
+  type TrafficScope,
+} from '../core/metrics';
 import { Hono } from 'hono';
 import { z } from 'zod';
 import corpus from '../data/corpus.json';
@@ -82,7 +90,7 @@ app.get('/api/status', async (c) => {
   }
   return c.json({
     name: 'RAGNA',
-    version: '0.2.0',
+    version: '0.3.0',
     corpusVersion: corpus.version,
     corpusHash: corpus.hash,
     environment: c.env.ENVIRONMENT,
@@ -99,6 +107,10 @@ app.get('/api/status', async (c) => {
     chunkCount: chunks.filter((c) => permitted(c, 'public')).length,
     questionCount: questions.length,
   });
+});
+app.get('/api/health', async (c) => {
+  const result = await healthStatus(c.env);
+  return c.json(result, result.api === 'ok' ? 200 : 503);
 });
 app.get('/api/corpus', (c) =>
   c.json({
@@ -202,64 +214,42 @@ app.post('/api/admin/index', async (c) => {
   });
 });
 app.get('/api/metrics', async (c) => {
+  const scope = c.req.query('traffic') || 'all';
+  if (scope !== 'all' && !trafficSources.includes(scope as TrafficSource))
+    return c.json({ error: 'Geçersiz trafik filtresi' }, 400);
+  const until = new Date().toISOString();
   const since = new Date(Date.now() - 86400000).toISOString();
-  const { results } = await c.env.DB.prepare(
-    'SELECT r.*,f.rating FROM requests r LEFT JOIN feedback f ON r.id=f.request_id WHERE r.created_at>=? ORDER BY r.created_at DESC LIMIT 1000',
+  const { results: counts } = await c.env.DB.prepare(
+    'SELECT traffic_source,COUNT(*) AS count FROM requests WHERE created_at>=? AND created_at<=? GROUP BY traffic_source',
   )
-    .bind(since)
+    .bind(since, until)
+    .all<{ traffic_source: TrafficSource; count: number }>();
+  const trafficCounts = Object.fromEntries(trafficSources.map((s) => [s, 0])) as Record<
+    TrafficSource,
+    number
+  >;
+  for (const row of counts) trafficCounts[row.traffic_source] = row.count;
+  const { results } = await c.env.DB.prepare(
+    "SELECT r.*,f.rating FROM requests r LEFT JOIN feedback f ON r.id=f.request_id WHERE r.created_at>=? AND r.created_at<=? AND (?='all' OR r.traffic_source=?) ORDER BY r.created_at DESC,r.id DESC LIMIT 1001",
+  )
+    .bind(since, until, scope, scope)
     .all<Record<string, unknown>>();
-  const durations = results.map((r) => Number(r.duration_ms)).sort((a, b) => a - b);
-  const p = (n: number) =>
-    durations.length
-      ? durations[Math.min(durations.length - 1, Math.ceil(durations.length * n) - 1)]
-      : null;
-  const live = results.filter((r) => r.mode === 'live');
-  const rated = results.filter((r) => r.rating !== null);
-  const generated = results.filter((r) => r.model !== null && r.mode !== 'cached');
   const budget = await (
     await c.env.GUARD.get(c.env.GUARD.idFromName('public-budget')).fetch('https://guard/status')
   ).json();
   return c.json({
+    ...summarizeMetrics(results.slice(0, 1000)),
     budget,
+    scope: scope as TrafficScope,
     window: 'last 24 hours',
-    sampleSize: results.length,
-    truncated: results.length === 1000,
-    total: results.length,
-    live: live.length,
-    cached: results.filter((r) => r.mode === 'cached').length,
-    cacheHitRate: results.filter((r) => r.mode !== 'guided').length
-      ? results.filter((r) => r.mode === 'cached').length /
-        results.filter((r) => r.mode !== 'guided').length
-      : null,
-    evidence: results.filter((r) => r.mode === 'evidence').length,
-    guided: results.filter((r) => r.mode === 'guided').length,
-    abstained: results.filter((r) => r.mode === 'abstained').length,
-    p50Ms: p(0.5),
-    p95Ms: p(0.95),
-    fallbackRate: results.length
-      ? results.filter((r) => r.fallback_reason).length / results.length
-      : null,
-    reportedCostUsd: generated.some((r) => r.cost_usd !== null)
-      ? generated.reduce((s, r) => s + Number(r.cost_usd || 0), 0)
-      : null,
-    costCoverage: generated.length
-      ? generated.filter((r) => r.cost_usd !== null).length / generated.length
-      : null,
-    positiveFeedback: rated.length
-      ? rated.filter((r) => r.rating === 1).length / rated.length
-      : null,
-    feedbackCount: rated.length,
-    requests: results.slice(0, 20).map((r) => ({
-      id: r.id,
-      createdAt: r.created_at,
-      mode: r.mode,
-      provider: r.provider,
-      model: r.model,
-      durationMs: r.duration_ms,
-      retrievalMode: r.retrieval_mode,
-      fallbackReason: r.fallback_reason,
-      spans: JSON.parse(String(r.spans_json)),
-    })),
+    since,
+    until,
+    trafficCounts,
+    matchedCount:
+      scope === 'all'
+        ? Object.values(trafficCounts).reduce((s, n) => s + n, 0)
+        : trafficCounts[scope as TrafficSource],
+    truncated: results.length > 1000,
   });
 });
 
@@ -397,6 +387,7 @@ async function runChat(
   const requestId = crypto.randomUUID();
   const spans: Span[] = [];
   const trusted = authorized(request, env);
+  const traffic = classifyTraffic(request, trusted);
   const audience: Audience = trusted && input.audience === 'operations' ? 'operations' : 'public';
   const client = await hash(request.headers.get('cf-connecting-ip') || 'local');
   const guard = env.GUARD.get(env.GUARD.idFromName('public-budget'));
@@ -439,7 +430,7 @@ async function runChat(
           originalProvider: cached.provider,
         },
       };
-      await recordRequest(env, result, 0);
+      await recordRequest(env, result, 0, traffic, Boolean(input.guided));
       return result;
     }
   }
@@ -551,13 +542,19 @@ async function runChat(
   }
   result.durationMs = performance.now() - start;
   if (key) await writeCache(env, key, result, chunks);
-  await recordRequest(env, result, retrievalMs);
+  await recordRequest(env, result, retrievalMs, traffic, Boolean(input.guided));
   return result;
 }
-async function recordRequest(env: Env, result: ChatResponse, retrievalMs: number) {
+async function recordRequest(
+  env: Env,
+  result: ChatResponse,
+  retrievalMs: number,
+  traffic: TrafficSource,
+  guided: boolean,
+) {
   try {
     await env.DB.prepare(
-      'INSERT INTO requests (id,created_at,mode,provider,model,duration_ms,retrieval_ms,retrieval_mode,fallback_reason,input_tokens,output_tokens,cost_usd,citation_validity,spans_json) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+      'INSERT INTO requests (id,created_at,mode,provider,model,duration_ms,retrieval_ms,retrieval_mode,fallback_reason,input_tokens,output_tokens,cost_usd,citation_validity,spans_json,traffic_source,guided_requested) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
     )
       .bind(
         result.requestId,
@@ -574,6 +571,8 @@ async function recordRequest(env: Env, result: ChatResponse, retrievalMs: number
         result.usage.costUsd,
         result.citationValidity,
         JSON.stringify(result.spans),
+        traffic,
+        guided ? 1 : 0,
       )
       .run();
   } catch {
@@ -682,6 +681,62 @@ app.post('/v1/chat/completions', async (c) => {
     choices: [{ index: 0, message: { role: 'assistant', content: answer }, finish_reason: 'stop' }],
   });
 });
+app.post('/api/admin/health-check', async (c) => {
+  if (!authorized(c.req.raw, c.env)) return c.json({ error: 'Yetkisiz erişim' }, 401);
+  await checkInference(c.env);
+  return c.json(await healthStatus(c.env));
+});
 app.all('/api/*', (c) => c.json({ error: 'Bulunamadı' }, 404));
 app.all('*', (c) => c.env.ASSETS.fetch(c.req.raw));
-export default app;
+async function checkInference(env: Env) {
+  const start = performance.now();
+  let status = 'error',
+    provider: string | null = null,
+    mode: string | null = null,
+    reason: string | null = null;
+  try {
+    if (!env.RAGNA_API_KEY) throw new Error('monitor_key_missing');
+    const result = await runChat(
+      { question: 'İade süresi kaç gün?', refreshCache: true },
+      new Request('https://ragna.internal/api/chat', {
+        headers: { Authorization: `Bearer ${env.RAGNA_API_KEY}`, 'X-Ragna-Traffic': 'smoke' },
+      }),
+      env,
+    );
+    provider = result.provider;
+    mode = result.mode;
+    status =
+      result.mode === 'live' &&
+      result.citationValidity === 1 &&
+      result.citations.some((c) => c.documentId === 'returns')
+        ? 'ok'
+        : 'error';
+    reason = status === 'ok' ? null : 'inference_check_failed';
+  } catch {
+    reason = 'inference_check_failed';
+  }
+  await env.DB.batch([
+    env.DB.prepare(
+      'INSERT INTO health_checks(id,checked_at,status,duration_ms,provider,mode,reason) VALUES(?,?,?,?,?,?,?)',
+    ).bind(
+      crypto.randomUUID(),
+      new Date().toISOString(),
+      status,
+      performance.now() - start,
+      provider,
+      mode,
+      reason,
+    ),
+    env.DB.prepare('DELETE FROM health_checks WHERE checked_at<?').bind(
+      new Date(Date.now() - 14 * 86400000).toISOString(),
+    ),
+    env.DB.prepare('DELETE FROM answer_cache WHERE expires_at<=?').bind(Date.now()),
+  ]);
+}
+
+export default {
+  fetch: app.fetch,
+  scheduled: async (_event: ScheduledController, env: Env, ctx: ExecutionContext) => {
+    ctx.waitUntil(checkInference(env));
+  },
+};
