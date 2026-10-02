@@ -34,7 +34,7 @@ class Pipe:
             await __event_emitter__({"type": "status", "data": {"description": "Retrieving authorized evidence…", "done": False}})
         try:
             # Public corpus only: an Open WebUI role is not an operations-data grant.
-            response = await asyncio.to_thread(requests.post, self.valves.RAGNA_BASE_URL.rstrip("/") + "/api/chat", headers={"Authorization": "Bearer " + self.valves.RAGNA_API_KEY}, json={"question": question, "audience": "public"}, timeout=50)
+            response = await asyncio.to_thread(requests.post, self.valves.RAGNA_BASE_URL.rstrip("/") + "/api/chat", headers={"Authorization": "Bearer " + self.valves.RAGNA_API_KEY}, json={"question": question, "audience": "public"}, timeout=90)
             response.raise_for_status()
             result = response.json()
             if __event_emitter__:

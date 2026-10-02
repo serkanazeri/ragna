@@ -4,6 +4,32 @@ import type { Env } from '../worker/env';
 import type { Span } from '../core/types';
 afterEach(() => vi.unstubAllGlobals());
 describe('provider routing', () => {
+  it('reads a local Ollama answer with thinking disabled and a bounded deadline', async () => {
+    const fetcher = vi.fn().mockResolvedValue(
+      Response.json({
+        message: { content: '{"answer":"30 gün [S1]","citations":["S1"],"abstained":false}' },
+        prompt_eval_count: 200,
+        eval_count: 25,
+      }),
+    );
+    vi.stubGlobal('fetch', fetcher);
+    const result = await generate(
+      {
+        ENVIRONMENT: 'development',
+        MODEL_ROUTE: 'local-first',
+        OLLAMA_BASE_URL: 'http://localhost:11434',
+        LOCAL_MODEL: 'gemma4:12b-mlx',
+      } as Env,
+      'İade süresi?',
+      [{ id: 'S1', text: '30 gün', title: 'Policy' }],
+      [],
+    );
+    expect(result.result?.provider).toBe('ollama');
+    expect(result.result?.outputTokens).toBe(25);
+    expect(fetcher.mock.calls[0][0]).toBe('http://localhost:11434/api/chat');
+    expect(JSON.parse(fetcher.mock.calls[0][1].body).think).toBe(false);
+    expect(fetcher.mock.calls[0][1].signal).toBeInstanceOf(AbortSignal);
+  });
   it('reads the Gemma 4 OpenAI-shaped Workers AI response', async () => {
     const run = vi.fn().mockResolvedValue({
       choices: [

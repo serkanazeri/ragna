@@ -16,6 +16,10 @@
 
 The Open WebUI first administrator account is intentionally left for the operator. Its OpenAI-compatible connection is configured by Compose; the optional native citation Pipe can be imported through the admin interface.
 
+The container-to-host integration also passed real model discovery, local `gemma4:12b-mlx` inference, and buffered OpenAI-compatible SSE completion. The checked Turkish returns question produced a cited 30-day answer in 5.16 seconds. The initial 12-second local call timed out; disabling thinking and allowing a 45-second local deadline resolved the observed failure. This is a single functional check, not a latency benchmark.
+
+The first published commit passed GitHub Actions (`Verify`, run `36994656588`), including clean dependency installation, formatting, build, regression tests, and offline evaluation.
+
 Cloudflare model output has a newer OpenAI-style `choices` envelope. The initial integration run exposed this mismatch; the adapter and its regression test now cover that envelope. Test failures remain visible in the operational dashboard's 24-hour window. They are not deleted to improve the displayed success rate.
 
 The initial generation run exposed a stock paraphrase retrieval miss, Turkish responses to English questions, and abstention flag/text mismatches. Subsequent changes improved the observed cases. Fixed abstention presentation avoids showing raw protocol text. Semantic answer correctness has not been human-scored.

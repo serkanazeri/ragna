@@ -85,6 +85,7 @@ export async function generate(
                 model,
                 messages,
                 stream: false,
+                think: false,
                 format: 'json',
                 options: { num_predict: 1024, temperature: 0.2 },
               }
@@ -110,7 +111,8 @@ export async function generate(
               : {}),
           },
           body: JSON.stringify(payload),
-          signal: AbortSignal.timeout(provider === 'ollama' ? 12000 : 20000),
+          // Local model loading/prefill is slower than the hosted inference path.
+          signal: AbortSignal.timeout(provider === 'ollama' ? 45000 : 20000),
         });
         if (!response.ok) throw new Error(`http_${response.status}`);
         const body = (await response.json()) as {

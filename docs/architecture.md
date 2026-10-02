@@ -46,3 +46,5 @@ The current table has no automatic retention purge. A production deployment need
 Static assets are served at the edge. Retrieval does not scan external documents on each question. Embeddings are precomputed during indexing. Query providers run server-side, and each expensive path is bounded. The client has no charting framework; small accessible bars/tables display exact measurements.
 
 The API buffers output until validation completes. Reported request duration therefore includes retrieval plus complete response validation, not first-token latency. Cloud performance must be measured separately from the sub-millisecond offline lexical function.
+
+Hosted inference has a 12-second Workers AI and 20-second OpenRouter deadline. Local Ollama has a 45-second deadline to accommodate model loading and prefill; thinking is disabled for the bounded factual answer task. The optional Open WebUI Pipe allows 90 seconds for retrieval and the sequential provider paths.
