@@ -24,6 +24,16 @@ export class UsageGuard {
     const day = new Date().toISOString().slice(0, 10);
     const now = Date.now();
     return this.state.storage.transaction(async (storage) => {
+      if (new URL(request.url).pathname === '/cache-access') {
+        const key = 'cache-client:' + client;
+        const prior = await storage.get<{ start: number; count: number }>(key);
+        const minute = prior && now - prior.start < 60000 ? prior : { start: now, count: 0 };
+        if (minute.count >= 60) return Response.json({ allowed: false }, { status: 429 });
+        minute.count++;
+        await storage.put(key, minute);
+        await storage.setAlarm(now + 86400000);
+        return Response.json({ allowed: true });
+      }
       const previous = await storage.get<{ day: string; count: number; reserved: number }>('day');
       const daily = previous?.day === day ? previous : { day, count: 0, reserved: 0 };
       const key = 'client:' + client;

@@ -1,32 +1,31 @@
 # RAGNA
 
-### Evidence before answers.
+### Kaynağı belli yanıtlar. Ölçülebilir mühendislik kararları.
 
-A RAG engineering workbench by [Serkan Azeri](https://www.serkanazeri.com/). Explore a fictional service operation, inspect every source, compare retrieval decisions, and follow a request from search to a validated response.
+[Serkan Azeri](https://www.serkanazeri.com/) tarafından geliştirilen, **Forward Deployed AI Engineering** yaklaşımını görünür kılan bir RAG referans projesi. Bir sorunun hangi kaynaklarla yanıtlandığını, retrieval tercihlerinin sonuçlarını ve sistemin gerçek çalışma davranışını aynı uygulamada inceleyin.
 
-**[Live workbench](https://ragna.serkanazeri.workers.dev)** · [Architecture](docs/architecture.md) · [Evaluation protocol](docs/evaluation.md) · [Deployment runbook](docs/deployment.md) · [Open WebUI](integrations/open-webui/README.md)
+**[Canlı uygulama](https://ragna.serkanazeri.workers.dev)** · [Mimari](docs/architecture.md) · [Değerlendirme protokolü](docs/evaluation.md) · [Dağıtım](docs/deployment.md) · [Open WebUI](integrations/open-webui/README.md)
 
-> A reference implementation for Forward Deployed AI Engineering: problem framing, data contracts, access boundaries, measurement, deployment, and failure handling in one inspectable system.
+![Türkçe RAGNA arayüzü ve ölçüm paneli](docs/dashboard.jpg)
 
-![RAGNA workbench showing deployed retrieval measurements](docs/dashboard.jpg)
+## Çözdüğümüz problem
 
-## The operational problem
+Bir hizmet ekibi iade, garanti, destek önceliği, tamir ve geçici ekipman politikalarıyla ilgili değişen soruları yanıtlar. Bir cevap birden fazla belgeye dayanabilir. Eski bir politika makul görünse de yanlış olabilir; kurum içi ticari koşullar ziyaretçilerin model bağlamına girmemelidir.
 
-A service team must answer changing questions about returns, warranty, support priority, repairs, and equipment loans. Answers can depend on multiple policies; an obsolete policy can be plausible and wrong. Internal commercial terms must remain outside a public visitor's retrieval context.
+**Aster Mobility kurgusaldır.** Politika belgeleri sentetiktir. İşveren belgeleri, müşteri konuşmaları, CV içeriği veya gizli iş verileri bu projede yer almaz.
 
-**Aster Mobility is fictional.** Every policy is synthetic. No employer documents, customer conversations, CV contents, or confidential business data are included.
+Bu proje yalnızca bir sohbet ekranından oluşmaz:
 
-The first release makes this problem observable:
+- **Sor ve incele:** Kaynak atıfları, belge sürümleri, yanıt türü, trace kayıtları, geri bildirim ve JSON dışa aktarma.
+- **Karşılaştır:** Chunk stratejileri, Recall@5, MRR, nDCG@5 ve erişim ihlali regresyonları.
+- **İşlet:** Gerçek istek sayıları, p50/p95, sağlayıcı/fallback, cache hit oranı ve bildirilen maliyet.
+- **Bağımsız yayımla:** Demo Cloudflare üzerinde çalışır; bilgisayarın açık olmasına bağlı değildir.
+- **Yerelde çalış:** Open WebUI aynı API'ye bağlanır; Gemma 4 Ollama üzerinden çalıştırılabilir.
+- **Yükle ve mobilde kullan:** Türkçe, responsive PWA; çevrimdışı açılan uygulama arayüzü ve yerel sunulan Inter fontu.
 
-- **Ask and inspect:** Turkish/English questions, source excerpts, version/date provenance, response origin, request traces, feedback, and JSON export.
-- **Compare retrieval:** reproducible chunking experiments, Recall@5, MRR, nDCG@5, question-level results, and access-leak regressions.
-- **Operate:** real request counts, latency, provider/fallback information, reported cost, and explicit quota behavior.
-- **Deploy independently:** the public application runs on Cloudflare; a closed laptop does not take the demo offline.
-- **Work locally:** Open WebUI connects to the same API; an optional Pipe emits native citation events. Ollama can run Gemma 4 locally.
+## Hızlı başlangıç
 
-## Quick start
-
-Requires Node 22.12+ and npm. No model key or Cloudflare login is needed for the local evidence walkthrough.
+Node.js 22.12+ ve npm gerekir. Kaynak önizlemesi ve kayıtlı örnekler için model anahtarı gerekmez.
 
 ```bash
 npm ci
@@ -36,165 +35,198 @@ npm run build
 npm run preview
 ```
 
-Open **http://localhost:8787**. Ask a question to inspect retrieval, or select **Recorded walkthrough** to display a clearly labeled reference fixture. For hot reload, run `npm run dev` and open port 5173.
+[http://localhost:8787](http://localhost:8787) adresini açın. **Ragna'ya sor** bölümünde bir soru yazın veya **Kayıtlı örneği göster** seçeneğini kullanın. Hot reload için `npm run dev` ile port 5173'ü açın. PWA service worker yalnızca production build'de kaydedilir; PWA kontrolünü `npm run preview` ile yapın.
 
 ```bash
-npm run check          # TypeScript, production build, tests, reproducible retrieval evaluation
-npm run test:smoke     # Requires the local API on 8787
+npm run build         # TypeScript + frontend + PWA precache manifest
+npm test              # Retrieval, cache, sağlayıcı ve bütçe regresyonları
+npm run evaluate      # Offline retrieval deneyleri
+npm run test:smoke    # 8787 portunda çalışan API'yi kontrol eder
 ```
 
-### Enable inference
+### Yerel model
 
-Add `OPENROUTER_API_KEY=...` to the ignored `.dev.vars` file. Never put it in browser code or a commit. OpenRouter is a server-side credit-backed provider with price ceilings; its free model tier is not treated as an availability guarantee.
-
-For local Ollama, add `OLLAMA_BASE_URL=http://localhost:11434` to `.dev.vars`, pull a supported Gemma 4 variant, then run:
+Ollama'da desteklenen bir Gemma 4 sürümünü hazırlayın:
 
 ```bash
 ollama pull gemma4:e4b
-npx wrangler dev --port 8787 --var MODEL_ROUTE:local-first
 ```
 
-Use `--var LOCAL_MODEL:gemma4:12b-mlx` if that model is already installed and supported on your machine. Local hardware, quantization, and latency require their own measurements; local and cloud variants are not assumed equivalent.
+Git tarafından dışlanan `.dev.vars` dosyasına ekleyin:
 
-## Architecture
+```dotenv
+OLLAMA_BASE_URL=http://localhost:11434
+MODEL_ROUTE=local-first
+LOCAL_MODEL=gemma4:e4b
+```
+
+Servisi yeniden başlatın. Makinede zaten kuruluysa `gemma4:12b-mlx` kullanılabilir; adını `ollama list` ile doğrulayın. Yerel ve buluttaki model varyantlarının aynı performansı gösterdiği varsayılmaz. Yerelde thinking kapalıdır ve model çağrısı 45 saniyeyle sınırlandırılır.
+
+### Bulut ve OpenRouter
+
+Canlı uygulama **Cloudflare Workers AI üzerindeki Gemma 4** modelini kullanır. Bunun için OpenRouter veya bilgisayara açılan bir Tunnel gerekmez. Workers AI ücretsiz kotası sonludur; kota aşımı ücretsiz planda model çağrılarını durdurabilir.
+
+OpenRouter isteğe bağlı ikinci sağlayıcıdır. Etkinleştirmek isterseniz `OPENROUTER_API_KEY` değerini `.dev.vars` içine yazıp dağıtım rehberindeki secret adımını uygulayın. Anahtarı tarayıcı koduna veya Git'e eklemeyin. Mevcut demo için zorunlu değildir.
+
+## Mimari
 
 ```mermaid
 flowchart LR
-  User[Public workbench] --> API[Cloudflare Worker / Hono]
-  OW[Local Open WebUI] --> API
-  API --> Guard[Durable Object / request and budget guard]
-  API --> FTS[D1 FTS5 / current and authorized chunks]
-  API --> Embed[Workers AI / BGE-M3]
-  Embed --> Vec[Vectorize / metadata filters]
-  FTS --> Rank[RRF / top 5 chunks]
-  Vec --> Rank
-  Rank --> Gemma[Workers AI / Gemma 4]
-  Gemma -. failure .-> OR[OpenRouter / Gemma 4]
-  Gemma --> Check[JSON and citation validation]
-  OR --> Check
-  Check --> Trace[D1 / metrics and feedback]
-  Check --> User
-  API -. providers unavailable .-> Evidence[Labeled evidence view]
-  Ingest[Versioned synthetic corpus] --> R2[R2 / source snapshots]
-  Ingest --> FTS
-  Ingest --> Embed
+  U["Türkçe web / PWA"] --> W["Cloudflare Worker · Hono"]
+  O["Yerel Open WebUI"] --> W
+  W --> C{"Geçerli yanıt cache'i?"}
+  C -->|Hit| A["Kaynaklı cache yanıtı"]
+  C -->|Miss| G["Durable Object · model rezervasyonu"]
+  G --> D["D1 FTS5"]
+  G --> E["BGE-M3 · Workers AI"]
+  E --> V["Vectorize · 1024 boyut"]
+  D --> R["RRF · erişim denetimi"]
+  V --> R
+  R --> M["Gemma 4 · Workers AI / yerel Ollama"]
+  M --> J["JSON ve atıf doğrulaması"]
+  J --> C
+  W --> T["D1 · telemetry ve geri bildirim"]
+  I["Yetkili indexleme"] --> S["R2 · sürümlü kaynak arşivi"]
 ```
 
-The React build and API deploy together through **Workers Static Assets**. This is a deliberate simplification of a separate Pages frontend: one origin, one release, no cross-origin credentials, and no separate frontend/backend version drift. Open WebUI remains a local engineering interface; it is not embedded in a serverless Worker.
+React build'i ve API, **Workers Static Assets** ile aynı dağıtımda sunulur. Ayrı Pages frontend yerine tek origin, tek sürüm ve daha az yapılandırma yüzeyi seçildi. Open WebUI kendi Docker servisi olarak yerelde çalışır; serverless Worker içine gömülmez.
 
-**Cloudflare Tunnel is optional.** It can expose a deliberately authenticated local endpoint for an experiment. It cannot keep a laptop service running when the laptop is off, and the public demo never depends on it.
+**Cloudflare Tunnel isteğe bağlıdır.** Bilgisayar kapalıyken yerel servisi çalışır tutmaz. Herkese açık demo yerel donanıma bağlı değildir.
 
-## Engineering decisions
+## Mühendislik kararları
 
-| Decision                                           | Rationale                                                                                                                                         | Evidence and tradeoff                                                                                                                                                                                       |
-| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| BGE-M3, 1024 dimensions                            | Multilingual document/query embeddings through the same hosted model; query embedding stays available when the laptop is off                      | A deployment candidate, not a claim of universal model superiority. 51 fixture vectors consume 52,224 stored dimensions. [Model documentation](https://developers.cloudflare.com/workers-ai/models/bge-m3/) |
-| Section windows, 450 estimated tokens, 10% overlap | Preserve policy headings, citations, dates, and authorization metadata                                                                            | The lexical experiment favors fixed windows. The section configuration remains a hypothesis pending matched cloud evaluation. Small sections make the 250/450 variants identical on much of this fixture.   |
-| FTS5 + dense search + RRF                          | Exact policy identifiers and multilingual paraphrases need different retrieval signals; rank fusion avoids pretending their scores are calibrated | Top 20 candidates from each path, RRF constant 60, final top 5 chunks. The offline BM25 implementation is a diagnostic baseline, not the same engine as D1 FTS5.                                            |
-| Gemma 4 through Workers AI; OpenRouter fallback    | Stable cloud endpoint without hosting GPUs; fallback uses the user's existing provider credits                                                    | Each route is timed and labeled. No provider retry loop. A provider can still fail, rate-limit, or reject structured output.                                                                                |
-| Citation validation before delivery                | Reject unknown identifiers, uncited non-abstaining answers, and malformed structured output                                                       | Identifier validity is **not** semantic faithfulness. The system can still produce a wrong claim attached to a valid source ID.                                                                             |
-| SQL and vector metadata filtering                  | Authorization and current-version constraints must be applied before model context is assembled                                                   | Public prompts cannot grant operations access; results are checked again after retrieval. This is a two-scope demonstration, not production identity management.                                            |
-| Small explicit pipeline                            | Keep retrieval, routing, evaluation, and cost boundaries visible in review                                                                        | Hono + typed functions instead of an orchestration framework. Larger workflows may justify a framework later.                                                                                               |
-| Conservative budget reservation                    | Limit paid-provider exposure before inference starts                                                                                              | Serialized reservations, 100 model requests/day, 6 public requests/minute per hashed IP, default $1 daily reservation cap. Reservations are not invoices or a Cloudflare account-wide billing cap.          |
+| Karar                                                   | Neden?                                                                                                                 | Kanıt ve sınır                                                                                                                                                             |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **BGE-M3, 1024 boyut**                                  | Türkçe/İngilizce sorgu ve belgeleri aynı embedding uzayında tutmak; sorgu embedding'ini bilgisayardan bağımsız üretmek | 51 vektör, 52.224 saklanan boyut. Alternatif modellerle eş koşullu üstünlük ölçümü yapılmadı. [Model belgesi](https://developers.cloudflare.com/workers-ai/models/bge-m3/) |
+| **Bölüm tabanlı chunk, 450 tahmini token, %10 overlap** | Başlık, sürüm, tarih ve kaynak bağını korumak                                                                          | Offline lexical deneyde sabit pencere daha iyi çıktı; bu sonuç gizlenmedi. Bölüm stratejisinin evrensel üstünlüğü iddia edilmiyor.                                         |
+| **FTS5 + dense retrieval + RRF**                        | Kesin terimler ile çok dilli/parafraz sorgular farklı sinyaller gerektiriyor                                           | Her yoldan ilk 20 aday, RRF sabiti 60, son 5 chunk. Skorlar aynı ölçekteymiş gibi toplanmıyor.                                                                             |
+| **Gemma 4**                                             | GPU barındırmadan bulut çıkarımı; aynı aileyi yerelde de deneyebilmek                                                  | Model/sağlayıcı ayrı kaydedilir. Sağlayıcı hata verebilir veya JSON/atıf sözleşmesini ihlal edebilir.                                                                      |
+| **Exact-match yanıt cache'i**                           | Tekrarlanan sorularda model kotasını ve gecikmeyi azaltmak                                                             | 24 saat TTL; corpus ve yapılandırma değişiminde geçersizleşme; anlamsal benzerliğe göre yanıt paylaşımı yok.                                                               |
+| **Atıf doğrulaması**                                    | Bilinmeyen kaynak kimliklerini ve atıfsız yanıtları reddetmek                                                          | Geçerli kaynak kimliği, anlamsal doğruluğu kanıtlamaz.                                                                                                                     |
+| **SQL ve vektör erişim filtreleri**                     | Yetkisiz/eski belgeleri model bağlamından önce ayıklamak                                                               | Sonuçlar retrieval sonrasında da kontrol edilir. İki kapsamlı demo, tam tenant/kimlik sistemi değildir.                                                                    |
+| **Küçük, açık pipeline**                                | Retrieval, routing, cache, ölçüm ve maliyeti kod incelemesinde görünür tutmak                                          | Hono + TypeScript fonksiyonları. Gereksinim oluşmadan orchestration framework eklenmedi.                                                                                   |
+| **PWA ve yerel fontlar**                                | Mobilde kurulum, okunaklı Türkçe tipografi ve çevrimdışı arayüz                                                        | API yanıtları service worker cache'ine yazılmaz. Yeni sorular internet bağlantısı gerektirir.                                                                              |
 
-EmbeddingGemma and other multilingual encoders remain experiment candidates. A fair comparison must hold the corpus, split, chunking, distance metric, and question set fixed, and include Turkish/English recall, latency, storage, and laptop-independent query embedding. It is not valid to choose a model solely from a leaderboard or dimension count.
+## Yanıt cache'i nasıl çalışır?
 
-## Measurement, with boundaries
+1. Yalnızca herkese açık kapsamda, canlı model tarafından üretilmiş ve atıf denetiminden geçmiş yanıtlar kaydedilir.
+2. Soru NFC normalizasyonundan geçirilir; baş/son ve tekrarlanan boşluklar düzenlenir. Harf büyüklüğü ve noktalama korunur. Benzer görünen farklı sorular eşit sayılmaz.
+3. SHA-256 anahtarı soru, corpus hash, prompt/cache politikası, model route ve sağlayıcı yapılandırmasını içerir. Ham soru cache tablosunda tutulmaz.
+4. D1 kaydı 24 saat geçerlidir. Cache hit sırasında kaynak metni, başlık, sürüm, tarih ve erişim kapsamı yeniden doğrulanır.
+5. Geçerli yanıt **Cache yanıtı** etiketi, üretim zamanı ve asıl sağlayıcısıyla gösterilir. Bu istekte token üretimi ve model rezervasyonu sıfırdır.
+6. Cache en fazla 1.000 kayıt tutar; yazma sırasında süresi dolan/eski kayıtlar temizlenir. Süresi dolmuş kayıtlar hiçbir zaman sunulmaz. Trafik/yazma yoksa fiziksel silme bir sonraki yazmaya kadar gecikebilir.
+7. İç erişim kapsamı, kayıtlı referans örnekleri, abstention ve kaynak alıntısı fallback'leri cache'e alınmaz. Cache hatası normal retrieval yolunu engellemez.
 
-### Deployed retrieval — 2 October 2026
+Cache, **model tarafından üretilmiş yanıtı ve kaynaklarını** saklar; hassas bilgi girmeyin. SHA-256 anonimleştirme garantisi değildir. Genel telemetry ham soruyu veya yanıtı saklamaz. Sunucu cache'i çevrimdışı cihazda yanıt üretmez.
 
-| Same section chunks, same 60 questions |  Recall@5 | Held-out recall |    nDCG@5 | Retrieval p95 | Access leaks |
-| -------------------------------------- | --------: | --------------: | --------: | ------------: | -----------: |
-| D1 FTS5                                |     61.4% |           55.0% |     0.576 |         39 ms |            0 |
-| D1 FTS5 + BGE-M3 + RRF                 | **95.4%** |       **95.0%** | **0.902** |        527 ms |            0 |
+Örnek soruları gerçek model çağrılarıyla hazırlamak için:
 
-The improvement costs an additional embedding/vector round trip. The 24-question test split contains 20 answerable questions. Measurements are a single sequential run on synthetic data, not a concurrent-load benchmark. [Raw deployed retrieval evidence](reports/cloud-retrieval.json).
+```bash
+RAGNA_URL=https://your-worker.workers.dev npm run cache:warm
+```
 
-The first 24-question generation run reached Workers AI for all requests, but revealed language-following failures and an abstention-label mismatch. These findings are preserved in the [generation baseline](reports/generation-baseline.json). The revised prompt and validator were checked on five [targeted regressions](reports/generation-regression.json); these cases are no longer an untouched holdout. The stock paraphrase still misses the needed source and correctly falls back to model abstention. A new blind set is required before claiming a general answer-quality improvement.
+Bu komut mevcut geçerli cache kayıtlarını kullanır; eksik yanıtlar normal model kotasından üretilir. Üretilemeyen yanıt cache'e alınmaz. Yetkili canlı değerlendirme `refreshCache: true` kullanır; cache hit'i yeni model kalitesi veya inference gecikmesi gibi ölçmez.
 
-### Offline chunking ablation
+## Ölçümler ve sınırları
 
-Committed results come from `npm run evaluate`, across 60 deterministic synthetic questions. These are **document-level** scores over the unique documents represented by the first five retrieved chunks.
+### Bulutta retrieval — 2 Ekim 2026
 
-| Offline in-memory lexical configuration | Recall@5 |   MRR | nDCG@5 | Access leaks |
-| --------------------------------------- | -------: | ----: | -----: | -----------: |
-| Section-aware / 250                     |    0.596 | 0.580 |  0.577 |            0 |
-| Section-aware / 450                     |    0.596 | 0.580 |  0.577 |            0 |
-| Fixed window / 450                      |    0.676 | 0.613 |  0.623 |            0 |
+Aynı bölüm chunk'ları ve 60 sentetik soru kullanıldı:
 
-These numbers expose a useful failure: lexical retrieval misses paraphrases and English queries against Turkish policies. They are not generated-answer accuracy. Zero observed leaks describes this fixture, not proof of comprehensive security.
+| Yapılandırma           | Recall@5  | Holdout recall | nDCG@5    | Retrieval p95 | Gözlenen erişim ihlali |
+| ---------------------- | --------- | -------------- | --------- | ------------- | ---------------------- |
+| D1 FTS5                | %61,4     | %55,0          | 0,576     | 39 ms         | 0                      |
+| D1 FTS5 + BGE-M3 + RRF | **%95,4** | **%95,0**      | **0,902** | 527 ms        | 0                      |
 
-**Question families:** 48 single-hop questions (direct Turkish, Turkish paraphrase, English), plus 12 multi-hop, temporal, unanswerable, access-control, and adversarial scenarios. Policy families are separated between development and test; edge cases intentionally revisit known policies. Corpus and question hashes are recorded with results.
+İyileşme ek embedding/vector çağrısı maliyetiyle elde edildi. 24 soruluk test split'inde 20 yanıtlanabilir soru bulunur. Bunlar tek sıralı koşunun sonuçlarıdır; eşzamanlı trafik testi değildir. [Ham retrieval raporu](reports/cloud-retrieval.json).
 
-| Layer             | Measured                                                                                       | Explicitly not inferred                                      |
-| ----------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| Retrieval         | Recall@5, MRR, nDCG@5, forbidden/stale result count, retrieval latency                         | Answer correctness                                           |
-| Response contract | JSON shape, permitted citation IDs, response origin                                            | Semantic entailment or calibrated confidence                 |
-| Operations        | Request traces, p50/p95, fallback reason, provider/model, reported token/cost fields, feedback | Availability SLO from a single session, missing cost as zero |
-| Live evaluation   | Reference-term coverage, cited evidence recall, abstention match, provider/mode                | Human correctness from a lexical term match                  |
+İlk 24 soruluk üretim koşusunda tüm istekler Workers AI'a ulaştı; İngilizce sorulara Türkçe yanıt ve abstention etiketi sorunları görüldü. [İlk üretim raporu](reports/generation-baseline.json) bu bulguları korur. Prompt/validator düzenlemesi [5 hedefli regresyonda](reports/generation-regression.json) kontrol edildi. Bu örnekler artık dokunulmamış holdout değildir. Stok parafrazı gereken kaynağı hâlâ kaçırabilir. Genel yanıt kalitesi iddiası için yeni kör test gerekir.
 
-The UI separates **live model**, **recorded example**, **evidence only**, and **abstained**. A recorded answer never masquerades as a working model. SSE in the OpenAI adapter is **buffered after validation**; true token streaming and model TTFT are not implemented.
+### Offline chunk karşılaştırması
+
+| Bellek içi lexical yapılandırma | Recall@5  | MRR       | nDCG@5    | Erişim ihlali |
+| ------------------------------- | --------- | --------- | --------- | ------------- |
+| Bölüm / 250                     | 0,596     | 0,580     | 0,577     | 0             |
+| Bölüm / 450                     | 0,596     | 0,580     | 0,577     | 0             |
+| Sabit pencere / 450             | **0,676** | **0,613** | **0,623** | 0             |
+
+Skorlar ilk beş chunk'ın temsil ettiği benzersiz belgeler üzerinden hesaplanır. Küçük bölümler nedeniyle 250/450 varyantları bu sette çoğunlukla aynı sonucu verir. Bellek içi BM25, D1 FTS5 ile aynı arama motoru değildir. [Tekrarlanabilir rapor](reports/evaluations.json).
+
+**Soru aileleri:** 48 single-hop soru (doğrudan Türkçe, Türkçe parafraz, İngilizce); 12 multi-hop, temporal, unanswerable, access-control ve adversarial senaryo. Politikalar dev/test arasında ayrılır; edge case'ler bilinen politikaları tekrar kullanabilir. Veri ve corpus hash değerleri raporlarda saklanır.
+
+| Katman              | Ölçülen                                                                          | Bu ölçümden çıkarılamayan                                  |
+| ------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Retrieval           | Recall@5, MRR, nDCG@5, erişim ihlali, gecikme                                    | Yanıt doğruluğu                                            |
+| Yanıt sözleşmesi    | JSON biçimi, geçerli atıflar, yanıt kökeni                                       | Anlamsal tutarlılık veya kalibre güven                     |
+| Operasyon           | p50/p95, fallback, cache hit, sağlayıcı, bildirilen token/maliyet, geri bildirim | Tek oturumdan uptime SLO veya eksik maliyetin sıfır olduğu |
+| Canlı değerlendirme | Referans terim kapsaması, atıf recall, abstention uyumu                          | İnsan değerlendirmesine dayalı doğruluk                    |
+
+UI; **canlı model**, **cache yanıtı**, **kayıtlı örnek**, **kaynak alıntıları** ve **yanıt verilmedi** durumlarını ayırır. Cache hit oranı son 24 saatteki en fazla 1.000 kayıtta, `guided` türü hariç istekler üzerinden hesaplanır; bu bir offline benchmark sonucu değildir. OpenAI uyumlu SSE, tam yanıt doğrulandıktan sonra gönderilir. Gerçek token streaming ve TTFT uygulanmadı.
 
 ```bash
 RAGNA_URL=https://your-worker.workers.dev npm run evaluate:retrieval
 RAGNA_URL=https://your-worker.workers.dev EVAL_LIMIT=12 npm run evaluate:live
 ```
 
-Live reports are ignored by Git until reviewed for publication. See the [evaluation protocol](docs/evaluation.md) for acceptance criteria and review practice.
+Canlı raporlar inceleme öncesinde Git dışında tutulur. Sıfır gözlenen erişim ihlali, kapsamlı güvenlik kanıtı değildir.
 
-## Synthetic data workflow
+## Sentetik veri iş akışı
 
-`data/corpus.json` contains 19 fictional source documents: 17 current public documents, one operations-only document, and one archived policy. `data/sources/` preserves readable Markdown exports. The fixture generator produces 51 chunks under the current configuration.
+`data/corpus.json`: 17 güncel açık belge, bir kurum içi belge ve bir arşivlenmiş politika; toplam 19 belge. Mevcut strateji 51 chunk üretir. `data/sources/` okunabilir Markdown kopyalarını içerir.
 
-1. Define policy facts and access/version metadata.
-2. Derive deterministic regression questions and reference evidence.
-3. Optionally run `npm run synthetic` to generate Gemma candidates through OpenRouter.
-4. Validate that each candidate's evidence quote is an exact source substring.
-5. Save candidates with `pending-review` status. Review semantic answer support and split contamination before promotion.
-6. Re-run retrieval and live generation evaluations after a change.
-
-The current fixed dataset is programmatically evidence-checked and **has not been human-reviewed**. Candidate generation does not automatically modify the benchmark. Public document uploads are intentionally absent: the demo stays reproducible and avoids unbounded embedding cost and visitors' confidential data.
-
-Local candidate generation is also supported:
+1. Politika gerçeklerini, erişim kapsamını ve sürümleri belirleyin.
+2. Kaynaklardan regresyon sorularını ve beklenen kanıtları türetin.
+3. Gemma ile aday soru üretin; kaynak alıntısının birebir eşleşmesini doğrulayın.
+4. Adayları `pending-review` durumunda tutun. Kaynak desteği ve split sızıntısı insan tarafından incelenmeden benchmark'a eklemeyin.
+5. Kaynak veya strateji değişiminde retrieval ve canlı üretim testlerini tekrarlayın.
 
 ```bash
 SYNTHETIC_PROVIDER=ollama LOCAL_MODEL=gemma4:12b-mlx SYNTHETIC_DOCUMENTS=1 npm run synthetic
 ```
 
-Three actual locally generated candidates, with exact evidence quotes and pending review status, are preserved in [the sample report](reports/synthetic-sample.json). They are not part of the 60-question benchmark.
+[Üç gerçek yerel üretim adayı](reports/synthetic-sample.json) kaynak alıntılarıyla yayımlanmıştır; 60 soruluk benchmark'a dahil değildir. Mevcut sabit veri kümesi insan incelemesinden geçmemiştir. Herkese açık belge yükleme bu sürümde yoktur; demo tekrar üretilebilir ve sınırlı maliyetli tutulur.
 
-## Resilience and cost
+## PWA ve responsive kullanım
 
-- Public cloud route: Workers AI → OpenRouter (when a key is configured) → labeled evidence excerpts.
-- Development local route: Ollama → available cloud providers → labeled evidence excerpts.
-- Embedding/index failures fall back to lexical retrieval. A corpus hash must match before the vector index is enabled.
-- Workers AI generation has a 12-second bound; OpenRouter 20 seconds; query embedding 5 seconds; vector search 3 seconds. Timed-out Workers AI work may continue upstream and consume quota.
-- OpenRouter price ceilings are $0.25/M input and $1/M output; output is capped at 1,024 tokens and the serialized prompt at 20 KB. These are admission controls, not price forecasts.
-- Guided walkthroughs do not consume model reservations. Once live inference is unavailable or the demo budget is exhausted, source exploration and recorded examples remain usable while the hosting quotas allow it.
+- Manifest, 192/512 px ikonlar, maskable ikon ve service worker bulunur. Destekleyen tarayıcılarda **Uygulamayı yükle** düğmesini kullanın; iOS Safari'de **Paylaş → Ana Ekrana Ekle** yolunu izleyin.
+- Production build sırasında yalnızca uygulama dosyaları, fontlar ve ikonlar precache edilir. Build içeriği değişince cache sürümü değişir; eski uygulama cache'leri temizlenir.
+- `/api/*`, `/v1/*`, sohbet POST'ları ve kimlik doğrulama verileri tarayıcı cache'ine girmez.
+- İlk başarılı çevrimiçi açılıştan sonra arayüz ve build içindeki değerlendirme sonuçları çevrimdışı açılabilir. Canlı metrikler, kaynak API'si, sunucu yanıt cache'i ve yeni sorular bağlantı gerektirir.
+- Mavi renk sistemi, Türkçe destekli Inter, en az 44 px temel dokunma hedefleri, görünür keyboard focus ve reduced-motion desteği vardır. Geniş tablolar kendi alanlarında yatay kayar.
 
-Cloudflare's free allowances are finite, and a free deployment is not an uptime guarantee. [Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/), [Workers AI pricing](https://developers.cloudflare.com/workers-ai/platform/pricing/), and [Vectorize pricing](https://developers.cloudflare.com/vectorize/platform/pricing/) should be checked before changing the corpus, traffic limit, or model. No paid-plan upgrade is required by this repository's setup.
+## Dayanıklılık ve maliyet
 
-## Project map
+- Bulut: geçerli cache → Workers AI → isteğe bağlı OpenRouter → açıkça etiketli kaynak alıntıları.
+- Yerel: geçerli cache → Ollama → yapılandırılmış bulut sağlayıcısı → kaynak alıntıları.
+- Model rezervasyonu: toplam 100 istek/gün, herkese açık 6 istek/dakika/IP, varsayılan $1/gün konservatif rezervasyon. Cache yanıtları ayrı 60 istek/dakika/IP sınırına tabidir ve model bütçesini tüketmez.
+- Workers AI 12 sn, OpenRouter 20 sn, yerel Ollama 45 sn; query embedding 5 sn, vector araması 3 sn ile sınırlandırılır. Workers AI timeout'u upstream işlemi iptal etmeyebilir.
+- OpenRouter fiyat tavanı: giriş $0,25/M, çıkış $1/M; en fazla 1.024 çıktı tokenı ve 20 KB prompt. Bunlar güncel fiyat iddiası değil, kabul sınırlarıdır.
+- Rezervasyon bir fatura veya Cloudflare hesap geneli harcama sınırı değildir. Diğer uygulamalarla paylaşılan ücretsiz kota ayrıca takip edilmelidir.
+
+Ücretsiz hizmet sınırsız erişilebilirlik garantisi değildir. [Workers fiyatları](https://developers.cloudflare.com/workers/platform/pricing/), [Workers AI fiyatları](https://developers.cloudflare.com/workers-ai/platform/pricing/) ve [Vectorize fiyatları](https://developers.cloudflare.com/vectorize/platform/pricing/) geçerlidir. PWA kurulum yaklaşımı [MDN rehberini](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable) izler.
+
+## Proje yapısı
 
 ```text
-src/                      React workbench and responsive styles
-worker/                   API, provider routing, and Durable Object guard
-core/                     Typed contracts, chunking, ranking, validation
-data/                     Synthetic documents and regression questions
-migrations/               D1 schema and versioned fixture seed
-reports/                  Reproducible offline results
-scripts/                  Provisioning, indexing, evaluation, candidate generation
-integrations/open-webui/  Native citation Pipe and setup guide
-tests/                    Retrieval and provider contract regressions
-docs/                     Architecture, evaluation, deployment
+src/                     Türkçe React arayüzü, fontlar ve responsive tasarım
+worker/                  API, model routing, yanıt cache'i, bütçe denetimi
+core/                    Tipler, chunking, sıralama, atıf doğrulaması
+data/                    Sentetik kaynaklar ve regresyon soruları
+migrations/              D1 şeması ve sürümlü veri
+reports/                 Yayımlanmış deney kanıtları
+scripts/                 Dağıtım, indexleme, değerlendirme, PWA build, cache hazırlığı
+public/                  Manifest ve uygulama ikonları
+integrations/open-webui/ Yerel sohbet bağlantısı ve atıf Pipe'ı
+tests/                   Retrieval, cache, routing ve bütçe testleri
+docs/                    Mimari, değerlendirme ve operasyon rehberleri
 ```
 
-## Boundaries and next experiments
+## Sınırlar ve sonraki deneyler
 
-This release is a bounded portfolio demo. Production work would add real identity/tenant policy, reviewed customer data, asynchronous ingestion, delete/retention workflows, external uptime probes, a calibrated semantic evaluator, representative load tests, and account-level billing alarms.
+Bu sürüm sınırları belirli bir portföy demosudur. Gerçek müşteri ortamı; kimlik/tenant politikası, incelenmiş müşteri verisi, asenkron ingestion, veri silme/retention, uptime izlemesi, anlamsal kalite değerlendirmesi ve temsilî yük testleri gerektirir. Cache hit, iyi cevap garantisi değildir; yanlış bir yanıt da atıf biçimi geçerliyse cache'e girebilir.
 
-Next experiments are driven by observed failures: document diversity/reranking when chunks crowd the context, matched embedding comparisons for bilingual queries, answer faithfulness review, and chunk-boundary ablations on longer policies. Caching, reranking, and a queue are not claimed as implemented optimizations without measured need.
+Sonraki kararlar ölçümlere dayanmalıdır: Türkçe/İngilizce embedding karşılaştırması, uzun politikalarla chunk ablation, kaynak çeşitliliği/reranking ve insan yanıt incelemesi. Henüz uygulanmamış optimizasyonlar uygulanmış gibi sunulmaz.
 
-## License
+## Lisans
 
-RAGNA code and authored synthetic fixtures are MIT licensed. Gemma model terms, Open WebUI's license/branding requirements, and provider terms remain separate. Open WebUI is used as its own product without removing its branding.
+Kod ve bu proje için yazılmış sentetik veriler MIT lisanslıdır. Gemma model koşulları, Open WebUI lisansı/markalama kuralları ve sağlayıcı koşulları ayrıdır. Inter, Fontsource paketi içindeki OFL-1.1 lisansıyla sunulur. Open WebUI markası kaldırılmaz.

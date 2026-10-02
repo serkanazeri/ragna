@@ -37,7 +37,7 @@ R2 is an archival source snapshot in this release. Runtime source rendering uses
 
 The shared administration key is for one trusted operator. It is not a multi-user identity system. Treat the operations scope as a demonstrator, not a confidential-data deployment recipe. Open WebUI always uses the public scope, even when its user calls themselves an administrator in chat.
 
-D1 stores request UUID, timestamp, mode, provider, model, timings, token counts when available, cost when reported, citation validation, and span metadata. Raw questions and answers are not stored there. Provider processing is still external processing. The public dashboard exposes only operational metadata; request UUIDs serve as unguessable feedback references, not authenticated user identity. The feedback score is directional and can be manipulated by visitors.
+D1 stores request UUID, timestamp, mode, provider, model, timings, token counts when available, cost when reported, citation validation, and span metadata. Raw questions and answers are not stored in the requests telemetry table. The separate answer_cache table stores validated public model answers and citations for up to 24 hours, keyed by a question/configuration hash; it never stores the raw question. Hashing does not guarantee anonymity. Provider processing is still external processing. The public dashboard exposes only operational metadata; request UUIDs serve as unguessable feedback references, not authenticated user identity. The feedback score is directional and can be manipulated by visitors.
 
 The current table has no automatic retention purge. A production deployment needs an explicit retention policy and deletion job. Cloudflare request logging is sampled and must also be reviewed before using personal data.
 
@@ -48,3 +48,9 @@ Static assets are served at the edge. Retrieval does not scan external documents
 The API buffers output until validation completes. Reported request duration therefore includes retrieval plus complete response validation, not first-token latency. Cloud performance must be measured separately from the sub-millisecond offline lexical function.
 
 Hosted inference has a 12-second Workers AI and 20-second OpenRouter deadline. Local Ollama has a 45-second deadline to accommodate model loading and prefill; thinking is disabled for the bounded factual answer task. The optional Open WebUI Pipe allows 90 seconds for retrieval and the sequential provider paths.
+
+## v0.2: yanıt cache'i ve PWA
+
+Model rezervasyonundan önce D1 exact-match cache'i kontrol edilir. Anahtar; NFC/boşluk normalizasyonu yapılmış soru, corpus hash, public kapsam, CACHE_POLICY, route/model ve sağlayıcı yapılandırmasını kapsar. Her hit sırasında atıf metni ve kaynak sürümleri güncel public chunk'larla tekrar eşleştirilir. İç kapsam, kayıtlı örnekler, abstention ve evidence fallback saklanmaz. Geçerlilik 24 saat, kapasite 1.000 kayıttır. Cache isteği ayrı 60/dakika/IP sınırı kullanır; model rezervasyonuna yazılmaz. Yetkili değerlendirmeler cache okumasını atlayabilir; ziyaretçinin refreshCache parametresi dikkate alınmaz.
+
+PWA sadece aynı origin'deki build dosyalarını, ikonları ve fontları precache eder. API/sohbet yanıtları tarayıcı cache'ine girmez. Sunucu cache'i ile service worker cache'i ayrı amaçlara sahiptir. Offline arayüz sunucu verisine veya yeni model üretimine erişim anlamına gelmez.

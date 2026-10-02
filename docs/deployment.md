@@ -1,8 +1,8 @@
-# Deployment runbook
+# Dağıtım ve işletim rehberi
 
 ## Cloudflare
 
-Use your own Cloudflare account. Wrangler OAuth or a narrowly scoped deployment API token is required. Provisioning creates resources named `ragna` and `ragna-sources`; inspect existing resources first if those names already exist in your account.
+Wrangler OAuth veya kapsamı sınırlı bir deployment token gerekir. İlk kurulum `ragna` ve `ragna-sources` adlı kaynaklar oluşturur; mevcut kaynakları incelemeden aynı adlarla yeni kurulum başlatmayın.
 
 ```bash
 npm ci
@@ -12,40 +12,56 @@ npx wrangler d1 migrations apply ragna --remote --config wrangler.production.jso
 npm run deploy
 ```
 
-Copy the actual deployment URL from Wrangler. Set `vars.SITE_URL` in the ignored `wrangler.production.json` to that URL. `scripts/provision.ts` accepts `RAGNA_URL` for repeatable provisioning. Do not assume another account uses the author's workers.dev subdomain.
+Wrangler'ın döndürdüğü URL'yi kullanın. Git dışında tutulan `wrangler.production.json` içindeki `vars.SITE_URL` bu URL olmalıdır. Başka hesaplarda yazarın workers.dev adresi kullanılmaz.
 
 ```bash
 npm run secrets:init
-# Add OPENROUTER_API_KEY to .dev.vars using your editor.
 npm run secrets:deploy
 RAGNA_URL=https://your-worker.workers.dev npm run cloud:index
 RAGNA_URL=https://your-worker.workers.dev npm run test:smoke
-RAGNA_URL=https://your-worker.workers.dev npm run evaluate:retrieval
-RAGNA_URL=https://your-worker.workers.dev npm run evaluate:live
+RAGNA_URL=https://your-worker.workers.dev npm run cache:warm
 ```
 
-`secrets:deploy` sends only named server credentials to Wrangler through stdin. It does not print values. `WEBUI_SECRET_KEY` remains local. Keep `.dev.vars` permissions restricted. Never put secrets in `vars`, a frontend environment variable, or a GitHub issue.
+**OpenRouter isteğe bağlıdır.** Workers AI ile çalışan demo için `OPENROUTER_API_KEY` gerekmez. İkinci sağlayıcı kullanılacaksa anahtar `.dev.vars` dosyasına eklenir; `secrets:deploy` yalnızca tanımlı sunucu secret'larını stdin üzerinden gönderir, değerlerini yazdırmaz. `WEBUI_SECRET_KEY` yerelde kalır. Secret'ları frontend'e, `vars` alanına veya GitHub'a koymayın.
 
-## Checks
+## Mevcut kurulumu güncelleme
 
-`GET /api/status` reports configured providers, corpus version/hash, and index readiness. A configured flag is not a provider health check. Send a question and inspect its mode/spans to verify actual inference. A `live` response with the expected model is evidence of that request only.
+```bash
+npm ci
+npx wrangler d1 migrations apply ragna --remote --config wrangler.production.json
+npm run deploy
+```
 
-The demo's budget is a conservative application limit, not an invoice forecast or hard account-wide billing cap. Administrative indexing and evaluation invoke embeddings independently of the public generation reservation. Run them intentionally. Free quota exhaustion can affect requests even while the application reservation remains available.
+Cache için `0003_answer_cache.sql` migration'ı uygulanmalıdır. Worker eski sürüme döndürülse de ek tablo zararsız kalır. Kaynak/prompt/model politikası değişirse cache anahtarının da değiştiğini doğrulayın; prompt düzenlemelerinde `CACHE_POLICY` sürümünü artırın.
 
-Optional Turnstile protection requires both `TURNSTILE_SECRET_KEY` and matching `TURNSTILE_SITE_KEY`/`SITE_URL`. The server verifies hostname. Check accessibility and token renewal before enabling it publicly. The base release uses per-IP and global budget limits.
+`cache:warm` seçili örnek soruları gerçek API üzerinden geçirir. Mevcut cache'i tekrar kullanır; eksik yanıtlar model kotasını tüketir. Model yanıt vermezse sahte cache kaydı oluşturulmaz.
 
-## Failure investigation
+## Kontroller
 
-1. Inspect response mode, fallback reason, and spans in the workbench.
-2. Check `wrangler tail ragna` for server errors; do not publish logs containing credentials or visitor data.
-3. Check D1 migrations and the stored corpus hash.
-4. Check Vectorize ingestion completion and metadata indexes for `audience`/`status`.
-5. Check model quota and OpenRouter credits/key validity. Do not change models silently to make a health indicator green.
+`GET /api/status`; sağlayıcı yapılandırması, corpus sürümü/hash ve index hazırlığını bildirir. Yapılandırılmış olmak sağlık kontrolü değildir. Bir soru sorun, yanıt türünü ve trace kaydını inceleyin.
 
-## Rollback
+- İlk yanıt `live`, tekrarında `cached` olmalıdır; cache hit günlük model rezervasyonunu artırmaz.
+- `guided`, önceden hazırlanmış referans örnektir; model cache'i değildir.
+- `npm run evaluate:live` yetkili `refreshCache: true` kullanır ve gerçek inference ölçer.
+- PWA'yı HTTPS üzerinde veya localhost'ta test edin. Manifest ve `/sw.js` 200 dönmelidir. İlk yükleme çevrimiçi yapılır.
+- Yeni bir build'de service worker otomatik güncellenir. Sayfayı yeniden açmak en yeni arayüzü yükler; arka planda çalışan eski sekme mevcut görünümünü koruyabilir.
 
-Keep the last known working Git commit and Wrangler deployment version. Use `npx wrangler rollback` for Worker/assets rollback. Database changes need their own forward repair migration; Worker rollback does not reverse D1 data. Reindex the matching corpus before enabling hybrid retrieval after a corpus rollback.
+Uygulama bütçesi hesap geneli fatura sınırı değildir. Indexleme ve retrieval değerlendirmeleri embedding çağrılarını ayrıca tüketir. Cloudflare ücretsiz kotası başka projelerle paylaşılabilir.
+
+İsteğe bağlı Turnstile için `TURNSTILE_SECRET_KEY`, `TURNSTILE_SITE_KEY` ve doğru `SITE_URL` gerekir. Sunucu hostname doğrulaması yapar. Mevcut sürüm IP ve günlük model rezervasyonu sınırlarını kullanır.
+
+## Hata inceleme
+
+1. Yanıt türü, fallback nedeni ve trace adımlarını inceleyin.
+2. `wrangler tail ragna` ile hatalara bakın; secret veya ziyaretçi verisi içeren logları yayımlamayın.
+3. D1 migration'larını ve corpus hash eşleşmesini kontrol edin.
+4. Vectorize indexleme sonucunu, `audience` ve `status` filtrelerini doğrulayın.
+5. Model kotasını inceleyin. OpenRouter yalnızca yapılandırılmışsa anahtar/kredi kontrolü yapın.
+
+## Geri alma
+
+Son çalışan Git commit'ini ve Wrangler sürüm kimliğini saklayın. `npx wrangler rollback` Worker/assets sürümünü geri alır; D1 verisini geri almaz. Veritabanı sorunlarını yeni bir düzeltme migration'ıyla çözün. Corpus geri alınırsa hybrid retrieval öncesi karşılık gelen sürümü yeniden indexleyin.
 
 ## GitHub CI
 
-The verification workflow builds, tests, and regenerates the offline evaluation without provider secrets. Deployment is manual because deployment credentials should not be available to arbitrary pull-request code. Pin and review dependency updates through the lockfile. Live evaluation is an explicit operator action with a cost boundary.
+Workflow; provider secret'ı olmadan bağımlılık kurulumunu, biçim kontrolünü, build, test ve offline değerlendirmeyi çalıştırır. Deployment manuel tutulur; dış katkıların koduna dağıtım kimlik bilgileri verilmez. Lockfile değişiklikleri incelenmelidir.

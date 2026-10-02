@@ -1,0 +1,191 @@
+{
+  "date": "2026-10-02",
+  "kind": "browser-viewport-check",
+  "checks": [
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Yanıtın arkasındaki kaynağı görün. ",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Sorun. İnceleyin. Anlayın. ",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Kararlarınızı ölçümlerle destekleyin. ",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Sisteminizin kaynaklarını tanıyın. ",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Mühendislik, kararları açıklayabilmektir. ",
+      "scrollWidth": 320,
+      "width": 320
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Yanıtın arkasındaki kaynağı görün. ",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Sorun. İnceleyin. Anlayın. ",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Kararlarınızı ölçümlerle destekleyin. ",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Sisteminizin kaynaklarını tanıyın. ",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Mühendislik, kararları açıklayabilmektir. ",
+      "scrollWidth": 390,
+      "width": 390
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Yanıtın arkasındaki kaynağı görün. ",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Sorun. İnceleyin. Anlayın. ",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Kararlarınızı ölçümlerle destekleyin. ",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Sisteminizin kaynaklarını tanıyın. ",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Mühendislik, kararları açıklayabilmektir. ",
+      "scrollWidth": 768,
+      "width": 768
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Yanıtın arkasındaki kaynağı görün. ",
+      "scrollWidth": 1024,
+      "width": 1024
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Sorun. İnceleyin. Anlayın. ",
+      "scrollWidth": 1024,
+      "width": 1024
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Kararlarınızı ölçümlerle destekleyin. ",
+      "scrollWidth": 1024,
+      "width": 1024
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Sisteminizin kaynaklarını tanıyın. ",
+      "scrollWidth": 1024,
+      "width": 1024
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Mühendislik, kararları açıklayabilmektir. ",
+      "scrollWidth": 1024,
+      "width": 1024
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Yanıtın arkasındaki kaynağı görün. ",
+      "scrollWidth": 1440,
+      "width": 1440
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Sorun. İnceleyin. Anlayın. ",
+      "scrollWidth": 1440,
+      "width": 1440
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Kararlarınızı ölçümlerle destekleyin. ",
+      "scrollWidth": 1440,
+      "width": 1440
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Sisteminizin kaynaklarını tanıyın. ",
+      "scrollWidth": 1440,
+      "width": 1440
+    },
+    {
+      "font": "\"Inter Variable\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+      "overflow": false,
+      "page": " Mühendislik, kararları açıklayabilmektir. ",
+      "scrollWidth": 1440,
+      "width": 1440
+    }
+  ],
+  "offline": {
+    "browser": "Chrome",
+    "method": "Local server stopped, then page reloaded",
+    "result": "Application shell rendered; API requests showed a Turkish connection notice"
+  },
+  "limits": [
+    "Viewport checks are not physical-device tests.",
+    "No iOS/Safari installation was performed.",
+    "Offline shell does not include server API data or chat responses."
+  ]
+}

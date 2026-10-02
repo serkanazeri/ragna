@@ -41,3 +41,7 @@ A model judge, if added, needs human calibration, a pinned judge version and rub
 Improvement targets are hypotheses until measured: better held-out bilingual recall without access regressions, reasonable p95 under representative concurrent load, and high human-supported-answer rate. The initial deployment has no established production SLO.
 
 Model abstention decisions use a fixed user-facing message instead of exposing malformed text such as `abstained:true`. A small TR/EN question-prefix heuristic selects the message language. Provider/model attribution still records the decision origin. This presentation normalization does not convert an answered question into an abstention or establish correctness.
+
+## Cache ve canlı ölçümler
+
+`evaluate:live` yetkili `refreshCache: true` ile yeni inference ister. Cache yanıtları model doğruluğu veya model gecikmesi olarak raporlanmamalıdır. Operasyon paneli cache yanıtlarını ayrı sayar. Cache hit için bu isteğin üretim maliyeti sıfırdır; önceki üretimin maliyeti asıl istek kaydında kalır. Corpus/configuration invalidation, TTL, erişim kapsamı ve bütçe tüketmeme davranışı regresyon testleriyle korunur.

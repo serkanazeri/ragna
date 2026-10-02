@@ -18,7 +18,7 @@ for (const q of questions
       'Content-Type': 'application/json',
       Authorization: `Bearer ${process.env.RAGNA_API_KEY}`,
     },
-    body: JSON.stringify({ question: q.question }),
+    body: JSON.stringify({ question: q.question, refreshCache: true }),
     signal: AbortSignal.timeout(60000),
   });
   if (!response.ok) throw new Error(`Evaluation request failed: ${response.status}`);

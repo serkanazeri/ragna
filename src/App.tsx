@@ -64,6 +64,8 @@ type Metrics = {
   };
   total: number;
   live: number;
+  cached: number;
+  cacheHitRate: number | null;
   guided: number;
   evidence: number;
   abstained: number;
@@ -79,19 +81,53 @@ type Metrics = {
 };
 type DocumentSummary = Omit<SourceDocument, 'sections'> & { sections: number; chunkCount: number };
 type Example = { id: string; question: string; category: string };
-const percent = (n: number | null | undefined) => (n == null ? '—' : `${(n * 100).toFixed(1)}%`);
+const departmentNames: Record<string, string> = {
+  Logistics: 'Lojistik',
+  Operations: 'Operasyon',
+  Support: 'Destek',
+  Trust: 'Güven ve gizlilik',
+  Service: 'Servis',
+  Enablement: 'Eğitim',
+  Success: 'Müşteri başarısı',
+  'Customer care': 'Müşteri hizmetleri',
+  Finance: 'Finans',
+  Sales: 'Satış',
+};
+const categoryNames: Record<string, string> = {
+  'single-hop': 'Single-hop',
+  'multi-hop': 'Multi-hop',
+  temporal: 'Zaman ve sürüm',
+  unanswerable: 'Yanıtlanamayan',
+  'access-control': 'Erişim kontrolü',
+  adversarial: 'Adversarial',
+};
+const percent = (n: number | null | undefined) =>
+  n == null
+    ? '—'
+    : new Intl.NumberFormat('tr-TR', {
+        style: 'percent',
+        minimumFractionDigits: 1,
+        maximumFractionDigits: 1,
+      }).format(n);
 const time = (n: number | null | undefined) =>
   n == null ? '—' : n >= 1000 ? `${(n / 1000).toFixed(2)} s` : `${Math.round(n)} ms`;
 const modeName: Record<string, string> = {
-  live: 'Live model',
-  guided: 'Recorded example',
-  evidence: 'Evidence only',
-  abstained: 'Abstained',
+  live: 'Canlı model',
+  cached: 'Cache yanıtı',
+  guided: 'Kayıtlı örnek',
+  evidence: 'Kaynak alıntıları',
+  abstained: 'Yanıt verilmedi',
 };
 async function api<T>(path: string, options?: RequestInit): Promise<T> {
-  const r = await fetch(path, options);
+  if (!navigator.onLine)
+    throw new Error(
+      'Çevrimdışısınız. Yeni sorular ve güncel veriler için internet bağlantısı gerekiyor.',
+    );
+  const r = await fetch(path, options).catch(() => {
+    throw new Error('Sunucuya ulaşılamıyor. Bağlantınızı kontrol edip yeniden deneyin.');
+  });
   const data = (await r.json()) as T & { error?: string };
-  if (!r.ok) throw new Error(data.error || 'Request failed');
+  if (!r.ok) throw new Error(data.error || 'İstek tamamlanamadı');
   return data;
 }
 function download(data: unknown, name: string) {
@@ -201,22 +237,18 @@ export default function App() {
     window.scrollTo(0, 0);
   };
   const items: [Page, string, React.ReactNode][] = [
-    ['overview', 'Overview', <LayoutDashboard size={18} />],
-    ['ask', 'Ask Ragna', <MessageSquare size={18} />],
-    ['experiments', 'Evaluations', <FlaskConical size={18} />],
-    ['knowledge', 'Knowledge base', <Database size={18} />],
-    ['decisions', 'Engineering notes', <GitBranch size={18} />],
+    ['overview', 'Genel bakış', <LayoutDashboard size={18} />],
+    ['ask', "Ragna'ya sor", <MessageSquare size={18} />],
+    ['experiments', 'Değerlendirmeler', <FlaskConical size={18} />],
+    ['knowledge', 'Bilgi tabanı', <Database size={18} />],
+    ['decisions', 'Mühendislik notları', <GitBranch size={18} />],
   ];
   const cloud = cloudEvaluation.runs.find((r) => r.id === 'cloud-hybrid')!;
   const liveReady = status && Object.values(status.providers).some(Boolean);
   return (
     <div className="app-shell">
       {menu && (
-        <button
-          className="mobile-scrim"
-          aria-label="Close navigation"
-          onClick={() => setMenu(false)}
-        />
+        <button className="mobile-scrim" aria-label="Menüyü kapat" onClick={() => setMenu(false)} />
       )}
       <aside className={`sidebar ${menu ? 'open' : ''}`}>
         <button className="brand" onClick={() => navigate('overview')}>
@@ -230,11 +262,11 @@ export default function App() {
             <Layers3 size={16} />
           </span>
           <div>
-            Aster Mobility<small>Reference workspace</small>
+            Aster Mobility<small> Örnek çalışma alanı </small>
           </div>
           <ChevronDown size={14} />
         </div>
-        <p className="nav-label">WORKBENCH</p>
+        <p className="nav-label"> ÇALIŞMA ALANI </p>
         <nav>
           {items.map(([id, label, icon]) => (
             <button key={id} className={page === id ? 'active' : ''} onClick={() => navigate(id)}>
@@ -246,14 +278,13 @@ export default function App() {
         </nav>
         <div className="sidebar-note">
           <div>
-            <ShieldCheck size={16} /> Built on evidence
+            <ShieldCheck size={16} /> Kaynağı belli yanıtlar{' '}
           </div>
           <p>
-            Every answer has a source.
-            <br />
-            Every decision has a reason.
+            Her yanıtın bir kaynağı, <br />
+            her kararın bir gerekçesi var.{' '}
           </p>
-          <span>FICTIONAL CORPUS · REAL MEASUREMENTS</span>
+          <span> SENTETİK VERİ · GERÇEK ÖLÇÜMLER </span>
         </div>
         <a className="author" href="https://www.serkanazeri.com/" target="_blank" rel="noreferrer">
           <span className="avatar">SA</span>
@@ -267,19 +298,19 @@ export default function App() {
         <header className="topbar">
           <button
             className="mobile-menu icon-button"
-            aria-label="Open navigation"
+            aria-label="Menüyü aç"
             onClick={() => setMenu(true)}
           >
             <Menu />
           </button>
           <div className="breadcrumb">
-            Workspace <ChevronRight size={13} />
+            Çalışma alanı <ChevronRight size={13} />
             <strong>{items.find((i) => i[0] === page)?.[1]}</strong>
           </div>
           <div className="topbar-right">
             <span className="system-state">
               <i className={`dot ${liveReady ? 'ok' : ''}`} />
-              {liveReady ? 'Cloud inference configured' : 'Evidence preview'}
+              {liveReady ? 'Model bağlantısı hazır' : 'Kaynak önizlemesi'}
             </span>
             <a
               href="https://github.com/serkanazeri/ragna"
@@ -287,21 +318,22 @@ export default function App() {
               rel="noreferrer"
               className="repo-link"
             >
-              <Code2 size={16} /> Source <ArrowUpRight size={13} />
+              <Code2 size={16} /> Kaynak kodu <ArrowUpRight size={13} />
             </a>
           </div>
         </header>
         <main>
+          <PwaTools />
           {loadError && (
             <div className="notice warning" role="alert">
-              Connection notice: {loadError}
+              Bağlantı uyarısı: {loadError}
               <button
                 onClick={() => {
                   setLoadError('');
                   refresh();
                 }}
               >
-                Retry
+                Yeniden dene{' '}
               </button>
             </div>
           )}
@@ -310,36 +342,39 @@ export default function App() {
               <div className="page-heading">
                 <div>
                   <div className="eyebrow">
-                    <i /> RAG ENGINEERING WORKBENCH
+                    <i /> RAG MÜHENDİSLİK ATÖLYESİ{' '}
                   </div>
-                  <h1>Evidence before answers.</h1>
-                  <p>Understand what your RAG system knows. Measure how well it delivers.</p>
+                  <h1> Yanıtın arkasındaki kaynağı görün. </h1>
+                  <p>
+                    {' '}
+                    RAG sisteminizin ne bildiğini inceleyin. Yanıtlarını ölçün, kararlarını
+                    anlayın.{' '}
+                  </p>
                 </div>
                 <button className="button primary" onClick={() => navigate('ask')}>
-                  Ask a question <ArrowUpRight size={16} />
+                  Soru sorun <ArrowUpRight size={16} />
                 </button>
               </div>
               <section className="hero-panel">
                 <div className="hero-copy">
-                  <Tag tone="light">01 / THE REFERENCE PROJECT</Tag>
+                  <Tag tone="light"> 01 / REFERANS PROJE </Tag>
                   <h2>
-                    From a question
-                    <br />
-                    to a defensible answer.
+                    Bir sorudan, <br />
+                    kaynağı belli bir yanıta.{' '}
                   </h2>
                   <p>
-                    A production-minded RAG lab for a fictional service business. Inspect the
-                    sources, challenge the retrieval, and trace every response.
+                    Kurgusal bir hizmet işletmesi üzerinden gerçek mühendislik kararları. Kaynakları
+                    inceleyin, retrieval kalitesini ölçün, her yanıtın nasıl oluştuğunu görün.{' '}
                   </p>
                   <button className="text-link" onClick={() => navigate('decisions')}>
-                    Explore the engineering decisions <ArrowRight size={16} />
+                    Mühendislik kararlarını inceleyin <ArrowRight size={16} />
                   </button>
                 </div>
                 <div className="flow-visual">
                   <div className="flow-node">
                     <MessageSquare size={18} />
                     <span>
-                      Question<small>Intent & access scope</small>
+                      Soru <small> Niyet ve erişim kapsamı </small>
                     </span>
                     <span className="flow-num">01</span>
                   </div>
@@ -347,7 +382,7 @@ export default function App() {
                   <div className="flow-node">
                     <Search size={18} />
                     <span>
-                      Evidence<small>Retrieve · rank · verify access</small>
+                      Kanıtlar <small> Bul · sırala · erişimi doğrula </small>
                     </span>
                     <span className="flow-num">02</span>
                   </div>
@@ -355,39 +390,39 @@ export default function App() {
                   <div className="flow-node final">
                     <Sparkles size={18} />
                     <span>
-                      Answer + sources<small>Validate citations · record trace</small>
+                      Yanıt ve kaynaklar <small> Atıfları doğrula · trace kaydet </small>
                     </span>
                     <Check size={16} />
                   </div>
                 </div>
               </section>
               <div className="section-title">
-                <h2>Measured, not assumed</h2>
-                <Tag>DEPLOYED HYBRID · SYNTHETIC BENCHMARK</Tag>
+                <h2> Ölçümle görünür olan kalite </h2>
+                <Tag> CANLI HYBRID · SENTETİK BENCHMARK </Tag>
               </div>
               <div className="metrics-grid">
                 <Metric
                   label="Recall @ 5"
                   value={percent(cloud.metrics.recallAt5)}
-                  detail="54 answerable synthetic questions"
+                  detail="Yanıtlanabilir 54 sentetik soru"
                   icon={<Search size={16} />}
                 />
                 <Metric
-                  label="Ranking quality"
+                  label="Sıralama kalitesi"
                   value={cloud.metrics.ndcgAt5.toFixed(3)}
-                  detail="nDCG @ 5 · deployed hybrid"
+                  detail="nDCG @ 5 · canlı hybrid"
                   icon={<Layers3 size={16} />}
                 />
                 <Metric
-                  label="Access leaks"
+                  label="Erişim ihlalleri"
                   value={String(cloud.metrics.accessLeaks)}
-                  detail="Across the fixed regression set"
+                  detail="Sabit regresyon setindeki sonuç"
                   icon={<ShieldCheck size={16} />}
                 />
                 <Metric
-                  label="Evaluation questions"
+                  label="Değerlendirme soruları"
                   value={String(status?.questionCount || '—')}
-                  detail="6 scenario types · TR + EN"
+                  detail="6 senaryo türü · TR + EN"
                   icon={<FlaskConical size={16} />}
                 />
               </div>
@@ -395,12 +430,12 @@ export default function App() {
                 <section className="panel">
                   <div className="panel-heading">
                     <div>
-                      <h2>The retrieval experiment</h2>
-                      <p>Offline baseline · different chunking decisions.</p>
+                      <h2> Retrieval deneyi </h2>
+                      <p> Offline baseline · farklı chunk stratejileri. </p>
                     </div>
                     <button
                       className="icon-button"
-                      aria-label="Open evaluations"
+                      aria-label="Değerlendirmeleri aç"
                       onClick={() => navigate('experiments')}
                     >
                       <ArrowUpRight size={18} />
@@ -411,7 +446,7 @@ export default function App() {
                       <div className="bar-row" key={r.id}>
                         <div>
                           <span>
-                            {r.strategy === 'sections' ? 'Section-aware' : 'Fixed window'}{' '}
+                            {r.strategy === 'sections' ? 'Bölüm tabanlı' : 'Sabit pencere'}{' '}
                             <code>{r.chunkSize}</code>
                           </span>
                           <strong>{percent(r.metrics.recallAt5)}</strong>
@@ -426,33 +461,33 @@ export default function App() {
                     ))}
                   </div>
                   <div className="panel-foot">
-                    <CircleHelp size={14} /> Synthetic benchmark. Cloud hybrid quality is measured
-                    separately.
+                    <CircleHelp size={14} /> Sentetik benchmark. Buluttaki hybrid sonuçları ayrıca
+                    ölçülür.{' '}
                   </div>
                 </section>
                 <section className="panel">
                   <div className="panel-heading">
                     <div>
-                      <h2>Live operations</h2>
-                      <p>Last 24 hours · real requests only</p>
+                      <h2> Canlı operasyon </h2>
+                      <p> Son 24 saat · gerçek istekler </p>
                     </div>
                     <Activity size={18} />
                   </div>
                   <div className="operational-grid">
                     <div>
-                      <span>Requests</span>
+                      <span> İstekler </span>
                       <strong>{metrics?.total ?? '—'}</strong>
                     </div>
                     <div>
-                      <span>Response p95</span>
+                      <span> Yanıt süresi p95 </span>
                       <strong>{time(metrics?.p95Ms)}</strong>
                     </div>
                     <div>
-                      <span>Live answers</span>
+                      <span> Canlı yanıtlar </span>
                       <strong>{metrics?.live ?? '—'}</strong>
                     </div>
                     <div>
-                      <span>Reported model cost</span>
+                      <span> Bildirilen model maliyeti </span>
                       <strong>
                         {metrics?.reportedCostUsd != null
                           ? `$${metrics.reportedCostUsd.toFixed(4)}`
@@ -462,19 +497,19 @@ export default function App() {
                   </div>
                   <div className="operational-grid secondary-operations">
                     <div>
-                      <span>Fallback rate</span>
+                      <span> Fallback oranı </span>
                       <strong>{percent(metrics?.fallbackRate)}</strong>
                     </div>
                     <div>
-                      <span>Helpful feedback</span>
+                      <span> Olumlu geri bildirim </span>
                       <strong>{percent(metrics?.positiveFeedback)}</strong>
                     </div>
                     <div>
-                      <span>Cost reporting coverage</span>
+                      <span> Maliyeti bildirilen kullanım </span>
                       <strong>{percent(metrics?.costCoverage)}</strong>
                     </div>
                     <div>
-                      <span>Daily reservation / cap</span>
+                      <span> Günlük rezervasyon / sınır </span>
                       <strong>
                         {metrics?.budget
                           ? `$${metrics.budget.reservedUsd.toFixed(2)} / $${metrics.budget.dailyLimitUsd.toFixed(2)}`
@@ -482,17 +517,27 @@ export default function App() {
                       </strong>
                     </div>
                   </div>
+                  <div className="operational-grid secondary-operations">
+                    <div>
+                      <span>Cache yanıtları</span>
+                      <strong>{metrics?.cached ?? '—'}</strong>
+                    </div>
+                    <div>
+                      <span>Cache hit oranı</span>
+                      <strong>{percent(metrics?.cacheHitRate)}</strong>
+                    </div>
+                  </div>
                   <div className="panel-foot">
                     <Clock3 size={14} />
                     {metrics?.total
-                      ? 'Includes retrieval and validated response generation.'
-                      : 'Send a question to start collecting telemetry.'}
+                      ? 'Retrieval ve doğrulanmış yanıt üretimi dahildir.'
+                      : 'Telemetry toplamak için bir soru gönderin.'}
                   </div>
                 </section>
               </div>
               <div className="section-title">
-                <h2>Start with a real challenge</h2>
-                <span className="muted">Explore the fictional Aster Mobility policies</span>
+                <h2> Bir senaryoyla başlayın </h2>
+                <span className="muted"> Kurgusal Aster Mobility politikalarını keşfedin </span>
               </div>
               <div className="examples-grid">
                 {examples.slice(0, 3).map((e, i) => (
@@ -505,7 +550,7 @@ export default function App() {
                     }}
                   >
                     <span className="example-number">
-                      0{i + 1} <Tag>{e.category}</Tag>
+                      0{i + 1} <Tag>{categoryNames[e.category] || e.category}</Tag>
                     </span>
                     <strong>{e.question}</strong>
                     <ArrowUpRight size={19} />
@@ -532,21 +577,25 @@ export default function App() {
             <section className="panel recent-panel">
               <div className="panel-heading">
                 <div>
-                  <h2>Recent request traces</h2>
-                  <p>Source content and visitor questions are not stored in public telemetry.</p>
+                  <h2> Son isteklerin trace kayıtları </h2>
+                  <p>
+                    {' '}
+                    Ziyaretçi soruları ve kaynak içerikleri genel telemetry kayıtlarına
+                    yazılmaz.{' '}
+                  </p>
                 </div>
-                <Tag>{metrics?.total || 0} REQUESTS</Tag>
+                <Tag>{metrics?.total || 0} İSTEK </Tag>
               </div>
               {metrics?.requests.length ? (
                 <div className="table-scroll">
                   <table>
                     <thead>
                       <tr>
-                        <th>Request</th>
-                        <th>Response mode</th>
-                        <th>Provider</th>
+                        <th> İstek </th>
+                        <th> Yanıt türü </th>
+                        <th> Sağlayıcı </th>
                         <th>Retrieval</th>
-                        <th>Duration</th>
+                        <th> Süre </th>
                         <th />
                       </tr>
                     </thead>
@@ -555,7 +604,7 @@ export default function App() {
                         <tr key={r.id}>
                           <td>
                             <code>{r.id.slice(0, 8)}</code>
-                            <small>{new Date(r.createdAt).toLocaleTimeString()}</small>
+                            <small>{new Date(r.createdAt).toLocaleTimeString('tr-TR')}</small>
                           </td>
                           <td>
                             <Tag tone={r.mode === 'live' ? 'green' : 'neutral'}>
@@ -571,7 +620,7 @@ export default function App() {
                             <button
                               className="icon-button"
                               onClick={() => setTrace(r)}
-                              aria-label={`Inspect trace ${r.id.slice(0, 8)}`}
+                              aria-label={`Trace kaydını incele ${r.id.slice(0, 8)}`}
                             >
                               <ArrowUpRight size={15} />
                             </button>
@@ -584,19 +633,22 @@ export default function App() {
               ) : (
                 <div className="empty-state compact">
                   <Activity size={24} />
-                  <strong>Your first trace starts with a question.</strong>
-                  <span>No fabricated activity. Try the workbench to populate this view.</span>
+                  <strong> İlk trace kaydı bir soruyla başlar. </strong>
+                  <span>
+                    {' '}
+                    Bu alan gerçek isteklerle güncellenir. Başlamak için bir soru sorun.{' '}
+                  </span>
                 </div>
               )}
             </section>
           )}
           <footer className="footer">
-            <span>RAGNA / 0.1.0</span>
+            <span> RAGNA / 0.2.0 </span>
             <span>
-              Built by Serkan Azeri <span className="footer-dot">·</span> Synthetic data.
-              Transparent evaluation.
+              Serkan Azeri tarafından geliştirildi <span className="footer-dot">·</span> Sentetik
+              veri. Şeffaf değerlendirme.{' '}
             </span>
-            <span>{status?.corpusVersion || 'Loading corpus'}</span>
+            <span>{status?.corpusVersion || 'Veri kümesi yükleniyor'}</span>
           </footer>
         </main>
       </div>
@@ -611,13 +663,13 @@ export default function App() {
           <section
             role="dialog"
             aria-modal="true"
-            aria-label={source ? 'Source document' : 'Request trace'}
+            aria-label={source ? 'Kaynak belge' : 'İstek trace kaydı'}
             className="modal"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               className="modal-close icon-button"
-              aria-label="Close dialog"
+              aria-label="Pencereyi kapat"
               onClick={() => {
                 setSource(null);
                 setTrace(null);
@@ -628,12 +680,12 @@ export default function App() {
             </button>
             {source ? (
               <>
-                <div className="eyebrow">SOURCE DOCUMENT · SYNTHETIC</div>
+                <div className="eyebrow"> KAYNAK BELGE · SENTETİK </div>
                 <h2>{source.title}</h2>
                 <div className="source-meta">
                   <Tag>v{source.version}</Tag>
                   <Tag>{source.effectiveDate}</Tag>
-                  <Tag>{source.department}</Tag>
+                  <Tag>{departmentNames[source.department] || source.department}</Tag>
                 </div>
                 {source.sections.map((s) => (
                   <article key={s.heading}>
@@ -645,7 +697,7 @@ export default function App() {
             ) : (
               trace && (
                 <>
-                  <div className="eyebrow">REQUEST TRACE</div>
+                  <div className="eyebrow"> İSTEK TRACE KAYDI </div>
                   <h2>
                     <code>{trace.id.slice(0, 8)}</code>
                   </h2>
@@ -654,7 +706,7 @@ export default function App() {
                   </p>
                   <TraceView spans={trace.spans} />
                   {trace.fallbackReason && (
-                    <div className="notice">Fallback reason: {trace.fallbackReason}</div>
+                    <div className="notice"> Fallback nedeni: {trace.fallbackReason}</div>
                   )}
                 </>
               )
@@ -740,7 +792,7 @@ function Ask({
       );
       onComplete();
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Request failed');
+      setError(e instanceof Error ? e.message : 'İstek tamamlanamadı');
     } finally {
       setLoading(false);
       if (widget.current) {
@@ -759,32 +811,32 @@ function Ask({
       });
       setFeedback(value);
     } catch {
-      setError('Feedback could not be saved.');
+      setError('Geri bildirim kaydedilemedi.');
     }
   };
   return (
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">THE EVIDENCE WORKBENCH</div>
-          <h1>Ask. Inspect. Understand.</h1>
-          <p>Explore the fictional policies in Turkish or English.</p>
+          <div className="eyebrow"> KAYNAKLARDAN YANITA </div>
+          <h1> Sorun. İnceleyin. Anlayın. </h1>
+          <p> Kurgusal politikalar hakkında sorun; yanıtı kaynaklarıyla birlikte inceleyin. </p>
         </div>
         <Tag tone="green">
-          <ShieldCheck size={13} /> Public access scope
+          <ShieldCheck size={13} /> Herkese açık kaynaklar{' '}
         </Tag>
       </div>
       <div className="chat-layout">
-        <aside className="question-library">
-          <h3>A question worth asking</h3>
-          <p>Choose a scenario or write your own.</p>
+        <aside className="question-library" aria-label="Örnek sorular">
+          <h3> Örnek sorular </h3>
+          <p> Bir senaryo seçin veya kendi sorunuzu yazın. </p>
           {examples.map((e) => (
             <button
               key={e.id}
               className={question === e.question ? 'selected' : ''}
               onClick={() => setQuestion(e.question)}
             >
-              <Tag>{e.category}</Tag>
+              <Tag>{categoryNames[e.category] || e.category}</Tag>
               <span>{e.question}</span>
               <ArrowUpRight size={14} />
             </button>
@@ -792,15 +844,15 @@ function Ask({
           <div className="library-note">
             <CircleHelp size={17} />
             <p>
-              All policies belong to a fictional company. Do not enter personal or confidential
-              information.
+              Tüm politikalar kurgusal bir şirkete aittir. Kişisel veya gizli bilgi girmeyin.
+              Kaynaklı yanıtlar 24 saat sunucu cache'inde tutulabilir.{' '}
             </p>
           </div>
         </aside>
         <section className="chat-workspace">
           <div className="chat-toolbar">
             <span>
-              <span className="small-logo">r</span> Ragna assistant
+              <span className="small-logo">r</span> Ragna asistanı{' '}
             </span>
             <label className="toggle-label">
               <input
@@ -808,7 +860,7 @@ function Ask({
                 checked={guided}
                 onChange={(e) => setGuided(e.target.checked)}
               />{' '}
-              Recorded walkthrough
+              Kayıtlı örneği göster{' '}
             </label>
           </div>
           <div className="chat-body" aria-live="polite">
@@ -817,38 +869,38 @@ function Ask({
                 <div className="orb">
                   <Search size={30} />
                 </div>
-                <h2>Good answers start with good evidence.</h2>
+                <h2> İyi yanıtlar güvenilir kaynaklarla başlar. </h2>
                 <p>
-                  Every result includes its source context and a trace you can inspect. When live
-                  inference is unavailable, you'll see clearly labeled evidence.
+                  Önce geçerli cache yanıtı aranır. Yeni yanıtlarda kaynakları ve işlem adımlarını
+                  inceleyebilirsiniz. Model erişilemezse kaynak alıntıları açıkça belirtilir.{' '}
                 </p>
                 <div className="capability-row">
                   <span>
                     <BookOpen size={14} />
-                    Source citations
+                    Kaynak atıfları{' '}
                   </span>
                   <span>
                     <GitBranch size={14} />
-                    Request traces
+                    İstek trace kayıtları{' '}
                   </span>
                   <span>
                     <ShieldCheck size={14} />
-                    Access boundaries
+                    Erişim sınırları{' '}
                   </span>
                 </div>
               </div>
             ) : (
               <>
                 <div className="user-question">
-                  <span>YOU</span>
+                  <span> SİZ </span>
                   <p>{asked}</p>
                 </div>
                 {loading && (
                   <div className="loading-answer">
                     <span className="spinner" />
                     <div>
-                      Finding evidence and validating the response
-                      <small>Cloud inference may take a few seconds.</small>
+                      Cache kontrol ediliyor, kaynaklar ve yanıt doğrulanıyor{' '}
+                      <small> Yeni yanıt üretimi birkaç saniye sürebilir. </small>
                     </div>
                   </div>
                 )}
@@ -869,18 +921,27 @@ function Ask({
                     </div>
                     {answer.mode !== 'live' && (
                       <div className="mode-explainer">
-                        {answer.mode === 'guided'
-                          ? 'This is a recorded, source-backed reference answer. No live model generated it.'
-                          : answer.mode === 'evidence'
-                            ? 'Live generation is unavailable. These are retrieved source excerpts, not a generated answer.'
-                            : 'The available response abstains from answering. Check the trace for its origin.'}
+                        {answer.mode === 'cached'
+                          ? 'Bu yanıt daha önce model tarafından üretildi. Güncel kaynakları doğrulandı ve cache üzerinden sunuldu; bu istekte model çağrılmadı.'
+                          : answer.mode === 'guided'
+                            ? 'Bu yanıt kaynaklara dayalı, önceden hazırlanmış bir referans örnektir. Bu istekte model çağrılmadı.'
+                            : answer.mode === 'evidence'
+                              ? 'Canlı yanıt üretimi kullanılamıyor. Aşağıda bulunan kaynaklardan alıntılar gösteriliyor.'
+                              : 'Mevcut bilgilerle güvenilir bir yanıt verilemiyor. Ayrıntılar için trace kaydını inceleyin.'}
                       </div>
                     )}
                     <div className="answer-text">{answer.answer}</div>
+                    {answer.cache && (
+                      <p className="cache-meta">
+                        Üretim: {new Date(answer.cache.createdAt).toLocaleString('tr-TR')} ·{' '}
+                        {answer.cache.originalProvider} · Geçerlilik:{' '}
+                        {new Date(answer.cache.expiresAt).toLocaleString('tr-TR')}
+                      </p>
+                    )}
                     {answer.citations.length > 0 && (
                       <>
                         <div className="source-label">
-                          SUPPORTING SOURCES <span>{answer.citations.length}</span>
+                          YANITI DESTEKLEYEN KAYNAKLAR <span>{answer.citations.length}</span>
                         </div>
                         <div className="citations">
                           {answer.citations.map((c) => (
@@ -900,35 +961,35 @@ function Ask({
                     )}
                     <details className="trace-details">
                       <summary>
-                        <GitBranch size={15} /> Inspect this request{' '}
+                        <GitBranch size={15} /> İstek ayrıntılarını incele{' '}
                         <code>{answer.requestId.slice(0, 8)}</code>
                         <ChevronDown size={14} />
                       </summary>
                       <div className="trace-summary">
                         <Tag>{answer.provider}</Tag>
                         <Tag>{answer.retrievalMode}</Tag>
-                        <Tag>{answer.model || 'No model'}</Tag>
+                        <Tag>{answer.model || 'Model kullanılmadı'}</Tag>
                       </div>
                       <TraceView spans={answer.spans} />
                       {answer.fallbackReason && (
                         <p className="muted">Fallback: {answer.fallbackReason}</p>
                       )}
                       <p className="muted">
-                        Citation validation checks identifiers. Semantic faithfulness requires a
-                        separate evaluation.
+                        Atıf doğrulaması kaynak kimliklerini denetler. Yanıtın anlam bakımından
+                        kaynakla tutarlılığı ayrıca değerlendirilmelidir.{' '}
                       </p>
                     </details>
                     <div className="answer-actions">
-                      <span>Was this useful?</span>
+                      <span> Bu yanıt yararlı mıydı? </span>
                       <button
-                        aria-label="Helpful"
+                        aria-label="Yararlı"
                         className={`icon-button ${feedback === 1 ? 'chosen' : ''}`}
                         onClick={() => rate(1)}
                       >
                         <ThumbsUp size={15} />
                       </button>
                       <button
-                        aria-label="Not helpful"
+                        aria-label="Yararlı değil"
                         className={`icon-button ${feedback === -1 ? 'chosen' : ''}`}
                         onClick={() => rate(-1)}
                       >
@@ -938,7 +999,7 @@ function Ask({
                         className="trace-export"
                         onClick={() => download(answer, `ragna-${answer.requestId}.json`)}
                       >
-                        <ArrowDownToLine size={14} /> Export trace
+                        <ArrowDownToLine size={14} /> Trace kaydını indir{' '}
                       </button>
                     </div>
                   </div>
@@ -948,11 +1009,11 @@ function Ask({
           </div>
           <form className="composer" onSubmit={submit}>
             <label className="sr-only" htmlFor="question">
-              Your question
+              Sorunuz{' '}
             </label>
             <textarea
               id="question"
-              placeholder="Ask about returns, warranty, support, or challenge a policy…"
+              placeholder="İade, garanti veya destek hakkında sorunuzu yazın…"
               value={question}
               maxLength={1500}
               rows={2}
@@ -965,7 +1026,7 @@ function Ask({
               }}
             />
             <div className="composer-bottom">
-              <span>Enter to send · Shift + Enter for a new line</span>
+              <span> Enter: gönder · Shift + Enter: yeni satır </span>
               <button
                 className="button primary"
                 disabled={
@@ -975,10 +1036,14 @@ function Ask({
                 }
                 type="submit"
               >
-                {loading ? 'Working…' : 'Ask Ragna'}
+                {loading ? 'Hazırlanıyor…' : "Ragna'ya sor"}
                 <Send size={15} />
               </button>
             </div>
+            <p className="composer-note">
+              Kişisel veya gizli bilgi girmeyin. Kaynaklı yanıtlar 24 saat sunucu cache’inde
+              saklanabilir.
+            </p>
             <div ref={captcha} />
           </form>
         </section>
@@ -992,17 +1057,17 @@ function CloudResults() {
     <section className="panel cloud-results">
       <div className="panel-heading">
         <div>
-          <h2>Measured on Cloudflare</h2>
+          <h2> Cloudflare üzerinde ölçüldü </h2>
           <p>
-            Same 60 synthetic questions · same section chunks ·{' '}
-            {new Date(cloudEvaluation.publishedAt).toLocaleDateString()}
+            Aynı 60 sentetik soru · aynı bölüm chunk'ları ·{' '}
+            {new Date(cloudEvaluation.publishedAt).toLocaleDateString('tr-TR')}
           </p>
         </div>
         <button
           className="text-button"
           onClick={() => download(cloudEvaluation, 'ragna-cloud-retrieval.json')}
         >
-          <ArrowDownToLine size={15} /> Evidence
+          <ArrowDownToLine size={15} /> Kanıtlar{' '}
         </button>
       </div>
       <div className="table-scroll">
@@ -1014,7 +1079,7 @@ function CloudResults() {
               <th>Held-out recall</th>
               <th>nDCG @ 5</th>
               <th>Retrieval p95</th>
-              <th>Access leaks</th>
+              <th> Erişim ihlalleri </th>
             </tr>
           </thead>
           <tbody>
@@ -1022,7 +1087,7 @@ function CloudResults() {
               <tr key={r.id}>
                 <td>
                   <strong>{r.label}</strong>
-                  <small>{r.holdoutMetrics.questions} held-out questions</small>
+                  <small>{r.holdoutMetrics.questions} holdout sorusu </small>
                 </td>
                 <td>{percent(r.metrics.recallAt5)}</td>
                 <td>{percent(r.holdoutMetrics.recallAt5)}</td>
@@ -1037,8 +1102,8 @@ function CloudResults() {
         </table>
       </div>
       <div className="panel-foot">
-        <CircleHelp size={14} /> Retrieval-only measurement. This is not answer accuracy or a
-        production traffic benchmark.
+        <CircleHelp size={14} /> Bu ölçüm retrieval kalitesini gösterir. Yanıt doğruluğunu veya
+        üretim trafiği performansını ölçmez.{' '}
       </div>
     </section>
   );
@@ -1052,28 +1117,28 @@ function Evaluations({ runs }: { runs: EvalRun[] }) {
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">MEASURE → COMPARE → DECIDE</div>
-          <h1>Show your evidence.</h1>
-          <p>Reproducible retrieval runs, with the limitations kept in view.</p>
+          <div className="eyebrow"> ÖLÇ → KARŞILAŞTIR → KARAR VER </div>
+          <h1> Kararlarınızı ölçümlerle destekleyin. </h1>
+          <p> Tekrarlanabilir retrieval deneyleri ve sonuçların açıkça belirtilen sınırları. </p>
         </div>
         <button className="button" onClick={() => download(runs, 'ragna-evaluations.json')}>
-          <ArrowDownToLine size={16} /> Export results
+          <ArrowDownToLine size={16} /> Sonuçları indir{' '}
         </button>
       </div>
       <CloudResults />
       <div className="notice">
         <FlaskConical size={19} />
         <span>
-          <strong>Offline lexical benchmark.</strong> These runs measure in-memory retrieval on a
-          synthetic fixture. Cloud hybrid retrieval and generated-answer correctness are separate
-          evaluations. This dataset has not been reviewed by a human.
+          <strong> Offline lexical benchmark. </strong> Bu deneyler sentetik veri üzerinde bellek
+          içi retrieval ölçer. Buluttaki hybrid retrieval ve üretilen yanıtların doğruluğu ayrı
+          değerlendirilir. Veri kümesi insan incelemesinden geçmemiştir.{' '}
         </span>
       </div>
       <div className="panel">
         <div className="panel-heading">
           <div>
-            <h2>Compare configurations</h2>
-            <p>Same corpus and question set across all three runs.</p>
+            <h2> Yapılandırmaları karşılaştırın </h2>
+            <p> Üç deneyde de aynı veri kümesi ve sorular kullanılır. </p>
           </div>
           <Tag>RECALL @ 5</Tag>
         </div>
@@ -1081,11 +1146,11 @@ function Evaluations({ runs }: { runs: EvalRun[] }) {
           <table className="eval-table">
             <thead>
               <tr>
-                <th>Configuration</th>
+                <th> Yapılandırma </th>
                 <th>Recall @ 5</th>
                 <th>MRR</th>
                 <th>nDCG @ 5</th>
-                <th>Access leaks</th>
+                <th> Erişim ihlalleri </th>
                 <th />
               </tr>
             </thead>
@@ -1093,8 +1158,8 @@ function Evaluations({ runs }: { runs: EvalRun[] }) {
               {runs.map((r) => (
                 <tr key={r.id} className={run?.id === r.id ? 'selected-row' : ''}>
                   <td>
-                    <strong>{r.strategy === 'sections' ? 'Section-aware' : 'Fixed window'}</strong>
-                    <small>{r.chunkSize} estimated tokens · 10% overlap</small>
+                    <strong>{r.strategy === 'sections' ? 'Bölüm tabanlı' : 'Sabit pencere'}</strong>
+                    <small>{r.chunkSize} tahmini token · %10 overlap </small>
                   </td>
                   <td>
                     <div className="inline-score">
@@ -1115,7 +1180,7 @@ function Evaluations({ runs }: { runs: EvalRun[] }) {
                   </td>
                   <td>
                     <button className="text-button" onClick={() => setSelected(r.id)}>
-                      Inspect <ArrowRight size={14} />
+                      İncele <ArrowRight size={14} />
                     </button>
                   </td>
                 </tr>
@@ -1127,13 +1192,13 @@ function Evaluations({ runs }: { runs: EvalRun[] }) {
       {run && (
         <>
           <div className="section-title">
-            <h2>Question-level results</h2>
+            <h2> Soru bazında sonuçlar </h2>
             <select
-              aria-label="Filter scenario"
+              aria-label="Senaryoyu filtrele"
               value={category}
               onChange={(e) => setCategory(e.target.value)}
             >
-              <option value="all">All scenarios</option>
+              <option value="all"> Tüm senaryolar </option>
               {[
                 'single-hop',
                 'multi-hop',
@@ -1142,7 +1207,9 @@ function Evaluations({ runs }: { runs: EvalRun[] }) {
                 'access-control',
                 'adversarial',
               ].map((c) => (
-                <option key={c}>{c}</option>
+                <option key={c} value={c}>
+                  {categoryNames[c] || c}
+                </option>
               ))}
             </select>
           </div>
@@ -1150,11 +1217,11 @@ function Evaluations({ runs }: { runs: EvalRun[] }) {
             <table>
               <thead>
                 <tr>
-                  <th>Question ID</th>
-                  <th>Scenario</th>
+                  <th> Soru kimliği </th>
+                  <th> Senaryo </th>
                   <th>Split</th>
                   <th>Recall</th>
-                  <th>Retrieved documents</th>
+                  <th> Bulunan belgeler </th>
                 </tr>
               </thead>
               <tbody>
@@ -1164,17 +1231,17 @@ function Evaluations({ runs }: { runs: EvalRun[] }) {
                       <code>{r.questionId}</code>
                     </td>
                     <td>
-                      <Tag>{r.category}</Tag>
+                      <Tag>{categoryNames[r.category] || r.category}</Tag>
                     </td>
                     <td>{r.split}</td>
                     <td>
                       {r.recall === null ? (
-                        <span className="muted">Not applicable</span>
+                        <span className="muted"> Uygulanamaz </span>
                       ) : (
                         percent(r.recall)
                       )}
                     </td>
-                    <td className="retrieved-ids">{r.retrievedIds.join(', ') || 'None'}</td>
+                    <td className="retrieved-ids">{r.retrievedIds.join(', ') || 'Yok'}</td>
                   </tr>
                 ))}
               </tbody>
@@ -1183,12 +1250,12 @@ function Evaluations({ runs }: { runs: EvalRun[] }) {
           <div className="notice">
             <CircleHelp size={18} />
             <span>
-              Unanswerable questions have no retrieval recall target. Abstention is a generation
-              behavior and is not inferred from this score.
+              Yanıtlanamayan sorular için retrieval recall hedefi yoktur. Yanıt vermekten kaçınma
+              davranışı, model üretiminde ayrıca ölçülür.{' '}
             </span>
           </div>
           <p className="hash-line">
-            DATASET SHA256 <code>{run.datasetHash}</code>
+            VERİ KÜMESİ SHA256 <code>{run.datasetHash}</code>
           </p>
         </>
       )}
@@ -1206,51 +1273,57 @@ function Knowledge({
 }) {
   const [search, setSearch] = useState('');
   const filtered = documents.filter((d) =>
-    `${d.title} ${d.department}`.toLocaleLowerCase('tr').includes(search.toLocaleLowerCase('tr')),
+    `${d.title} ${departmentNames[d.department] || d.department}`
+      .toLocaleLowerCase('tr')
+      .includes(search.toLocaleLowerCase('tr')),
   );
   return (
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">THE KNOWLEDGE LAYER</div>
-          <h1>Know what goes in.</h1>
-          <p>Versioned policies, explicit access boundaries, and inspectable source text.</p>
+          <div className="eyebrow"> BİLGİ KATMANI </div>
+          <h1> Sisteminizin kaynaklarını tanıyın. </h1>
+          <p>
+            {' '}
+            Sürümlenmiş politikalar, belirli erişim sınırları ve incelenebilir kaynak
+            metinleri.{' '}
+          </p>
         </div>
-        <Tag>SYNTHETIC · ASTER MOBILITY</Tag>
+        <Tag> SENTETİK · ASTER MOBILITY </Tag>
       </div>
       <div className="metrics-grid">
         <Metric
-          label="Public documents"
+          label="Açık belgeler"
           value={String(documents.length)}
-          detail="Current versions only"
+          detail="Yalnızca güncel sürümler"
           icon={<FileText size={16} />}
         />
         <Metric
-          label="Searchable chunks"
+          label="Aranabilir chunk'lar"
           value={String(status?.chunkCount || '—')}
-          detail="Public access scope"
+          detail="Herkese açık kaynaklar"
           icon={<Layers3 size={16} />}
         />
         <Metric
-          label="Retrieval mode"
+          label="Retrieval yöntemi"
           value={status?.retrieval === 'hybrid' ? 'Hybrid' : 'Lexical'}
-          detail={status?.embedding || 'Vector index not connected'}
+          detail={status?.embedding || 'Vektör index bağlı değil'}
           icon={<Search size={16} />}
         />
         <Metric
-          label="Data provenance"
+          label="Verinin kökeni"
           value="100%"
-          detail="Fictional, version-controlled policies"
+          detail="Kurgusal, sürüm kontrollü politikalar"
           icon={<ShieldCheck size={16} />}
         />
       </div>
       <div className="section-title">
-        <h2>Source registry</h2>
+        <h2> Kaynak listesi </h2>
         <label className="search-field">
           <Search size={16} />
           <input
-            aria-label="Search source documents"
-            placeholder="Search documents…"
+            aria-label="Kaynak belgelerde ara"
+            placeholder="Belgelerde ara…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -1263,10 +1336,10 @@ function Knowledge({
               <span className="doc-icon">
                 <FileText size={22} />
               </span>
-              <Tag tone="green">Current</Tag>
+              <Tag tone="green"> Güncel </Tag>
             </div>
             <h3>{d.title}</h3>
-            <p>{d.department}</p>
+            <p>{departmentNames[d.department] || d.department}</p>
             <div className="document-bottom">
               <span>
                 v{d.version} · {d.effectiveDate}
@@ -1281,14 +1354,14 @@ function Knowledge({
       {!filtered.length && (
         <div className="empty-state">
           <Search />
-          <strong>No matching documents.</strong>
+          <strong> Eşleşen belge bulunamadı. </strong>
         </div>
       )}
       <div className="notice">
         <ShieldCheck size={18} />
         <span>
-          Archived policies and internal-only documents are excluded before retrieval. Public
-          visitors cannot change their access scope through a prompt.
+          Arşivlenmiş ve kurum içi belgeler retrieval öncesinde filtrelenir. Ziyaretçiler prompt ile
+          erişim kapsamını değiştiremez.{' '}
         </span>
       </div>
     </>
@@ -1298,56 +1371,56 @@ function Decisions() {
   const notes = [
     [
       '01',
-      'Availability is part of the product',
-      'Cloud first, local when you choose.',
-      'The public demo runs on Cloudflare independently of the developer’s laptop. Workers AI is the primary generation path, with an explicitly priced OpenRouter fallback. Local Open WebUI connects to the same RAG contract. A failed provider produces a labeled evidence view, not a fabricated live answer.',
+      'Erişilebilirlik ürünün bir parçasıdır',
+      'Bulutta bağımsız, yerelde isteğe bağlı.',
+      "Canlı demo bilgisayar kapalıyken de Cloudflare üzerinde çalışır. Workers AI ana model sağlayıcısıdır. OpenRouter isteğe bağlıdır; mevcut kurulum için gerekli değildir. Yerel Open WebUI aynı RAG API'sine bağlanır. Geçerli cache yanıtı model çağrısı yapmadan sunulur; yeni yanıt üretilemezse kaynak alıntıları gösterilir.",
     ],
     [
       '02',
-      'Embedding is a deployment decision too',
-      'BGE-M3 is the cloud candidate.',
-      'The multilingual model is hosted by Workers AI and can produce both document and query vectors in the same embedding space. Vectorize uses 1024 dimensions. EmbeddingGemma remains an experiment candidate; it is not claimed to be inferior without a matched evaluation.',
+      'Embedding seçimi bir dağıtım kararıdır',
+      'Buluttaki tercih: BGE-M3.',
+      'Workers AI üzerindeki çok dilli model, belge ve sorgu vektörlerini aynı embedding uzayında üretir. Vectorize 1024 boyut kullanır. EmbeddingGemma karşılaştırma adayıdır; aynı koşullarda ölçüm yapılmadan modeller arasında üstünlük iddiası yoktur.',
     ],
     [
       '03',
-      'Chunk boundaries change the evidence',
-      'Compare section-aware and fixed windows.',
-      'The workbench preserves source titles, versions, and section provenance. It evaluates 250/450 estimated-token section windows against a 450-token fixed baseline. The baseline results are published even when they challenge the preferred strategy. Token counts here are estimates, not tokenizer-exact counts.',
+      'Chunk sınırları bulunan kanıtı değiştirir',
+      'Bölüm tabanlı ve sabit pencereleri karşılaştırın.',
+      'Kaynak başlıkları, sürümler ve bölüm bilgisi korunur. 250/450 tahmini token içeren bölüm pencereleri, 450 token sabit baseline ile karşılaştırılır. Tercih edilen stratejiyi desteklemeyen sonuçlar da yayımlanır. Token sayıları yaklaşık değerlerdir.',
     ],
     [
       '04',
-      'Synthetic data is a starting point',
-      'Candidates are never automatically gold.',
-      'The fixture contains 60 source-derived questions across six scenario types. A separate Gemma-powered generator writes candidates with exact evidence quotes and pending review status. The current fixture is evidence-checked by code and has not been human-reviewed. It cannot establish production accuracy.',
+      'Sentetik veri bir başlangıçtır',
+      'Üretilen adaylar otomatik referans kabul edilmez.',
+      'Altı senaryo türünde kaynaklardan türetilmiş 60 soru bulunur. Ayrı bir Gemma üreticisi, birebir kaynak alıntısıyla birlikte inceleme bekleyen adaylar oluşturur. Kaynak kontrolü kodla yapılmıştır; insan değerlendirmesi yoktur. Bu set üretim ortamındaki doğruluğu kanıtlamaz.',
     ],
     [
       '05',
-      'A source identifier is not a truth score',
-      'Measure the property you actually checked.',
-      'Runtime validation checks that every cited identifier belongs to the authorized context. It cannot prove the claims are supported. Semantic faithfulness and human correctness remain unmeasured until a dedicated review is performed. The dashboard never substitutes citation validity for answer accuracy.',
+      'Kaynak kimliği, doğruluk puanı değildir',
+      'Doğruladığınız özelliği ölçün.',
+      'Çalışma anında atıfların izin verilen kaynaklara ait olduğu denetlenir. Bu kontrol iddiaların kaynak tarafından desteklendiğini tek başına kanıtlamaz. Anlamsal tutarlılık ve insan değerlendirmesine dayalı doğruluk ayrı inceleme gerektirir.',
     ],
     [
       '06',
-      'Small budgets need explicit boundaries',
-      'Reserve before inference.',
-      'A Durable Object serializes daily request and budget reservations. OpenRouter has price ceilings and a bounded response size. A conservative reservation is not an invoice; actual provider-reported cost is displayed separately. Source versions and configuration belong in any cache key.',
+      'Bütçeler ve cache açık sınırlar gerektirir',
+      'Önce cache, sonra model rezervasyonu.',
+      "Güncel, kaynaklı ve herkese açık yanıtlar 24 saat saklanır. Cache anahtarı soru, corpus hash ve model yapılandırmasını içerir. İç erişim kapsamı cache'e alınmaz. Cache hit model kotası tüketmez; günlük model rezervasyonu Durable Object ile yönetilir. Rezervasyon tutarı gerçek fatura değildir.",
     ],
   ];
   return (
     <>
       <div className="page-heading">
         <div>
-          <div className="eyebrow">WHY THIS SYSTEM LOOKS THIS WAY</div>
-          <h1>The decisions are the work.</h1>
-          <p>Hypotheses, tradeoffs, and honest limits behind the implementation.</p>
+          <div className="eyebrow"> TERCİHLERİN ARKASINDAKİ GEREKÇELER </div>
+          <h1> Mühendislik, kararları açıklayabilmektir. </h1>
+          <p> Uygulamanın arkasındaki varsayımlar, ödünleşimler ve ölçüm sınırları. </p>
         </div>
         <a
           className="button"
-          href="https://github.com/serkanazeri/ragna#engineering-decisions"
+          href="https://github.com/serkanazeri/ragna#mühendislik-kararları"
           target="_blank"
           rel="noreferrer"
         >
-          Read the README <ExternalLink size={15} />
+          README'yi okuyun <ExternalLink size={15} />
         </a>
       </div>
       <div className="decisions-list">
@@ -1355,7 +1428,7 @@ function Decisions() {
           <article className="decision" key={number}>
             <span className="decision-number">{number}</span>
             <div>
-              <span className="eyebrow">ARCHITECTURE DECISION</span>
+              <span className="eyebrow"> MİMARİ KARAR </span>
               <h2>{title}</h2>
               <h3>{subtitle}</h3>
               <p>{body}</p>
@@ -1364,6 +1437,94 @@ function Decisions() {
           </article>
         ))}
       </div>
+    </>
+  );
+}
+
+interface InstallEvent extends Event {
+  prompt(): Promise<void>;
+  userChoice: Promise<{ outcome: string }>;
+}
+function PwaTools() {
+  const [online, setOnline] = useState(navigator.onLine);
+  const [install, setInstall] = useState<InstallEvent | null>(null);
+  const [help, setHelp] = useState(false);
+  const [installed, setInstalled] = useState(
+    window.matchMedia('(display-mode: standalone)').matches,
+  );
+  const [ready, setReady] = useState(false);
+  const [failed, setFailed] = useState(false);
+  useEffect(() => {
+    const update = () => setOnline(navigator.onLine);
+    const available = (e: Event) => {
+      e.preventDefault();
+      setInstall(e as InstallEvent);
+    };
+    const complete = () => {
+      setInstalled(true);
+      setInstall(null);
+    };
+    const failure = () => setFailed(true);
+    window.addEventListener('online', update);
+    window.addEventListener('offline', update);
+    window.addEventListener('beforeinstallprompt', available);
+    window.addEventListener('appinstalled', complete);
+    window.addEventListener('pwa-registration-failed', failure);
+    let mounted = true;
+    if ('serviceWorker' in navigator)
+      navigator.serviceWorker.ready.then(() => {
+        if (mounted) setReady(true);
+      });
+    return () => {
+      mounted = false;
+      window.removeEventListener('online', update);
+      window.removeEventListener('offline', update);
+      window.removeEventListener('beforeinstallprompt', available);
+      window.removeEventListener('appinstalled', complete);
+      window.removeEventListener('pwa-registration-failed', failure);
+    };
+  }, []);
+  return (
+    <>
+      {!online && (
+        <div className="offline-banner" role="status">
+          Çevrimdışısınız. Uygulama arayüzü ve kayıtlı değerlendirmeler kullanılabilir. Sunucu cache
+          yanıtları ve yeni sorular için internet bağlantısı gerekir.
+        </div>
+      )}
+      <div className="pwa-tools">
+        {!installed && (
+          <button
+            className="button"
+            onClick={async () => {
+              if (!install) {
+                setHelp(!help);
+                return;
+              }
+              await install.prompt();
+              await install.userChoice;
+              setInstall(null);
+            }}
+          >
+            <ArrowDownToLine size={16} />
+            Uygulamayı yükle
+          </button>
+        )}
+        <small>
+          {failed
+            ? 'Çevrimdışı hazırlık tamamlanamadı. Sayfayı yenileyebilirsiniz.'
+            : ready
+              ? 'PWA hazır · çevrimdışı arayüz'
+              : 'RAGNA · web uygulaması'}
+          {installed ? ' · Yüklendi' : ''}
+        </small>
+      </div>
+      {help && (
+        <div className="notice" role="status">
+          Chrome veya Edge menüsünden “Uygulamayı yükle” seçeneğini kullanın. iPhone/iPad Safari’de
+          Paylaş → Ana Ekrana Ekle yolunu izleyin. Kurulum seçeneği tarayıcı desteğine bağlıdır.
+        </div>
+      )}
     </>
   );
 }

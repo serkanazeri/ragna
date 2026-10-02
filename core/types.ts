@@ -62,7 +62,7 @@ export interface Span {
 export interface ChatResponse {
   requestId: string;
   answer: string;
-  mode: 'live' | 'guided' | 'evidence' | 'abstained';
+  mode: 'live' | 'guided' | 'evidence' | 'abstained' | 'cached';
   provider: string;
   model: string | null;
   citations: Citation[];
@@ -74,8 +74,9 @@ export interface ChatResponse {
     inputTokens: number | null;
     outputTokens: number | null;
     costUsd: number | null;
-    costKind: 'reported' | 'unavailable';
+    costKind: 'reported' | 'unavailable' | 'avoided';
   };
+  cache?: { createdAt: string; expiresAt: string; originalProvider: string };
   citationValidity: number | null;
   budget?: { reservedUsd: number; dailyLimitUsd: number };
 }

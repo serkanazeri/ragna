@@ -64,3 +64,38 @@ describe('inference admission', () => {
     expect((await reserve()).ok).toBe(true);
   });
 });
+
+describe('cached request admission', () => {
+  it('serves cache after inference quota exhaustion without another reservation', async () => {
+    const { guard, reserve } = setup({ DAILY_REQUEST_LIMIT: '1' });
+    await reserve();
+    expect((await reserve()).status).toBe(429);
+    const response = await guard.fetch(
+      new Request('https://guard/cache-access', {
+        method: 'POST',
+        body: JSON.stringify({ client: 'a' }),
+      }),
+    );
+    expect(response.ok).toBe(true);
+    const status = (await (await guard.fetch(new Request('https://guard/status'))).json()) as {
+      requests: number;
+      reservedUsd: number;
+    };
+    expect(status.requests).toBe(1);
+    expect(status.reservedUsd).toBe(0.01);
+  });
+  it('rate limits cache hits independently of inference', async () => {
+    const { guard } = setup();
+    const responses = await Promise.all(
+      Array.from({ length: 61 }, () =>
+        guard.fetch(
+          new Request('https://guard/cache-access', {
+            method: 'POST',
+            body: JSON.stringify({ client: 'a' }),
+          }),
+        ),
+      ),
+    );
+    expect(responses.filter((r) => r.ok)).toHaveLength(60);
+  });
+});

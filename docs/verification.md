@@ -23,3 +23,14 @@ The first published commit passed GitHub Actions (`Verify`, run `36994656588`), 
 Cloudflare model output has a newer OpenAI-style `choices` envelope. The initial integration run exposed this mismatch; the adapter and its regression test now cover that envelope. Test failures remain visible in the operational dashboard's 24-hour window. They are not deleted to improve the displayed success rate.
 
 The initial generation run exposed a stock paraphrase retrieval miss, Turkish responses to English questions, and abstention flag/text mismatches. Subsequent changes improved the observed cases. Fixed abstention presentation avoids showing raw protocol text. Semantic answer correctness has not been human-scored.
+
+## v0.2 doğrulaması — 2 Ekim 2026
+
+- 33 otomatik test: TTL, kaynak/sürüm/erişim değişimi, bilinmeyen atıf, config invalidation, yetkili cache bypass ve quota dolduğunda cache erişimi dahil.
+- Gerçek yerel API: Gemma yanıtı 9.273 ms, aynı sorunun cache yanıtı 4 ms; model rezervasyon sayısı 6 → 7 → 7. Tek fonksiyonel kontrol; latency benchmark değildir.
+- Türkçe arayüzde cache etiketi, üretim zamanı, sağlayıcı ve kaynak penceresi görüldü.
+- Genel bakış, sohbet, değerlendirmeler, bilgi tabanı ve mühendislik notları; 320/390/768/1024/1440 px genişliklerde kontrol edildi. 25 kombinasyonda sayfa genelinde yatay taşma yoktu. Tablolar ve mobil soru kartları kendi alanlarında kaydırılabilir. Bu test fiziksel cihaz testi değildir.
+- Chrome'da service worker kurulduktan sonra yerel sunucu durduruldu; sayfa yeniden yüklendiğinde uygulama arayüzü açıldı ve API erişimi için Türkçe bağlantı uyarısı gösterildi. Kullanıcının cihazına uygulama kurulmadı; Safari/iOS gerçek cihaz kurulumu ayrıca kontrol edilmelidir.
+- Manifest, 192/512 px PNG ikonlar, maskable ikon, aynı origin'den Inter fontları ve versiyonlanmış static precache eklendi. API yanıtları browser cache'ine dahil edilmedi.
+- Canlı Cloudflare smoke kontrolü geçti. Dört kaynaklı örnek yanıt Workers AI ile hazırlanarak cache'e alındı; yanıtlanamayan iki örnek saklanmadı. Aynı sorunun iki anonim isteği `cached` döndü, ayrı request ID üretti ve model rezervasyon sayısı 47 → 47 kaldı. Bu isteklerde model token kullanımı sıfırdı; dashboard iki cache hit gösterdi.
+- Cloudflare v0.2 dağıtımı: `1f5753f7-555d-4d0b-9b65-51adbc59f346`. Manifest, service worker ve ikonlar canlıda HTTP 200 döndü. README ekran görüntüsü canlı Türkçe arayüzden yenilendi.

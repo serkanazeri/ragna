@@ -22,6 +22,7 @@ import type {
 } from '../core/types';
 import type { Env } from './env';
 import { generate } from './providers';
+import { cacheKey, readCache, writeCache } from './answer-cache';
 import { abstentionMessage } from '../core/retrieval';
 export { UsageGuard } from './guard';
 
@@ -60,7 +61,7 @@ app.use('*', async (c, next) => {
 app.onError((err, c) => {
   console.error(JSON.stringify({ type: 'request_error', name: err.name }));
   return c.json(
-    { error: 'Request could not be completed. Please try again.', code: 'request_failed' },
+    { error: 'İstek tamamlanamadı. Lütfen yeniden deneyin.', code: 'request_failed' },
     500,
   );
 });
@@ -81,7 +82,7 @@ app.get('/api/status', async (c) => {
   }
   return c.json({
     name: 'RAGNA',
-    version: '0.1.0',
+    version: '0.2.0',
     corpusVersion: corpus.version,
     corpusHash: corpus.hash,
     environment: c.env.ENVIRONMENT,
@@ -119,7 +120,7 @@ app.get('/api/sources/:id', (c) => {
       d.status === 'current' &&
       (d.audience === 'public' || audience === 'operations'),
   );
-  return doc ? c.json(doc) : c.json({ error: 'Source not found' }, 404);
+  return doc ? c.json(doc) : c.json({ error: 'Kaynak bulunamadı' }, 404);
 });
 app.get('/api/examples', (c) =>
   c.json(
@@ -132,7 +133,7 @@ app.get('/api/examples', (c) =>
 );
 app.get('/api/evaluations', (c) => c.json(evaluationData));
 app.post('/api/admin/index', async (c) => {
-  if (!authorized(c.req.raw, c.env)) return c.json({ error: 'Unauthorized' }, 401);
+  if (!authorized(c.req.raw, c.env)) return c.json({ error: 'Yetkisiz erişim' }, 401);
   if (!c.env.AI || !c.env.VECTORIZE)
     return c.json({ error: 'Cloud AI and Vectorize bindings are required' }, 503);
   const input = z
@@ -214,7 +215,7 @@ app.get('/api/metrics', async (c) => {
       : null;
   const live = results.filter((r) => r.mode === 'live');
   const rated = results.filter((r) => r.rating !== null);
-  const generated = results.filter((r) => r.model !== null);
+  const generated = results.filter((r) => r.model !== null && r.mode !== 'cached');
   const budget = await (
     await c.env.GUARD.get(c.env.GUARD.idFromName('public-budget')).fetch('https://guard/status')
   ).json();
@@ -225,6 +226,11 @@ app.get('/api/metrics', async (c) => {
     truncated: results.length === 1000,
     total: results.length,
     live: live.length,
+    cached: results.filter((r) => r.mode === 'cached').length,
+    cacheHitRate: results.filter((r) => r.mode !== 'guided').length
+      ? results.filter((r) => r.mode === 'cached').length /
+        results.filter((r) => r.mode !== 'guided').length
+      : null,
     evidence: results.filter((r) => r.mode === 'evidence').length,
     guided: results.filter((r) => r.mode === 'guided').length,
     abstained: results.filter((r) => r.mode === 'abstained').length,
@@ -262,6 +268,7 @@ const chatSchema = z.object({
   audience: z.enum(['public', 'operations']).optional(),
   turnstileToken: z.string().max(4096).optional(),
   guided: z.boolean().optional(),
+  refreshCache: z.boolean().optional(),
 });
 async function retrieve(
   question: string,
@@ -349,7 +356,7 @@ async function retrieve(
   return { hits: lexical.slice(0, 5), mode };
 }
 app.post('/api/admin/retrieve', async (c) => {
-  if (!authorized(c.req.raw, c.env)) return c.json({ error: 'Unauthorized' }, 401);
+  if (!authorized(c.req.raw, c.env)) return c.json({ error: 'Yetkisiz erişim' }, 401);
   const parsed = z
     .object({
       question: z.string().min(3).max(1500),
@@ -393,6 +400,49 @@ async function runChat(
   const audience: Audience = trusted && input.audience === 'operations' ? 'operations' : 'public';
   const client = await hash(request.headers.get('cf-connecting-ip') || 'local');
   const guard = env.GUARD.get(env.GUARD.idFromName('public-budget'));
+  const key =
+    !input.guided && audience === 'public'
+      ? await cacheKey(input.question, corpus.hash, env)
+      : null;
+  const cached = key && !(trusted && input.refreshCache) ? await readCache(env, key, chunks) : null;
+  if (cached) {
+    const admission = await guard.fetch(
+      new Request('https://guard/cache-access', {
+        method: 'POST',
+        body: JSON.stringify({ client, trusted }),
+      }),
+    );
+    if (admission.ok) {
+      const result: ChatResponse = {
+        requestId,
+        answer: cached.answer,
+        mode: 'cached',
+        provider: 'cache',
+        model: cached.model,
+        citations: cached.citations,
+        spans: [
+          {
+            name: 'answer cache',
+            status: 'ok',
+            durationMs: performance.now() - start,
+            detail: 'exact-match · 24h TTL',
+          },
+        ],
+        durationMs: performance.now() - start,
+        retrievalMode: 'cache',
+        fallbackReason: null,
+        usage: { inputTokens: 0, outputTokens: 0, costUsd: 0, costKind: 'avoided' },
+        citationValidity: 1,
+        cache: {
+          createdAt: new Date(cached.createdAt).toISOString(),
+          expiresAt: new Date(cached.expiresAt).toISOString(),
+          originalProvider: cached.provider,
+        },
+      };
+      await recordRequest(env, result, 0);
+      return result;
+    }
+  }
   const quota = input.guided
     ? Response.json({ allowed: false, reservedUsd: 0, dailyLimitUsd: Number(env.DAILY_BUDGET_USD) })
     : await guard.fetch(
@@ -500,45 +550,49 @@ async function runChat(
     }
   }
   result.durationMs = performance.now() - start;
+  if (key) await writeCache(env, key, result, chunks);
+  await recordRequest(env, result, retrievalMs);
+  return result;
+}
+async function recordRequest(env: Env, result: ChatResponse, retrievalMs: number) {
   try {
     await env.DB.prepare(
       'INSERT INTO requests (id,created_at,mode,provider,model,duration_ms,retrieval_ms,retrieval_mode,fallback_reason,input_tokens,output_tokens,cost_usd,citation_validity,spans_json) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
     )
       .bind(
-        requestId,
+        result.requestId,
         new Date().toISOString(),
         result.mode,
         result.provider,
         result.model,
         result.durationMs,
         retrievalMs,
-        retrievalMode,
+        result.retrievalMode,
         result.fallbackReason,
         result.usage.inputTokens,
         result.usage.outputTokens,
         result.usage.costUsd,
         result.citationValidity,
-        JSON.stringify(spans),
+        JSON.stringify(result.spans),
       )
       .run();
   } catch {
-    console.error(JSON.stringify({ type: 'telemetry_write_failed', requestId }));
+    console.error(JSON.stringify({ type: 'telemetry_write_failed', requestId: result.requestId }));
   }
-  return result;
 }
 app.post('/api/chat', async (c) => {
   if (Number(c.req.header('content-length') || 0) > 10000)
-    return c.json({ error: 'Request too large' }, 413);
+    return c.json({ error: 'İstek boyutu sınırı aşıldı' }, 413);
   const body = await c.req.text();
-  if (body.length > 10000) return c.json({ error: 'Request too large' }, 413);
+  if (body.length > 10000) return c.json({ error: 'İstek boyutu sınırı aşıldı' }, 413);
   let decoded;
   try {
     decoded = JSON.parse(body);
   } catch {
-    return c.json({ error: 'Invalid JSON' }, 400);
+    return c.json({ error: 'Geçersiz JSON' }, 400);
   }
   const parsed = chatSchema.safeParse(decoded);
-  if (!parsed.success) return c.json({ error: 'Question must contain 3–1500 characters.' }, 400);
+  if (!parsed.success) return c.json({ error: 'Sorunuz 3–1500 karakter arasında olmalı.' }, 400);
   if (c.env.TURNSTILE_SECRET_KEY && !authorized(c.req.raw, c.env)) {
     const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method: 'POST',
@@ -550,7 +604,7 @@ app.post('/api/chat', async (c) => {
     });
     const validation = (await response.json()) as { success: boolean; hostname?: string };
     if (!validation.success || validation.hostname !== new URL(c.env.SITE_URL).hostname)
-      return c.json({ error: 'Please complete the verification.' }, 403);
+      return c.json({ error: 'Lütfen doğrulamayı tamamlayın.' }, 403);
   }
   return c.json(await runChat(parsed.data, c.req.raw, c.env));
 });
@@ -558,11 +612,11 @@ app.post('/api/feedback', async (c) => {
   const parsed = z
     .object({ requestId: z.string().uuid(), rating: z.union([z.literal(1), z.literal(-1)]) })
     .safeParse(await c.req.json());
-  if (!parsed.success) return c.json({ error: 'Invalid feedback' }, 400);
+  if (!parsed.success) return c.json({ error: 'Geçersiz geri bildirim' }, 400);
   const exists = await c.env.DB.prepare('SELECT id FROM requests WHERE id=?')
     .bind(parsed.data.requestId)
     .first();
-  if (!exists) return c.json({ error: 'Request not found' }, 404);
+  if (!exists) return c.json({ error: 'İstek bulunamadı' }, 404);
   await c.env.DB.prepare(
     'INSERT INTO feedback (request_id,rating,created_at) VALUES (?,?,?) ON CONFLICT(request_id) DO UPDATE SET rating=excluded.rating',
   )
@@ -573,17 +627,17 @@ app.post('/api/feedback', async (c) => {
 app.get('/v1/models', (c) =>
   authorized(c.req.raw, c.env)
     ? c.json({ object: 'list', data: [{ id: 'ragna', object: 'model', owned_by: 'ragna' }] })
-    : c.json({ error: 'Unauthorized' }, 401),
+    : c.json({ error: 'Yetkisiz erişim' }, 401),
 );
 app.post('/v1/chat/completions', async (c) => {
-  if (!authorized(c.req.raw, c.env)) return c.json({ error: 'Unauthorized' }, 401);
+  if (!authorized(c.req.raw, c.env)) return c.json({ error: 'Yetkisiz erişim' }, 401);
   const raw = await c.req.text();
-  if (raw.length > 20000) return c.json({ error: 'Request too large' }, 413);
+  if (raw.length > 20000) return c.json({ error: 'İstek boyutu sınırı aşıldı' }, 413);
   let decoded;
   try {
     decoded = JSON.parse(raw);
   } catch {
-    return c.json({ error: 'Invalid JSON' }, 400);
+    return c.json({ error: 'Geçersiz JSON' }, 400);
   }
   const parsed = z
     .object({
@@ -594,15 +648,15 @@ app.post('/v1/chat/completions', async (c) => {
       stream: z.boolean().optional(),
     })
     .safeParse(decoded);
-  if (!parsed.success) return c.json({ error: 'Invalid messages' }, 400);
+  if (!parsed.success) return c.json({ error: 'Geçersiz mesajlar' }, 400);
   const question = parsed.data.messages.filter((m) => m.role === 'user').at(-1)?.content;
   const input = chatSchema.safeParse({ question });
-  if (!input.success) return c.json({ error: 'Invalid question' }, 400);
+  if (!input.success) return c.json({ error: 'Geçersiz soru' }, 400);
   const r = await runChat(input.data, c.req.raw, c.env);
   const label =
     r.mode === 'live'
       ? ''
-      : `[${r.mode.toUpperCase()} — ${r.fallbackReason || 'recorded example'}]\n\n`;
+      : `[${r.mode.toUpperCase()} — ${r.fallbackReason || 'kayıtlı örnek'}]\n\n`;
   const answer =
     label +
     r.answer +
@@ -628,6 +682,6 @@ app.post('/v1/chat/completions', async (c) => {
     choices: [{ index: 0, message: { role: 'assistant', content: answer }, finish_reason: 'stop' }],
   });
 });
-app.all('/api/*', (c) => c.json({ error: 'Not found' }, 404));
+app.all('/api/*', (c) => c.json({ error: 'Bulunamadı' }, 404));
 app.all('*', (c) => c.env.ASSETS.fetch(c.req.raw));
 export default app;
