@@ -1,56 +1,57 @@
-# Architecture and data contracts
+# Mimari ve veri sözleşmeleri
 
-## Request lifecycle
+## İsteğin yaşam döngüsü
 
-1. Validate the question and payload size. Public access is always `public`; only the server-side administration key can request `operations`.
-2. Reserve the model request through a single SQLite-backed Durable Object. Public requests share a per-IP minute limit and global daily count/cost reservation.
-3. Search current authorized chunks through D1 FTS5. If the verified index hash matches, embed with BGE-M3 and query Vectorize with metadata filters.
-4. Fuse ranks with RRF and inspect authorization again. Up to five chunks enter the prompt.
-5. Try the configured providers, with time and price bounds. Documents are explicitly untrusted input in the model prompt.
-6. Parse structured output and check that citation identifiers belong to the authorized context. Reject invalid output and try the next provider.
-7. Return the answer or a labeled fallback. Persist operational metadata without the raw question or answer. Telemetry failure is logged but does not discard an already produced answer.
+1. Soru ve payload boyutu doğrulanır. Herkese açık erişim her zaman `public` kapsamındadır; yalnızca sunucu tarafındaki yönetim anahtarı `operations` kapsamını isteyebilir.
+2. Uygun public isteklerde, model rezervasyonundan önce geçerli yanıt cache'i aranır. Cache hit ayrı hız sınırına tabidir; kaynaklar yeniden doğrulanır ve model çağrılmadan yanıt döndürülür.
+3. Yeni model isteği, SQLite kullanan tek bir Durable Object üzerinden rezerve edilir. Herkese açık istekler IP başına dakika sınırını ve küresel günlük istek/maliyet rezervasyonunu paylaşır.
+4. D1 FTS5 ile güncel ve erişim yetkisi olan chunk'lar aranır. Doğrulanmış index hash eşleşiyorsa BGE-M3 ile sorgu embedding'i üretilir ve Vectorize metadata filtreleriyle sorgulanır.
+5. Sıralamalar RRF ile birleştirilir ve erişim yetkisi yeniden denetlenir. Prompt'a en fazla beş chunk eklenir.
+6. Yapılandırılmış sağlayıcılar süre ve fiyat sınırları içinde denenir. Model prompt'u, belgelerin güvenilmeyen girdi olduğunu açıkça belirtir.
+7. Yapılandırılmış çıktı ayrıştırılır ve atıf kimliklerinin yetkili bağlama ait olduğu denetlenir. Geçersiz çıktı reddedilir ve sıradaki sağlayıcı denenir.
+8. Yanıt veya açıkça etiketlenmiş fallback döndürülür. Uygun model yanıtları ayrı yanıt cache'ine yazılır. Operasyonel metadata, ham soru veya yanıt olmadan telemetry kaydına alınır. Telemetry hatası loglanır; üretilmiş yanıtın kullanıcıya iletilmesini engellemez.
 
-No public parameter can select arbitrary models, inference URLs, or private data scopes. The browser receives no provider credential. Prompt instructions are an additional boundary; SQL/vector authorization is the primary data boundary.
+Ziyaretçi parametreleriyle keyfî model, inference URL'si veya özel veri kapsamı seçilemez. Tarayıcıya sağlayıcı kimlik bilgisi gönderilmez. Prompt talimatları ek bir sınırdır; temel veri erişim sınırını SQL ve vektör sorgularındaki yetkilendirme oluşturur.
 
-## Content lifecycle
+## İçeriğin yaşam döngüsü
 
-The canonical corpus is version-controlled JSON with `id`, `version`, `effectiveDate`, `audience`, `status`, and sections. Chunk identifiers preserve source association. `scripts/generate-data.ts` regenerates the fixture and initial SQL seed; it is a fixture-authoring tool, not a production migration manager. After an already deployed seed changes, create a new numbered migration rather than editing an applied migration and expecting it to run again.
+Asıl corpus; `id`, `version`, `effectiveDate`, `audience`, `status` ve bölüm alanlarını içeren, sürüm kontrolündeki JSON verisidir. Chunk kimlikleri kaynak bağını korur. `scripts/generate-data.ts`, test veri kümesini ve ilk SQL seed'ini yeniden üretir; bu araç production migration yönetimi için kullanılmaz. Dağıtılmış bir seed değiştiğinde, daha önce uygulanmış migration'ı düzenleyip tekrar çalışmasını beklemek yerine yeni numaralı bir migration oluşturulur.
 
-Authenticated indexing embeds eight chunks per request, upserts vectors, and copies versioned source snapshots to a private R2 bucket. Index activation requires all expected vectors to carry the current corpus hash. New application code must never silently use an old embedding index. Unknown or unauthorized vector results are dropped again in the Worker.
+Kimlik doğrulamalı indexleme her istekte sekiz chunk için embedding üretir, vektörleri upsert eder ve sürümlü kaynak kopyalarını özel R2 bucket'ına yazar. Index'in etkinleşmesi için beklenen tüm vektörlerin güncel corpus hash değerini taşıması gerekir. Yeni uygulama kodu eski embedding index'ini sessizce kullanmamalıdır. Bilinmeyen veya yetkisiz vektör sonuçları Worker içinde yeniden elenir.
 
-R2 is an archival source snapshot in this release. Runtime source rendering uses the same bundled, versioned corpus as the evaluator. This keeps source provenance deterministic; a larger ingestion service should read content from storage and store compact chunk references in SQL.
+Bu sürümde R2, kaynakların arşiv kopyalarını tutar. Çalışma anındaki kaynak görünümü, değerlendiricinin de kullandığı paketlenmiş ve sürümlü corpus'a dayanır. Böylece kaynak kökeni deterministik kalır. Daha büyük bir ingestion servisi içeriği depolamadan okumalı ve SQL'de küçük chunk referansları tutmalıdır.
 
-## Failure behavior
+## Hata durumlarında davranış
 
-| Failure                                    | Behavior                                                                  |
-| ------------------------------------------ | ------------------------------------------------------------------------- |
-| Laptop off                                 | Public cloud application continues independently                          |
-| Vector index not ready / embedding timeout | Lexical retrieval with an error span                                      |
-| Primary model invalid / unavailable        | OpenRouter if configured                                                  |
-| All model paths fail                       | Evidence excerpts with explicit mode                                      |
-| Insufficient evidence                      | Model abstention or labeled retrieval-only result                         |
-| Daily inference reservation exhausted      | Evidence / recorded walkthrough; no model call                            |
-| D1 telemetry insert fails                  | Answer returned, structured error logged; metrics undercount acknowledged |
-| Hosting/database free quota exhausted      | Request can fail; no promise of unlimited free availability               |
+| Hata veya durum                                      | Davranış                                                                                                       |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Bilgisayar kapalı                                    | Herkese açık bulut uygulaması bağımsız çalışmaya devam eder                                                    |
+| Vektör index'i hazır değil / embedding zaman aşımı   | Hata span'iyle birlikte lexical retrieval kullanılır                                                           |
+| Birincil model geçersiz çıktı veriyor / erişilemiyor | Yapılandırılmışsa OpenRouter denenir                                                                           |
+| Tüm model yolları başarısız                          | Yanıt türü açıkça belirtilerek kaynak alıntıları sunulur                                                       |
+| Yeterli kanıt yok                                    | Model yanıt vermekten kaçınır veya yalnızca retrieval sonucu etiketlenerek sunulur                             |
+| Günlük inference rezervasyonu dolu                   | Geçerli cache yanıtı sunulabilir; diğer isteklerde kaynak alıntısı / kayıtlı örnek kullanılır, model çağrılmaz |
+| D1 telemetry kaydı başarısız                         | Yanıt döndürülür, yapılandırılmış hata loglanır; metriklerin eksik sayabileceği kabul edilir                   |
+| Barındırma / veritabanı ücretsiz kotası dolu         | İstek başarısız olabilir; sınırsız ücretsiz erişilebilirlik vaat edilmez                                       |
 
-## Access and privacy limits
+## Erişim ve gizlilik sınırları
 
-The shared administration key is for one trusted operator. It is not a multi-user identity system. Treat the operations scope as a demonstrator, not a confidential-data deployment recipe. Open WebUI always uses the public scope, even when its user calls themselves an administrator in chat.
+Ortak yönetim anahtarı tek bir güvenilir operatör içindir; çok kullanıcılı kimlik sistemi değildir. `operations` kapsamı bir gösterimdir, gizli veri barındırmak için hazır bir dağıtım tasarımı değildir. Open WebUI, kullanıcı sohbette kendisini yönetici olarak tanıtsa bile her zaman public kapsamını kullanır.
 
-D1 stores request UUID, timestamp, mode, provider, model, timings, token counts when available, cost when reported, citation validation, and span metadata. Raw questions and answers are not stored in the requests telemetry table. The separate answer_cache table stores validated public model answers and citations for up to 24 hours, keyed by a question/configuration hash; it never stores the raw question. Hashing does not guarantee anonymity. Provider processing is still external processing. The public dashboard exposes only operational metadata; request UUIDs serve as unguessable feedback references, not authenticated user identity. The feedback score is directional and can be manipulated by visitors.
+D1; istek UUID'si, zaman damgası, yanıt türü, sağlayıcı, model, süreler, varsa token sayıları, bildirilmiş maliyet, atıf doğrulaması ve span metadata'sını saklar. `requests` telemetry tablosunda ham soru ve yanıt tutulmaz. Ayrı `answer_cache` tablosu, doğrulanmış public model yanıtlarını ve atıflarını soru/yapılandırma hash'iyle en fazla 24 saat geçerli olacak şekilde saklar; ham soruyu saklamaz. Hash kullanımı anonimlik garantisi değildir. Sağlayıcı tarafındaki işlem, haricî veri işleme olmaya devam eder. Herkese açık dashboard yalnızca operasyonel metadata sunar. İstek UUID'leri tahmin edilmesi güç geri bildirim referanslarıdır; kimliği doğrulanmış kullanıcı kimliği değildir. Geri bildirim skoru yön göstericidir ve ziyaretçiler tarafından manipüle edilebilir.
 
-The current table has no automatic retention purge. A production deployment needs an explicit retention policy and deletion job. Cloudflare request logging is sampled and must also be reviewed before using personal data.
+Mevcut telemetry tablosunda otomatik saklama süresi temizliği yoktur. Production dağıtımı için açık bir saklama politikası ve silme işi gerekir. Cloudflare istek logları örneklemeli tutulur; kişisel veri kullanılmadan önce bu ayarlar da incelenmelidir.
 
-## Performance decisions
+## Performans kararları
 
-Static assets are served at the edge. Retrieval does not scan external documents on each question. Embeddings are precomputed during indexing. Query providers run server-side, and each expensive path is bounded. The client has no charting framework; small accessible bars/tables display exact measurements.
+Statik dosyalar edge üzerinden sunulur. Retrieval her soruda dış belgeleri taramaz. Belge embedding'leri indexleme sırasında önceden hesaplanır. Sağlayıcı çağrıları sunucu tarafında çalışır ve maliyetli her yol sınırlandırılır. İstemcide grafik framework'ü yoktur; küçük ve erişilebilir çubuklar/tablolar ölçüm değerlerini gösterir.
 
-The API buffers output until validation completes. Reported request duration therefore includes retrieval plus complete response validation, not first-token latency. Cloud performance must be measured separately from the sub-millisecond offline lexical function.
+API, doğrulama tamamlanana kadar çıktıyı buffer'da tutar. Bu nedenle raporlanan istek süresi, retrieval ile yanıtın tamamının doğrulanmasını kapsar; ilk token gecikmesi değildir. Bulut performansı, milisaniyenin altında sürebilen offline lexical fonksiyondan ayrı ölçülmelidir.
 
-Hosted inference has a 12-second Workers AI and 20-second OpenRouter deadline. Local Ollama has a 45-second deadline to accommodate model loading and prefill; thinking is disabled for the bounded factual answer task. The optional Open WebUI Pipe allows 90 seconds for retrieval and the sequential provider paths.
+Bulut çıkarımında Workers AI için 12 saniye, OpenRouter için 20 saniye zaman aşımı uygulanır. Yerel Ollama, model yükleme ve prefill için 45 saniye bekleyebilir; sınırlı, olgusal yanıt görevi için thinking kapalıdır. İsteğe bağlı Open WebUI Pipe, retrieval ve ardışık sağlayıcı yolları için toplam 90 saniye bekler.
 
 ## v0.2: yanıt cache'i ve PWA
 
-Model rezervasyonundan önce D1 exact-match cache'i kontrol edilir. Anahtar; NFC/boşluk normalizasyonu yapılmış soru, corpus hash, public kapsam, CACHE_POLICY, route/model ve sağlayıcı yapılandırmasını kapsar. Her hit sırasında atıf metni ve kaynak sürümleri güncel public chunk'larla tekrar eşleştirilir. İç kapsam, kayıtlı örnekler, abstention ve evidence fallback saklanmaz. Geçerlilik 24 saat, kapasite 1.000 kayıttır. Cache isteği ayrı 60/dakika/IP sınırı kullanır; model rezervasyonuna yazılmaz. Yetkili değerlendirmeler cache okumasını atlayabilir; ziyaretçinin refreshCache parametresi dikkate alınmaz.
+Model rezervasyonundan önce D1 exact-match cache'i kontrol edilir. Anahtar; NFC/boşluk normalizasyonu yapılmış soru, corpus hash, public kapsam, `CACHE_POLICY`, route/model ve sağlayıcı yapılandırmasını kapsar. Her hit sırasında atıf metni ve kaynak sürümleri güncel public chunk'larla tekrar eşleştirilir. İç kapsam, kayıtlı örnekler, abstention ve evidence fallback saklanmaz. Geçerlilik 24 saat, kapasite 1.000 kayıttır. Süresi dolmuş kayıtlar sunulmaz; fiziksel temizlik bir sonraki cache yazmasında yapılır. Cache isteği ayrı 60/dakika/IP sınırı kullanır; model rezervasyonuna yazılmaz. Yetkili değerlendirmeler cache okumasını atlayabilir; ziyaretçinin `refreshCache` parametresi dikkate alınmaz.
 
-PWA sadece aynı origin'deki build dosyalarını, ikonları ve fontları precache eder. API/sohbet yanıtları tarayıcı cache'ine girmez. Sunucu cache'i ile service worker cache'i ayrı amaçlara sahiptir. Offline arayüz sunucu verisine veya yeni model üretimine erişim anlamına gelmez.
+PWA sadece aynı origin'deki build dosyalarını, ikonları ve fontları precache eder. API/sohbet yanıtları tarayıcı cache'ine girmez. Sunucu cache'i ile service worker cache'i ayrı amaçlara sahiptir. Çevrimdışı arayüz, sunucu verisine veya yeni model üretimine erişim anlamına gelmez.

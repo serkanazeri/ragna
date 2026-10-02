@@ -1,8 +1,8 @@
-# Copy to .dev.vars. Never commit real keys.
+# .dev.vars dosyasına kopyalayın. Gerçek anahtarları asla Git'e eklemeyin.
 OPENROUTER_API_KEY=
-# Required for Open WebUI, evaluation and admin requests. Generate with: openssl rand -hex 32
+# Open WebUI, değerlendirme ve yönetim istekleri için gerekli. Üretmek için: openssl rand -hex 32
 RAGNA_API_KEY=
-# Optional. Used only when MODEL_ROUTE=local-first.
+# İsteğe bağlı. Yalnızca MODEL_ROUTE=local-first olduğunda kullanılır.
 OLLAMA_BASE_URL=http://localhost:11434
-# Optional public-demo protection. Supply the matching public site key in Wrangler vars.
+# Herkese açık demo için isteğe bağlı koruma. Eşleşen public site key değerini Wrangler vars alanına ekleyin.
 TURNSTILE_SECRET_KEY=

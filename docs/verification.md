@@ -1,28 +1,28 @@
-# Initial release verification — 2 October 2026
+# İlk sürüm doğrulaması — 2 Ekim 2026
 
-| Check                           | Evidence                                                                                                                       |
-| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| TypeScript and production build | `npm run build` passed                                                                                                         |
-| Regression tests                | Retrieval authorization/versioning, citation validation, provider fallback, context ceiling, serialized budgets                |
-| Offline evaluation              | 60 questions × 3 chunk configurations; committed raw results                                                                   |
-| Cloud retrieval                 | 60 FTS5 requests and 60 hybrid requests; 61.4% → 95.4% Recall@5 on this synthetic fixture                                      |
-| Live generation                 | 24/24 requests reached Workers AI; source/response details in generation baseline                                              |
-| Targeted fixes                  | English answers and abstention decisions checked in 5 explicit regressions; no generalization claim                            |
-| Vector activation               | All 51 vectors verified with matching corpus hash; API verification batches respect the 20-ID limit                            |
-| Synthetic generation            | Local `gemma4:12b-mlx` produced 3 candidates with exact evidence quotes; pending human review                                  |
-| Open WebUI                      | Pinned v0.11.1 container healthy; Pipe invoked inside the container against the real API and emitted answer, citations, status |
-| Browser                         | Desktop overview/evaluation and recorded-answer flow; 390px mobile layout had no horizontal document overflow                  |
-| OpenRouter                      | Provider adapter/fallback covered with contract tests; live credit-backed route awaits an operator API key                     |
+| Kontrol                        | Kanıt                                                                                                                              |
+| ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| TypeScript ve production build | `npm run build` başarılı                                                                                                           |
+| Regresyon testleri             | Retrieval yetkilendirmesi/sürümleme, atıf doğrulaması, sağlayıcı fallback'i, bağlam sınırı ve sıralı bütçe işlemleri               |
+| Offline değerlendirme          | 60 soru × 3 chunk yapılandırması; ham sonuçlar depoda                                                                              |
+| Bulutta retrieval              | 60 FTS5 ve 60 hybrid isteği; bu sentetik veri kümesinde Recall@5 %61,4 → %95,4                                                     |
+| Canlı yanıt üretimi            | 24/24 istek Workers AI'a ulaştı; kaynak/yanıt ayrıntıları üretim baseline raporunda                                                |
+| Hedefli düzeltmeler            | İngilizce yanıtlar ve abstention kararları 5 açık regresyon senaryosunda kontrol edildi; genelleme iddiası yok                     |
+| Vektör etkinleştirme           | 51 vektörün tamamı eşleşen corpus hash ile doğrulandı; API doğrulama grupları 20 kimlik sınırına uyuyor                            |
+| Sentetik üretim                | Yerel `gemma4:12b-mlx`, birebir kaynak alıntılarıyla 3 aday üretti; insan incelemesi bekliyor                                      |
+| Open WebUI                     | Sabitlenmiş v0.11.1 container sağlıklı; Pipe container içinden gerçek API'ye bağlanarak yanıt, atıf ve durum olayları üretti       |
+| Tarayıcı                       | Masaüstü genel bakış/değerlendirme ve kayıtlı yanıt akışı kontrol edildi; 390 px mobil görünümde sayfa genelinde yatay taşma yoktu |
+| OpenRouter                     | Sağlayıcı adaptörü ve fallback, sözleşme testleriyle kapsandı; isteğe bağlı canlı yol için operatör API anahtarı yapılandırılmadı  |
 
-The Open WebUI first administrator account is intentionally left for the operator. Its OpenAI-compatible connection is configured by Compose; the optional native citation Pipe can be imported through the admin interface.
+Open WebUI'ın ilk yönetici hesabının oluşturulması operatöre bırakıldı. OpenAI uyumlu bağlantısı Compose ile yapılandırıldı; isteğe bağlı native atıf Pipe'ı yönetim arayüzünden içe aktarılabilir.
 
-The container-to-host integration also passed real model discovery, local `gemma4:12b-mlx` inference, and buffered OpenAI-compatible SSE completion. The checked Turkish returns question produced a cited 30-day answer in 5.16 seconds. The initial 12-second local call timed out; disabling thinking and allowing a 45-second local deadline resolved the observed failure. This is a single functional check, not a latency benchmark.
+Container ile ana makine arasındaki entegrasyon; gerçek model keşfi, yerel `gemma4:12b-mlx` inference ve buffer'lı OpenAI uyumlu SSE yanıtını da başarıyla tamamladı. Kontrol edilen Türkçe iade sorusu, atıflı 30 gün yanıtını 5,16 saniyede üretti. İlk 12 saniyelik yerel çağrı zaman aşımına uğradı; thinking'in kapatılması ve yerel zaman aşımının 45 saniyeye çıkarılması gözlenen sorunu çözdü. Bu tek bir işlev kontrolüdür; latency benchmark değildir.
 
-The first published commit passed GitHub Actions (`Verify`, run `36994656588`), including clean dependency installation, formatting, build, regression tests, and offline evaluation.
+İlk yayımlanan commit, GitHub Actions doğrulamasını (`Verify`, çalışma `36994656588`) geçti. Bu çalışma temiz bağımlılık kurulumu, biçim kontrolü, build, regresyon testleri ve offline değerlendirmeyi kapsadı.
 
-Cloudflare model output has a newer OpenAI-style `choices` envelope. The initial integration run exposed this mismatch; the adapter and its regression test now cover that envelope. Test failures remain visible in the operational dashboard's 24-hour window. They are not deleted to improve the displayed success rate.
+Cloudflare model çıktısı daha yeni, OpenAI biçiminde bir `choices` zarfı kullanır. İlk entegrasyon çalışması bu uyumsuzluğu ortaya çıkardı; adaptör ve regresyon testi artık bu zarfı kapsıyor. Test başarısızlıkları operasyon panelinin 24 saatlik penceresinde görünür kalır; gösterilen başarı oranını artırmak için silinmez.
 
-The initial generation run exposed a stock paraphrase retrieval miss, Turkish responses to English questions, and abstention flag/text mismatches. Subsequent changes improved the observed cases. Fixed abstention presentation avoids showing raw protocol text. Semantic answer correctness has not been human-scored.
+İlk üretim çalışmasında stok sorusunun parafrazında retrieval eksikliği, İngilizce sorulara Türkçe yanıtlar ve abstention alanı/metni arasında tutarsızlıklar görüldü. Sonraki değişiklikler gözlenen durumları iyileştirdi. Sabit abstention mesajı ham protokol metninin gösterilmesini önler. Yanıtların anlamsal doğruluğu henüz insan tarafından puanlanmadı.
 
 ## v0.2 doğrulaması — 2 Ekim 2026
 

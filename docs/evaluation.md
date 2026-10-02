@@ -1,47 +1,47 @@
-# Evaluation protocol
+# Değerlendirme protokolü
 
-## Reproducible baseline
+## Tekrarlanabilir baseline
 
-`npm run evaluate` uses a fixed synthetic corpus and question set. Hashes identify inputs. The three configurations share the same questions, tokenizer, BM25 implementation, and top-5 chunk cutoff. The metric removes duplicate document IDs after the cutoff, so several chunks from one policy can reduce coverage of a multi-policy question.
+`npm run evaluate`, sabit bir sentetik corpus ve soru kümesi kullanır. Girdiler hash değerleriyle tanımlanır. Üç yapılandırmada da sorular, tokenizer, BM25 uygulaması ve ilk beş chunk sınırı aynıdır. Metrik, bu sınır uygulandıktan sonra tekrar eden belge kimliklerini eler. Dolayısıyla aynı politikadan gelen birden fazla chunk, birden çok politikayı ilgilendiren sorunun kaynak kapsamasını azaltabilir.
 
-- Recall@5 = retrieved reference documents / reference documents.
-- MRR = inverse rank of the first reference document, or zero.
-- nDCG@5 = discounted binary document relevance divided by ideal discounted relevance.
-- Unanswerable questions have no positive reference documents and are excluded from these three denominators.
-- Access leaks count stale documents and operations-only documents exposed to public queries.
+- Recall@5 = getirilen referans belge sayısı / toplam referans belge sayısı.
+- MRR = ilk referans belgenin sırasının tersi; belge bulunamadıysa sıfır.
+- nDCG@5 = sıralamaya göre ağırlığı azaltılmış ikili belge ilgililiği / ideal sıralamanın ağırlıklı ilgililiği.
+- Yanıtlanamayan sorularda pozitif referans belge yoktur; bu sorular üç metriğin paydasına dahil edilmez.
+- Erişim sızıntısı sayımı, public sorgularda gösterilen eski belgeleri ve yalnızca `operations` kapsamına açık belgeleri kapsar.
 
-The held-out split covers separate policy families for ordinary questions. Adversarial/temporal edge cases intentionally revisit existing families. It is not a perfect independent benchmark. Synthetic prompts may resemble the authored source language and overestimate real-user retrieval quality.
+Holdout ayrımı, olağan sorularda farklı politika ailelerini kapsar. Adversarial ve zamansal edge case'ler mevcut aileleri bilinçli olarak tekrar kullanır. Bu nedenle kusursuz bağımsız bir benchmark değildir. Sentetik sorular, yazılmış kaynakların diline benzeyebilir ve gerçek kullanıcı sorgularındaki retrieval kalitesini olduğundan yüksek gösterebilir.
 
-## Live retrieval
+## Canlı retrieval
 
-`npm run evaluate:retrieval` sends all 60 questions through the authenticated retrieval endpoint, without generation. It records full-set and holdout metrics, mode, source IDs, corpus hash, spans, and latency. Set `LEXICAL_ONLY=1` to measure the actual D1 FTS5 path. Compare this with hybrid results; do not attribute a difference between offline BM25 and hybrid solely to embeddings.
+`npm run evaluate:retrieval`, 60 sorunun tamamını yanıt üretmeden, kimlik doğrulamalı retrieval endpoint'ine gönderir. Tam küme ve holdout metriklerini, yanıt türünü, kaynak kimliklerini, corpus hash değerini, span'leri ve gecikmeyi kaydeder. Gerçek D1 FTS5 yolunu ölçmek için `LEXICAL_ONLY=1` ayarlayın. Bu sonucu hybrid sonuçlarla karşılaştırın; offline BM25 ile hybrid arasındaki farkı yalnızca embedding'lere bağlamayın.
 
-## Live generation
+## Canlı yanıt üretimi
 
-`npm run evaluate:live` defaults to 12 held-out questions and saves each complete response for review. `EVAL_LIMIT` is capped at 60. The provider and response mode must accompany every quality result. A fallback/recorded row cannot count as successful live generation.
+`npm run evaluate:live`, varsayılan olarak 12 holdout sorusu kullanır ve her tam yanıtı inceleme için saklar. `EVAL_LIMIT` en fazla 60 olabilir. Her kalite sonucunda sağlayıcı ve yanıt türü bulunmalıdır. Fallback veya kayıtlı örnek satırı, başarılı canlı üretim olarak sayılamaz.
 
-Reference-term coverage is a debugging aid. It can reward a wrong statement containing the right number. Cited-document recall can reward a source that does not support the specific claim. Neither is a correctness score. Review claims against the exact retrieved passages.
+Referans terim kapsaması bir hata ayıklama yardımcısıdır. Doğru sayıyı içeren yanlış bir ifadeyi ödüllendirebilir. Atıf verilen belge recall'ı, belirli iddiayı desteklemeyen bir kaynağı ödüllendirebilir. İkisi de doğruluk skoru değildir. İddiaları, retrieval ile getirilen kaynak pasajlarıyla birebir karşılaştırın.
 
-## Human review rubric
+## İnsan değerlendirmesi ölçütleri
 
-For each live answer, record: correct / partially correct / incorrect; supported / partly supported / unsupported; abstention appropriate / inappropriate; citations sufficient / incomplete / wrong; and a short evidence-backed explanation. Review multilingual paraphrases, multi-policy synthesis, stale/current contradictions, unavailable facts, role claims, and source prompt injection separately.
+Her canlı yanıt için şunları kaydedin: doğru / kısmen doğru / yanlış; kaynakla destekleniyor / kısmen destekleniyor / desteklenmiyor; yanıt vermekten kaçınma kararı uygun / uygunsuz; atıflar yeterli / eksik / yanlış. Kısa, kanıta dayalı bir açıklama ekleyin. Çok dilli parafrazları, birden fazla politikanın sentezini, eski/güncel kaynak çelişkilerini, bilinmeyen bilgileri, rol iddialarını ve kaynak içindeki prompt injection girişimlerini ayrı değerlendirin.
 
-A model judge, if added, needs human calibration, a pinned judge version and rubric, disagreement analysis, and source/answer separation. Do not have the same model generate questions, answers, and a self-approved quality score without independent review.
+Model tabanlı değerlendirici eklenirse insan değerlendirmesiyle kalibrasyon, sabitlenmiş model sürümü ve ölçütler, görüş ayrılığı analizi ve kaynak/yanıt ayrımı gerekir. Bağımsız inceleme olmadan aynı modelin soruları, yanıtları ve kendi yanıtını onaylayan kalite skorunu üretmesine dayanmayın.
 
-## Release gates
+## Sürüm yayımlama koşulları
 
-- TypeScript and unit/provider regression tests pass.
-- No observed authorization or archived-source leak in fixed regression questions.
-- Local and deployed HTTP smoke checks pass.
-- Live answers expose the actual provider/model and trace; failure is labeled.
-- Vector index hash matches the deployed corpus before hybrid is enabled.
-- Secret files, real credentials, and customer data are absent from the commit.
-- Model/embedding superiority and availability SLOs are not claimed without the corresponding evidence.
+- TypeScript, birim testleri ve sağlayıcı regresyon testleri geçer.
+- Sabit regresyon sorularında yetkisiz veya arşivlenmiş kaynak sızıntısı gözlenmez.
+- Yerel ve dağıtılmış HTTP smoke kontrolleri geçer.
+- Canlı yanıtlar gerçek sağlayıcı/model ve trace bilgisini gösterir; başarısızlıklar etiketlenir.
+- Hybrid etkinleştirilmeden önce vektör index hash değeri dağıtılmış corpus ile eşleşir.
+- Commit'te secret dosyası, gerçek kimlik bilgisi veya müşteri verisi bulunmaz.
+- Model/embedding üstünlüğü ve erişilebilirlik SLO'ları, bunları destekleyen kanıt olmadan iddia edilmez.
 
-Improvement targets are hypotheses until measured: better held-out bilingual recall without access regressions, reasonable p95 under representative concurrent load, and high human-supported-answer rate. The initial deployment has no established production SLO.
+İyileştirme hedefleri ölçülene kadar hipotezdir: erişim regresyonu olmadan daha iyi iki dilli holdout recall, temsilî eşzamanlı yükte makul p95 ve insan değerlendirmesinde kaynaklarla desteklenen yüksek yanıt oranı. İlk dağıtımın belirlenmiş bir production SLO'su yoktur.
 
-Model abstention decisions use a fixed user-facing message instead of exposing malformed text such as `abstained:true`. A small TR/EN question-prefix heuristic selects the message language. Provider/model attribution still records the decision origin. This presentation normalization does not convert an answered question into an abstention or establish correctness.
+Modelin yanıt vermekten kaçınma kararları, `abstained:true` gibi bozuk protokol metinleri yerine kullanıcıya yönelik sabit bir mesajla sunulur. Küçük bir TR/EN soru öneki kuralı mesaj dilini seçer. Sağlayıcı/model kaydı kararın kökenini korur. Bu sunum normalizasyonu, yanıt verilmiş bir soruyu abstention'a dönüştürmez ve doğruluğu kanıtlamaz.
 
 ## Cache ve canlı ölçümler
 
-`evaluate:live` yetkili `refreshCache: true` ile yeni inference ister. Cache yanıtları model doğruluğu veya model gecikmesi olarak raporlanmamalıdır. Operasyon paneli cache yanıtlarını ayrı sayar. Cache hit için bu isteğin üretim maliyeti sıfırdır; önceki üretimin maliyeti asıl istek kaydında kalır. Corpus/configuration invalidation, TTL, erişim kapsamı ve bütçe tüketmeme davranışı regresyon testleriyle korunur.
+`evaluate:live`, yetkili `refreshCache: true` ile yeni inference ister. Cache yanıtları model doğruluğu veya model gecikmesi olarak raporlanmamalıdır. Operasyon paneli cache yanıtlarını ayrı sayar. Cache hit için bu isteğin üretim maliyeti sıfırdır; önceki üretimin maliyeti asıl istek kaydında kalır. Corpus/yapılandırma değişiminde geçersizleşme, TTL, erişim kapsamı ve bütçe tüketmeme davranışı regresyon testleriyle korunur.

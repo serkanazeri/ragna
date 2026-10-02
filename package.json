@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "An evidence-first RAG workbench with reproducible evaluations and resilient cloud inference.",
+  "description": "Kaynaklara dayalı yanıtlar, tekrarlanabilir değerlendirmeler ve dayanıklı bulut çıkarımı sunan RAG atölyesi.",
   "engines": {
     "node": ">=22.12"
   },

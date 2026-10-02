@@ -1,4 +1,4 @@
-name: Verify
+name: Doğrulama
 on:
   push:
     branches: [main]
